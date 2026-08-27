@@ -1,0 +1,28 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate every skill against docs/SKILL-STANDARD.md
+        run: python3 scripts/validate_skills.py
+
+      - name: Audit triggering and skill collisions
+        run: python3 scripts/check_triggers.py
+
+      - name: Run bundled scripts against their sample inputs
+        run: |
+          set -e
+          for f in skills/*/scripts/*.py; do
+            python3 -c "compile(open('$f').read(), '$f', 'exec')"
+          done
