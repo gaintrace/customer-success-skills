@@ -31,6 +31,17 @@ Editing a `description` means re-running `check_triggers.py`. `evals/routing.jso
 acceptance test — 65 realistic prompts that must each reach exactly one skill. `AMBIGUOUS` is
 not a pass; it means the intended skill won by a margin that will not survive rephrasing.
 
+Bundled scripts must parse on **Python 3.11** — that is what `.github/workflows/validate.yml`
+pins. Syntax added in 3.12 (PEP 701 f-strings: nested same-quote strings, or a replacement
+field spanning lines) compiles fine on a newer local interpreter and fails CI. Check against an
+older one before pushing:
+
+```bash
+for f in skills/*/scripts/*.py scripts/*.py; do
+  /usr/bin/python3 -c "compile(open('$f',encoding='utf-8').read(),'$f','exec')" || echo "FAIL $f"
+done
+```
+
 Any bundled script must run against a sample input before it ships:
 
 ```bash

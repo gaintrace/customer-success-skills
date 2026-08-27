@@ -184,8 +184,9 @@ def closing(d: dict[str, Any]) -> None:
     print(f"  What the exposure becomes       : {cf.get('exposure') or 'UNKNOWN — write this'}")
     print(f"  Zero-cost trade you will make   : {cf.get('zero_cost_trade') or 'UNKNOWN — write this'}")
     k = d.get("kill_criterion")
-    print(f"\nKill criterion                    : {k or 'UNKNOWN — write this. Offering one '
-          'converts a spend into an experiment, and almost nobody offers one.'}")
+    kill_fallback = ("UNKNOWN — write this. Offering one converts a spend into an "
+                     "experiment, and almost nobody offers one.")
+    print(f"\nKill criterion                    : {k or kill_fallback}")
     print("\nEvery line of the ask needs: action - owner - date - cost - expected effect - "
           "success measure - review date.")
 

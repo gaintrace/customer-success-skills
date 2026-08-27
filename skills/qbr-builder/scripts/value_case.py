@@ -410,10 +410,13 @@ def render(res: dict, explain: bool) -> str:
     for n in res["cost_notes"]:
         w.append(f"     ! {n}")
     w.append(f"  Net value               {money(res['net_value'])}")
-    w.append(f"  Value ratio             "
-             f"{'UNKNOWN' if res['value_ratio'] is None else f'{res['value_ratio']}x'}")
-    w.append(f"  Payback                 "
-             f"{'UNKNOWN' if res['payback_months'] is None else f'{res['payback_months']} months'}")
+    ratio = "UNKNOWN" if res["value_ratio"] is None else f"{res['value_ratio']}x"
+    payback = (
+        "UNKNOWN" if res["payback_months"] is None
+        else f"{res['payback_months']} months"
+    )
+    w.append(f"  Value ratio             {ratio}")
+    w.append(f"  Payback                 {payback}")
     w.append("")
     w.append(f"BAND: {res['band']}")
     if res["band"] == "Not presentable":
