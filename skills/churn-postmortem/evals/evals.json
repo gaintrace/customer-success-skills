@@ -1,0 +1,85 @@
+{
+  "skill_name": "churn-postmortem",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We lost Northwind Systems at the end of August \u2014 $180k, third renewal, didn't renew. The CSM's note in the CRM says 'price'. Can you write up what actually happened? I've dropped in a CRM closed-lost export, a ticket export with a title row above the header, and the Gong transcript from the last call.",
+      "expected_output": "A single-loss review record: the four dates with the label on the decision date, involuntary and quasi-churn ruled out first, a T-540 timeline across all seven families, stated reason held separate from proximate and root cause, an earliest-detectable-signal analysis with the four lags and a failure mode, closed-vocabulary classification, five whys on the vendor-side chain, a savability verdict with cross-functional attribution, exactly one systemic fix with an owner and a date, an Assumptions table and a Coverage Ledger with a confidence cap. Brief by default, Full on request. Both C16 axes are scored and printed, and the decision test runs before any competitor is named.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied files rather than asking for a re-export, finds the real header row beneath the title row, and confirms any column mapping below 0.80 confidence before using those numbers",
+        "Labels the record on the decision date rather than the churn, renewal or effective date, states the inference basis when the decision date was not recorded, and prints the opt-out deadline that governed alongside the save window",
+        "Keeps 'price' as the stated reason with its speaker, role and date, and codes primary_reason from timeline evidence instead \u2014 noting the divergence rather than resolving it silently",
+        "Computes detection lag, recognition lag, realised lead time and action lag, checks the identity recognition + realised = detection, and assigns a failure mode from the six-value list (absent / uninstrumented / unalerted / unrouted / unactioned / undetectable)",
+        "Runs five whys on why *we* did not prevent it, terminating on a cause we own and naming which stop rule was applied, with no chain ending on an individual",
+        "Returns exactly one primary systemic fix with a named function-lead owner, a date inside 90 days, a validation backtest and a 'not doing' line",
+        "Ends with an Assumptions table whose every row names a concrete consequence, and a Coverage Ledger over all seven families that carries history-retention depth and caps confidence",
+        "Prints both C16 axes on every record \u2014 decision_process_score and competitive_score, 0-5 each, with the dated markers behind each \u2014 in the Brief output as well as the Full record, and neither cell is left empty",
+        "Computes decision_owner_vacancy_days from the timeline rather than leaving it to the writer, and prints UNKNOWN as 'no decision owner was ever identified' rather than omitting the row"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's a spreadsheet of everything we lost last quarter \u2014 14 accounts, ARR, churn dates, and whatever reason code the CSM picked. What's the pattern, and what should we actually fix?",
+      "expected_output": "A cohort roll-up rather than fourteen stories: reason mix weighted by ARR, detection-lag and failure-mode distributions, savability split, the repeat-cause register with shipped status, the instrumentation backlog ranked by ARR, and at most three decisions each with an owner and a date.",
+      "assertions": [
+        "Groups the quarter by cause rather than walking accounts one at a time, and weights the reason mix by ARR rather than by account count",
+        "Treats the CSM-picked reason codes as stated reasons to be tested, not as the coded reasons, and flags a price/budget share above roughly 30 percent as a coding tell rather than a pricing finding",
+        "Reports the failure-mode distribution ARR-weighted and draws the investment conclusion from it (data versus tooling versus routing versus capacity), rather than recommending more signals by default",
+        "Reports the A+B and C+D savability shares separately and applies the honesty check when more than 60 percent lands in not-savable",
+        "Produces a repeat-cause register showing which previously promised fixes shipped, and escalates any cause on its third appearance instead of proposing a second fix for it",
+        "Proposes no more than three decisions, each with a named owner, a date inside 90 days and a validation backtest against both past losses and a control set of completed renewals",
+        "Asks for the as-of date of the export, names any account excluded by the materiality threshold with a revisit date, and records unanswered scoping questions as assumptions rather than blocking",
+        "Emits the decision-process vs competitive ARR split as the first table of the cohort report, before the reason mix, showing the no-decision family (no-decision, deprioritised, budget-freeze, orphaned-renewal, budget-loss) and competitive-displacement as separate ARR shares",
+        "Flags a competitive ARR share larger than the no-decision family's share as coding drift rather than a market finding, and re-tests those records against the two-source confirmation bar"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "This one stings \u2014 the account was green on our health score at the start of the quarter and churned anyway. What went wrong with the model, and what should I change?",
+      "expected_output": "A record that answers the Green-at-T-90 question explicitly, routes the loss as a scoring defect, computes the detection lag to show what the model had available, and refuses to re-weight on a single record while still producing an actionable next step.",
+      "assertions": [
+        "Answers 'was this account Green at T-90?' explicitly and routes a yes as a health-score false negative to health-score-designer, regardless of the reason code assigned",
+        "Identifies the earliest detectable signal by ID and names the system that already held the data, distinguishing 'the data did not exist' from 'nobody computed a metric from it'",
+        "Declines to change a weight, threshold or lead time on a single record, adds the signal to a watch list instead, and states the number of corroborating records required",
+        "States that any eventual threshold must be backtested against past losses and a control set of completed renewals, with the alert-budget impact quantified",
+        "Tunes to the P90 detection lag rather than the median when discussing where a threshold would sit",
+        "Uses bands and confidence rather than a churn probability, and avoids any claim of certainty or guaranteed accuracy",
+        "Does not name any customer-success-platform vendor, referring to the category generically when pointing at where a score lives",
+        "Answers 'was a decision made at all?' before assigning a reason code, and does not code the loss 'other' or assign failure mode 'undetectable' when the timeline holds no decision event"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Can you draft something I can send the customer to ask why they really left? They churned three weeks ago and I was their CSM.",
+      "expected_output": "A send-ready interview request inside a fenced copy block below the divider, plus internal guidance that the request should not come from the account owner and should be sent after the effective date, with the question set and what to record.",
+      "assertions": [
+        "Emits the customer-facing text inside a fenced text block below an unmissable divider, formatted for an email client with no markdown headings, pipe tables or bold, and with no unfilled placeholders",
+        "Flags that the request should come from someone other than the account owner, and explains the respondent and relationship-preservation biases that make the owner the wrong sender",
+        "Contains none of the banned phrases (just checking in, touching base, circling back, hope you're well, reaching out, we value your partnership, at your earliest convenience) and opens with a specific observation rather than filler",
+        "Contains no health score, risk band, ARR at risk, exposure, forecast category, save play or champion-departure inference, and no assessment of a named person",
+        "States plainly in the customer-facing text that this is not a save attempt, and makes one dated, easy ask with an explicit opt-out",
+        "Supplies the question set with the chronology question first (when did you first think this was not going to continue) rather than opening with 'why did you leave'",
+        "Records the stated reason verbatim with the speaker's role and date, keeps it separate from the coded primary_reason, and notes that the interview informs the coding but does not perform it"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "We lost Foxglove Design Co \u2014 $54k, renewal date came and went. The AE says they went with a competitor. Honestly I think they just never got round to it: the opportunity sat in Negotiation since December, their ops lead left in February and nobody replaced her, and the last real conversation we had was in March. Write it up.",
+      "expected_output": "A record that refuses the competitive code on this evidence: decision-process scored high and competitive scored at or near zero with the markers named, the rival stored as competitor_claimed rather than competitor, primary_reason coded from the no-decision family (no-decision or orphaned-renewal) with its own root-cause branch, decision_owner_vacancy_days computed, and a decision-process systemic fix \u2014 a named decision owner and a T-180 opt-out-calendar gate \u2014 with battlecards and price response explicitly refused.",
+      "assertions": [
+        "Scores both axes and prints them: decision-process at 3 or above with the markers named (stalled renewal opportunity C13, departed decision owner R1/R3 with no successor, no bilateral contact in the 60 days before the decision Z1), and competitive at 0 or 1",
+        "Refuses primary_reason = competitive-displacement because no replacement is confirmed by two independent sources and competitive_score is below 3, and stores the AE's claim in competitor_claimed instead of competitor",
+        "Codes primary_reason from the no-decision family \u2014 no-decision or orphaned-renewal \u2014 and never 'other', and never assigns failure mode 'undetectable' to a lapse",
+        "Computes decision_owner_vacancy_days from the last dated interaction with someone holding renewal decision authority, rather than leaving it blank or narrating it in prose",
+        "Proposes a decision-process systemic fix (a named renewal decision owner, a T-180 opt-out-calendar gate per R1, or a pre-wired approval path per R7) and explicitly refuses a competitive fix \u2014 no battlecard, no competitive enablement, no price response",
+        "Treats the AE's 'they went with a competitor' as a stated reason with its speaker and date, kept separate from the coded primary_reason, and records the divergence",
+        "Labels the record on the decision date rather than the renewal date, prints the opt-out deadline that governed, and ends with an Assumptions table and a seven-family Coverage Ledger with a confidence cap"
+      ],
+      "files": []
+    }
+  ]
+}

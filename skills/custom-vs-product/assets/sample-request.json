@@ -1,0 +1,67 @@
+{
+  "request": "Nightly close-out export with supplier-code translation",
+  "account": "Meridian Freight",
+  "as_of": "2026-08-27",
+  "loaded_rate": 150,
+  "account_arr": 980000,
+  "arr_at_stake": 240000,
+  "savability": 1.0,
+  "horizon_years": 3,
+  "drift": 0.15,
+  "upgrades_per_year": 4,
+  "band_uplift": 0.05,
+  "renewal_date": "2027-03-31",
+  "notice_period_days": 90,
+  "evidence_window_days": 60,
+  "revenue_contingent": false,
+  "term_years": 3,
+
+  "bespoke": {
+    "build_hours": 96,
+    "maintenance_h": 36,
+    "incident_h": 14,
+    "support_h": 10,
+    "eval_regression_h": 0,
+    "upgrade_tax_h": 5,
+    "third_party_cost_per_year": 0,
+    "withheld_feature_cost": 0
+  },
+
+  "general": {
+    "build_hours": 240,
+    "maintenance_h": 52,
+    "incident_h": 16,
+    "support_h": 12,
+    "eval_regression_h": 8,
+    "upgrade_tax_h": 4,
+    "third_party_cost_per_year": 0,
+    "withheld_feature_cost": 0,
+    "deploy_hours_per_account": 16
+  },
+
+  "generality_evidence": [
+    {"account": "Meridian Freight", "arr": 980000, "renewal": "2027-03-31", "tier": "G3",
+     "asked": "\"we need the close-out file in the drop at 06:00 with supplier codes already translated\" — Dana Osei, VP Ops, 2026-08-14",
+     "source": "request portal REQ-4412"},
+    {"account": "Northwind Logistics", "arr": 420000, "renewal": "2027-01-31", "tier": "G4",
+     "asked": "runs a nightly manual translation in a spreadsheet; no request filed",
+     "source": "usage telemetry + ticket #31908"},
+    {"account": "Cedar Rail", "arr": 260000, "renewal": "2026-12-15", "tier": "G3",
+     "asked": "\"the codes come out raw and finance has to remap them\" — Tomas Reyes, Controller, 2026-06-02",
+     "source": "request portal REQ-3980"},
+    {"account": "Halcyon Distribution", "arr": 150000, "renewal": "2027-07-01", "tier": "G2",
+     "asked": "asked for \"a better export\" in a QBR; job not stated",
+     "source": "QBR notes 2026-05-19"}
+  ],
+
+  "gates": {
+    "requires_fork": false,
+    "roadmap_owner": null,
+    "roadmap_increment_date": null,
+    "workaround_fidelity": 0.65,
+    "workaround_effort_ratio": 0.08,
+    "named_maintainer": "Jo Nkemdirim",
+    "sunset_review_date": "2027-06-30",
+    "rollback_within_sprint": true
+  }
+}

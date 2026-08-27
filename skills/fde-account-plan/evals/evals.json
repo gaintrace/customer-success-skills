@@ -1,0 +1,65 @@
+{
+  "skill_name": "fde-account-plan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write the technical account plan for Northwind. I've got a CSV of our integration inventory (exported from the connector admin, it has two title rows above the header), a Jira CSV of open defects, and a JSON dump of their environment config. Renewal is 5 Feb 2027.",
+      "expected_output": "A full technical account plan: files ingested without a re-export being requested, the renewal-critical technical facts stated above the architecture, an as-deployed mermaid diagram with owners on both sides, integration inventory with credential expiry and owners, a priced custom-work ledger, version and sunset state, a categorised risk register, scale headroom as a number and a date, a Coverage Ledger over the seven families with a confidence cap, and an Assumptions table.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied files, finds the real header row beneath the two title rows, and confirms any column mapping below 0.80 confidence before using those numbers",
+        "Asks for and records the data as-of date rather than treating the exports as current",
+        "Computes the opt-out deadline as renewal_date minus notice_period_days and dates every expiry, EOL and cutover against it rather than against 5 Feb 2027",
+        "States two or three renewal-critical technical facts above the architecture section, each with evidence, a resolve-by date and a named owner with their side",
+        "Produces a custom-work ledger with an annual carrying cost in dollars, a maintainer per item, a disposition per item, and the carrying cost as a share of ARR",
+        "Reports all seven signal families including the ones that came back clean, ends with a Coverage Ledger stating a coverage percentage and a confidence cap",
+        "Ends with an Assumptions table whose every row names a concrete consequence rather than 'may affect results'",
+        "Names no customer-success-platform vendor anywhere in the output"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "What technical debt are we carrying for Acme? I know there's a connector we wrote during the POC and I think someone built them a reporting job, but I don't have a list.",
+      "expected_output": "A discovery sweep across the seven hiding places, printing negatives as well as findings, then a priced ledger with dispositions, the carrying cost as a share of ARR, and the escalation decision that follows from the 5% threshold.",
+      "assertions": [
+        "Walks all seven hiding places for custom work and prints the ones that came back clean as explicit negative findings, not silence",
+        "Prices each item as annual carrying cost using maintenance, incident and upgrade-tax hours at a loaded rate, and states the interest rate against build cost",
+        "States the loaded hourly rate used and records it in the Assumptions table when it was not supplied, naming what would change if it is wrong",
+        "Assigns a disposition to every item from the ordered rule table (productise, generalise, migrate, own it, retire) with a date",
+        "Flags every item with no named maintainer, and does not accept a team name as an owner",
+        "Applies the 5%-of-ARR threshold and states whether disposition is a commercial or an engineering decision, labelling the threshold as a library convention rather than a measured benchmark",
+        "Does not sum arr_dependent across items as if the exposures were additive"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I'm the only person who knows how this deployment works and I'm going on leave for a month. What do I need to write down?",
+      "expected_output": "A handover pack: bus factor computed from authorship and incident history for both sides, the runbook in symptom-first order, the credential and sunset calendar with owners, the custom-work ledger with maintainers, and the escalation ladder with named humans.",
+      "assertions": [
+        "Computes bus factor from authorship and incident history rather than from the org chart, and reports our side and the customer's side as separate numbers that are never averaged",
+        "Identifies the customer-side bus factor as a churn risk with a 90 to 365 day lead time, distinct from our side being a delivery risk",
+        "Produces a runbook ordered symptom to first check to remediation to a named escalation, testable by an engineer who has never seen the account",
+        "Enumerates every credential, certificate and version end-of-life with a rotation owner and dates each against the opt-out deadline",
+        "Lists every custom item with what only the departing engineer knows about it, and assigns an interim maintainer by name",
+        "Marks anything undocumented as UNKNOWN — requires a named source, rather than reconstructing it from memory without labelling the inference"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "The customer wants us to build them a bulk-approve API and their upgrade is overdue. Draft what I send them.",
+      "expected_output": "An internal decision record plus a send-ready customer-facing block: the refusal with its reasoning and the nearest alternative, the upgrade window request with specific dates and named dependencies, and no internal assessment anywhere in the customer text.",
+      "assertions": [
+        "Emits the customer-facing text inside a fenced text block below the divider, formatted for an email client with no markdown headings, no pipe tables and no unfilled placeholders",
+        "States the refusal in the first line of that section, gives the reason in the customer's interest, and offers the nearest thing that can be done today",
+        "Commits no roadmap or fix date that a named owner has not agreed",
+        "Requests a specific upgrade window with concrete dates, names the customer-side person needed and for how long, and states the rollback duration as a tested number",
+        "Contains no carrying cost, interest rate, disposition language, risk band, bus factor, renewal exposure or assessment of a named person in the customer-facing block",
+        "Keeps the internal decision record above the divider and states explicitly that everything above it must not be forwarded",
+        "Avoids the banned phrasebook — no 'just checking in', 'touching base', 'circling back', 'reaching out' or 'we value your partnership'"
+      ],
+      "files": []
+    }
+  ]
+}

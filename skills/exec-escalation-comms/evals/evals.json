@@ -1,0 +1,61 @@
+{
+  "skill_name": "exec-escalation-comms",
+  "description": "Evaluation prompts for the escalation-note skill. Each prompt is written the way a CSM or VP actually types it, under time pressure, with incomplete information. Assertions test the mechanisms the skill exists to enforce — the honest unknown, the commitment gates, the firewall, the opt-out calendar and the follow-through schedule — not the prose.",
+  "evals": [
+    {
+      "id": "outage-cause-unknown",
+      "prompt": "We had an outage overnight. Northwind's nightly reconciliation jobs didn't run — three of them failed at 01:04 and they're still failing. I don't know why yet, engineering is on it. Their ops lead has already emailed twice and I think their CTO is now involved. Write the note to their exec.",
+      "assertions": [
+        "Emits a customer-facing block inside a fenced ```text code block, below the unmissable CUSTOMER-FACING divider, with no unfilled placeholders such as [Name] or [Date]",
+        "States the root cause as explicitly unknown and refuses to speculate, rather than offering a probable cause — and pairs the unknown with a specific clock time by which the cause will be known",
+        "Does not delay the note pending diagnosis: the note is written to go out now, and the skill states that waiting for certainty is the more damaging choice",
+        "Commits to an exact next-update clock time in the customer's timezone, with an explicit statement that the update is sent whether or not there is news",
+        "Lists actions already taken with timestamps, kept in a separate section from actions committed, and does not merge the two",
+        "Contains no internal language anywhere in the customer block — no health score, risk band, ARR at risk, forecast, save play, war room, coverage tier, 'P1' or 'sev-2'",
+        "Names no individual engineer as the cause, and states the cause ownership in the active voice with 'we' as the actor rather than a passive construction such as 'an issue occurred'",
+        "Schedules the follow-through with dates: the closure note within one business day of resolution, and the written review within five business days"
+      ]
+    },
+    {
+      "id": "missed-date-ungated-commitment",
+      "prompt": "I need to tell Meridian we're going to miss the 22 August SSO date. Engineering thinks they can do 12 September but nobody's actually confirmed that yet. Can you draft it? I want to promise them the new date so they stop chasing.",
+      "assertions": [
+        "Refuses to state 12 September as a committed date in the customer note while no named owner has agreed it in writing, and names the gate it failed (owner has not agreed)",
+        "Prints the stripped commitment above the divider with the gate it failed and who must agree it before it can be added, rather than silently omitting it or softening it to a vague phrase",
+        "Substitutes a decision date the sender owns — for example an answer from the named engineering owner by a stated date, including if the answer is no — instead of an unowned delivery date",
+        "Cites R19 (no date you do not own) as the reason, and identifies 'it's on the roadmap' style phrasing as the failure mode",
+        "States that the internal exec brief is written first, because it is where the commitment gets agreed and there is otherwise nothing for the gates to check against",
+        "Recommends a phone call before the written note and before the missed date passes, rather than the note being the first notification (C26)",
+        "The customer block quantifies what the slip costs the customer in their own terms, not in our delivery terms"
+      ]
+    },
+    {
+      "id": "price-increase-opt-out-window",
+      "prompt": "We're putting list prices up 7% effective 1 March. I've got about 40 accounts to tell. Northwind renews 5 Feb with 90 days notice, Delta renews 30 Nov with 60 days notice, and I don't have the notice period for Acme. Draft the letter and tell me when to send it.",
+      "assertions": [
+        "Computes the opt-out deadline per account as renewal_date minus notice_period_days, and gates the announcement date on it — not on the renewal date alone (R1)",
+        "Flags Acme as UNKNOWN requiring the notice period from the signed contract, and does not substitute a default or an industry-average notice period to fill the gap",
+        "Identifies at least one account whose opt-out deadline constrains the announcement date, and recommends moving the effective date rather than shortening the notice",
+        "States a minimum notice period for a price increase with a named source, rather than asserting a number without attribution",
+        "Requires the note to reach the billing contact and the economic buyer, not the champion alone",
+        "The customer block states the account's own new number in the first or second sentence, with no cushioning preamble before it",
+        "Contains no commercial ask, negotiation opening, or apology for the price decision, and recommends calling the top-tier accounts a day before the wider send rather than the same hour",
+        "Points at scripts/update_clock.py for the per-account notice arithmetic rather than computing it in prose"
+      ]
+    },
+    {
+      "id": "internal-vs-customer-firewall",
+      "prompt": "Our VP wants a one-pager on the Northwind situation for exec staff, and I also need the note that goes to Northwind. Northwind is $620k, health has been red for three weeks, we've got them in the save-play queue, and honestly their new ops director has been the blocker on everything. Can you write both?",
+      "assertions": [
+        "Produces two distinct artifacts and states that the customer note is written from source facts rather than derived by deleting language from the internal one",
+        "Keeps ARR at risk, the red health band, the save-play status and the risk language entirely inside the internal version, with none of it appearing in the customer block in any wording (R18)",
+        "Excludes any assessment of the named ops director from the customer-facing text, and does not characterise any named person on either side as a blocker in customer-facing wording",
+        "The internal version carries exactly one ask that only an executive can satisfy, plus a decision date, and states that an escalation with no ask and no decision date is a notification",
+        "The internal version states the ARR-at-risk scenario — full churn versus a downsell of a stated amount — rather than a single undifferentiated figure",
+        "Computes and shows the opt-out deadline with days remaining in the internal version",
+        "Includes a coverage ledger over the seven signal families with a coverage percentage and a confidence level that does not exceed what coverage permits (R23)",
+        "Includes an Assumptions table with a concrete consequence stated for each assumption, or an explicit statement that nothing was assumed"
+      ]
+    }
+  ]
+}

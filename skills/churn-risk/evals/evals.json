@@ -1,0 +1,112 @@
+{
+  "skill_name": "churn-risk",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Which of my renewals in the next 90 days are at risk? I've dumped three exports in here \u2014 the CRM one has a couple of title rows above the header and the ARR column came through as text.",
+      "expected_output": "A ranked risk assessment over the renewal window: the files ingested without a re-export being requested, a bottom line with ARR at risk, a priority table ranked by Action Priority (not raw score), account cards for everything At Risk and above, all seven signal families reported including clean and missing ones, a Coverage Ledger with a confidence cap, and an Assumption Register for anything defaulted.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied files rather than asking the user to re-export or reformat them",
+        "Finds the real header row beneath the title rows and parses the text-formatted ARR column as money, confirming any column mapping below 0.80 confidence before scoring on it",
+        "Asks for and records the data as-of date rather than treating the export as current",
+        "Computes and uses the opt-out deadline (renewal_date minus notice_period_days), not the renewal date alone",
+        "Ranks by ARR-weighted exposure times urgency times savability, with the arithmetic shown, not by raw score",
+        "Reports all seven signal families for each account, including families that came back clean, and ends with a Coverage Ledger with a coverage percentage and a stated confidence cap",
+        "Ends with an Assumption Register table whose every row names a concrete consequence, not 'may affect results'",
+        "Prints the four required reads on every account card \u2014 the calendar three-tuple (C22), negotiation friction (C24), the first-term day count and activation date (C23), and the support-silence count (C21) \u2014 writing 'UNKNOWN \u2014 requires <source>' where a source is absent rather than omitting the row",
+        "Runs the onboarding gate before applying the renewal-window filter, so a first-term account past day 60 with no activation event appears in the assessment even though its renewal falls outside the 90-day window (C23)"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Acme's health score is 82 and they're renewing in six weeks. My gut says something is wrong. Can you check?",
+      "expected_output": "A single-account assessment that specifically tests the false-green mechanisms: buying-team usage separated from aggregate, champion liveness, override floors, and compound patterns. Should either confirm the green read with evidence or identify the masking.",
+      "assertions": [
+        "Separates buying-team usage from aggregate usage and reports both",
+        "Explicitly checks champion liveness (bounce, directory, title, channel membership)",
+        "Evaluates every override floor and shows which fired with evidence",
+        "Tests all fourteen compound patterns, naming Buyer disconnect specifically",
+        "States what would change the assessment in 2-3 observable events",
+        "Marks any unavailable signal family as 'UNKNOWN \u2014 requires X' rather than treating it as clean, and caps confidence at what the Coverage Ledger permits",
+        "Names no customer-success-platform vendor anywhere in the output, referring to the category generically ('your CS platform', 'a CS platform's scorecard') when it needs to point at where a score lives",
+        "Reports acceptance latency, reschedule count over 90 days, and who actually accepted the last invitation as a named person and role \u2014 and scores the calendar before scoring anything said in the meetings (C22)",
+        "States the negotiation friction on the last close as contested, routine or frictionless, and does not treat an uncontested renewal as corroboration of the healthy score (C24)"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I only have CRM and billing data \u2014 no product analytics. Can you still tell me who's at risk?",
+      "expected_output": "A degraded but useful Low-confidence assessment with explicit renormalisation over the available families and a named blind spot \u2014 or, only under 40 percent coverage, a gap list instead of a score with the specific sources that would unlock it.",
+      "assertions": [
+        "Degrades rather than refusing \u2014 still produces the commercial and billing family analysis in full",
+        "Computes coverage across the seven families and states the percentage",
+        "Renormalises weights over measured families rather than scoring missing families as zero risk",
+        "Caps confidence to Low or declares Insufficient, matching the stated criteria",
+        "Names which specific families are missing and what those gaps typically hide",
+        "Does not substitute an industry benchmark for the missing product-usage data",
+        "Records the reduced-coverage run and any defaulted weight profile in the Assumption Register"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Northwind just switched auto-renew off but everything else looks totally fine \u2014 usage is up, NPS is 9, no open tickets. Is this a false alarm?",
+      "expected_output": "The override floor must dominate. Score forced to Critical (85) regardless of the healthy weighted score, with the reasoning shown, plus the Exit preparation disconfirming test run before escalating.",
+      "assertions": [
+        "Applies the auto-renew override floor and states that it overrides the weighted score",
+        "Shows both the weighted score and the post-floor score explicitly",
+        "Runs the disconfirming test \u2014 checks whether the change was our own re-papering \u2014 before escalating",
+        "Surfaces the contradiction between healthy usage/sentiment and the commercial action, and applies the stated tiebreak order",
+        "Recommends the Competitive re-bid play with owner and 24-hour verification step",
+        "Does not average the commercial signal against the healthy signals",
+        "Keeps the artifact internal \u2014 the risk score, band, ARR at risk, pattern name and play name appear in no customer-facing wording, and any outreach draft is delegated to the customer-voice standard rather than lifted from this document"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Good news for once \u2014 Zeta renewed early, no pushback at all, signed the same order form we sent. They've been quiet all year, barely any tickets, and I haven't had a meeting with their VP since March. Can you close them out as retained and tell me where to upsell?",
+      "expected_output": "A refusal to read the easy renewal as health. The account is scored as a Frictionless renewal on a low-engagement base: banded no lower than Watch, the pattern named, a next-cycle risk record opened at signature, the zero-ticket year scored as disengagement rather than stability, and the expansion ask withheld under the health gate with the withholding printed.",
+      "assertions": [
+        "Names the Frictionless renewal compound pattern and states that zero negotiation events on a low-engagement account is a risk combination, not a clean outcome (C24)",
+        "Does not band the account Secure \u2014 the frictionless band floor of Watch is applied and stated, with the weighted score and the post-floor score both shown",
+        "Scores the near-zero ticket volume as risk (U-shaped support sub-score, 40 not 0) rather than as a stable account, and tests the Quiet quit pattern before accepting the quiet as resolution (C21)",
+        "Fills the negotiation-friction field explicitly as 'frictionless' and the calendar three-tuple, rather than omitting them because the renewal already closed",
+        "Refuses the upsell request and prints the withholding with its rule number (R8), rather than silently dropping it",
+        "Recommends the Engagement proof play with an owner and a date \u2014 one economic-buyer meeting inside 60 days whose purpose is that the buyer states the objective and the number",
+        "Opens a risk record for the next renewal dated from the signature, not from T-180 of the next cycle"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Don't worry about Epsilon, they're only three months in and their renewal isn't until next June. Just give me the accounts renewing this quarter.",
+      "expected_output": "The renewal-window scope is honoured, but the onboarding gate runs first and pulls Epsilon in anyway: day 94 of the first term with the activation event never fired fires Failed launch now, not at T-90. The renewal plan for that account is withheld and an implementation restart is recommended instead.",
+      "assertions": [
+        "Runs the onboarding gate before the renewal-window filter and includes the first-term account despite its renewal falling outside the requested window (C23)",
+        "Prints days since contract start and the activation event as a date or the literal NEVER for every first-term account",
+        "Fires the Failed launch pattern at the day-60 gate rather than deferring it to the renewal window, and says so explicitly",
+        "Refuses to write a renewal plan for the account whose activation event has never fired, prints 'Renewal plan status: withheld', and names the milestone that unlocks it (C23)",
+        "Recommends the Implementation restart play with a re-baselined date, a written mutual commitment, an owner and a date \u2014 not a renewal-prep handoff",
+        "Still returns the requested this-quarter renewal list; the gate adds an account rather than replacing the answer"
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Northwind's usage is fine and the last QBR went well, everyone was positive. Their VP has moved our monthly twice now and sent his analyst instead the time before. Am I overthinking it?",
+      "expected_output": "The calendar fires independently of usage. Two consecutive reschedules by the economic buyer applies the 60 floor regardless of the healthy usage read, acceptance latency and who-accepts are scored, and the recommended action is the calendar escalation within five working days.",
+      "assertions": [
+        "Applies the two-consecutive-buyer-reschedules floor of 60 and states explicitly that it fires with no usage decline required and that healthy usage does not offset it (C22)",
+        "Scores and prints all three calendar fields \u2014 acceptance latency against the account's own baseline, reschedule count over 90 days, and who accepts, named with their role",
+        "Treats acceptance delegated to an analyst outside the buying centre as a scored withdrawal signal rather than as attendance",
+        "Weights the calendar record above the positive QBR sentiment and names the tiebreak rule it applied",
+        "Runs the innocent explanations first \u2014 leave, quarter-end, an assistant now triaging \u2014 before escalating",
+        "Recommends the Calendar escalation play: the third invitation comes from a VP with a specific reason to attend, inside five working days, with the failure condition named"
+      ],
+      "files": []
+    }
+  ]
+}

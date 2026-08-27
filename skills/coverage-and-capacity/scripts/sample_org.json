@@ -1,0 +1,95 @@
+{
+  "as_of": "2026-08-28",
+  "currency": "USD",
+  "_note": "Worked example for capacity.py. Numbers are illustrative and internally consistent with references/capacity-math.md section 7. Replace every value with your own before quoting anything from the output.",
+
+  "csm": {
+    "calendar_hours": 2080,
+    "pto_hours": 160,
+    "sick_hours": 40,
+    "internal_load_hours": 627,
+    "realisation_factor": 0.85,
+    "ote": 140000,
+    "loading_factor": 1.30
+  },
+
+  "finance": {
+    "subscription_gross_margin": 0.81,
+    "arr_multiple": 5.0,
+    "coverage_share_of_margin": 0.15
+  },
+
+  "ramp": {
+    "months_to_full": 6,
+    "mean_productivity": 0.45
+  },
+
+  "segments": [
+    {
+      "name": "Enterprise",
+      "coverage_model": "named",
+      "accounts": 48,
+      "arr": 32000000,
+      "current_fte": 4.0,
+      "complexity_multiplier": 1.30,
+      "hours_basis": "measured",
+      "reactive_hours_per_account_per_year": 12.0,
+      "onboarding_hours_per_new_account": 40.0,
+      "new_accounts_per_year": 8,
+      "motions": [
+        { "name": "Executive business review", "instances_per_year": 4, "hours_each": 8.0 },
+        { "name": "Operational cadence call", "instances_per_year": 8, "hours_each": 1.25 },
+        { "name": "Success plan refresh", "instances_per_year": 4, "hours_each": 2.0 },
+        { "name": "Renewal motion", "instances_per_year": 1, "hours_each": 5.5 },
+        { "name": "Async value snapshot", "instances_per_year": 2, "hours_each": 1.25 },
+        { "name": "Stakeholder map refresh", "instances_per_year": 2, "hours_each": 1.5 },
+        { "name": "Product feedback submission", "instances_per_year": 4, "hours_each": 0.5 }
+      ]
+    },
+    {
+      "name": "Mid-Market",
+      "coverage_model": "named",
+      "accounts": 210,
+      "arr": 18900000,
+      "current_fte": 6.0,
+      "complexity_multiplier": 1.20,
+      "hours_basis": "default",
+      "reactive_hours_per_account_per_year": 6.0,
+      "onboarding_hours_per_new_account": 20.0,
+      "new_accounts_per_year": 34,
+      "motions": [
+        { "name": "Executive business review", "instances_per_year": 2, "hours_each": 8.0 },
+        { "name": "Operational cadence call", "instances_per_year": 4, "hours_each": 1.25 },
+        { "name": "Success plan refresh", "instances_per_year": 2, "hours_each": 2.0 },
+        { "name": "Renewal motion", "instances_per_year": 1, "hours_each": 3.0 },
+        { "name": "Async value snapshot", "instances_per_year": 2, "hours_each": 1.25 },
+        { "name": "Stakeholder map refresh", "instances_per_year": 1, "hours_each": 1.5 },
+        { "name": "Product feedback submission", "instances_per_year": 2, "hours_each": 0.5 }
+      ]
+    },
+    {
+      "name": "Scale",
+      "coverage_model": "pooled",
+      "effective_hours_override": 1122,
+      "accounts": 1240,
+      "arr": 14880000,
+      "current_fte": 3.0,
+      "complexity_multiplier": 1.0,
+      "hours_basis": "default",
+      "reactive_hours_per_account_per_year": 2.0,
+      "onboarding_hours_per_new_account": 4.0,
+      "new_accounts_per_year": 120,
+      "motions": [
+        { "name": "Renewal motion", "instances_per_year": 1, "hours_each": 0.5 },
+        { "name": "Async value snapshot", "instances_per_year": 4, "hours_each": 0.3 }
+      ]
+    }
+  ],
+
+  "uncovered": {
+    "accounts": 61,
+    "arr": 640000,
+    "arr_renewing_180d": 214000,
+    "earliest_opt_out_deadline": "2026-10-02"
+  }
+}

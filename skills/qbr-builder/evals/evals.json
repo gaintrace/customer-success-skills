@@ -1,0 +1,100 @@
+{
+  "skill_name": "qbr-builder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I've got a QBR with Northwind Logistics next Thursday. Here's the usage export and the ticket export — build me the deck.",
+      "expected_output": "The five-gate qualification verdict first, one batched tappable question set for anything the files and cs-context do not answer, then the internal plan (Parts A1-A11) with the shortfall section ahead of the value section, the deck build spec, and the champion's one-pager as a separate artifact.",
+      "assertions": [
+        "Runs the five-gate qualification and prints the verdict (RUN / SKIP / REPLACE) before building any slide",
+        "Runs ../cs-context/scripts/ingest.py on the supplied exports and confirms any column mapping below 0.80 confidence before using it",
+        "Asks the missing setup questions as a single batched AskUserQuestion call with a recommended option first, rather than one at a time in prose",
+        "Does not ask for ARR, renewal date, notice period or segment if .agents/cs-context.md supplies them",
+        "The 'What Fell Short' section (A5) appears before the 'Value Case' section (A6) in the output, and the deck build spec orders the shortfall slide (4) before the value slide (6)",
+        "Prints the computed fields 'Milestones missed: <n> of <m>' and 'Pre-wire: <n>/<m> WIRED · deadline <date>' in the Bottom Line block",
+        "Prints the data as-of date and states the value-claim band (Attested / Evidenced / Indicative / Not presentable)",
+        "Ends Part A with a Coverage Ledger naming all seven signal families, including the missing ones",
+        "Emits a PART F champion one-pager as a separate artifact in addition to the deck build spec",
+        "Names no competing customer-success platform product anywhere in the output; source citations are neutral (practitioners, Benchmarkit, SaaS Capital, Pavilion, 6sense) or absent"
+      ],
+      "files": ["usage_export.csv", "tickets_export.csv"]
+    },
+    {
+      "id": 2,
+      "prompt": "Their CFO is asking what they get for the $180k. Give me the ROI slide. I don't have a before number — can you just estimate what their close cycle used to be?",
+      "expected_output": "A refusal to invent the baseline, the band set to Not presentable, unit metrics in place of a dollar figure, and a named ask for who can supply the baseline and by when.",
+      "assertions": [
+        "Refuses to estimate or reconstruct the baseline as if the customer supplied it",
+        "Sets the value-claim band to 'Not presentable' and emits no dollar figure",
+        "Writes the gap as 'UNKNOWN — requires baseline from <named person>' rather than omitting the row or substituting a benchmark",
+        "Offers the baseline ladder, including the option of a reconstructed pre-period with the customer's written agreement, which caps the band at Evidenced",
+        "Marks any line whose baseline was not agreed before the period started with the literal tag 'retrospective — weaker evidence' and orders it below every agreed line",
+        "States attribution as a factor with a level (A1-A4) and never assumes 1.0",
+        "Records the assumption in an Assumptions table with columns '# | Assumption | Why it was needed | If wrong' and a concrete consequence in each row"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "QBR with Acme is done. Write the follow-up email. Health score dropped to 41 and there's about $148k at risk, so make sure they know we're taking it seriously.",
+      "expected_output": "An internal plan carrying the risk framing, and a send-ready customer recap in a fenced text block below the divider that contains none of it.",
+      "assertions": [
+        "The customer-facing recap sits inside a fenced ```text block below the CUSTOMER-FACING divider",
+        "No health score, risk band, 'at risk', ARR-at-risk figure, forecast category or save-play language appears anywhere in the customer-facing block",
+        "The miss paragraph appears before the agreed list and before any number in the recap",
+        "Contains no unfilled placeholders such as [Name] or <Account> inside the fence",
+        "Formatted for an email client: plain text, blank lines between paragraphs, bullet characters, no markdown headings, no pipe tables, no ** bold",
+        "Avoids the banned phrasebook — no 'just checking in', 'touching base', 'circling back', 'hope you're well', 'we value your partnership', 'drive adoption', 'leverage'",
+        "Every commitment in the recap carries a named person and a calendar date",
+        "The internal risk framing is translated into an observable question or a dated commitment rather than softened"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "We do QBRs with all 40 accounts every quarter because that's the process. Is that right?",
+      "expected_output": "The qualification gate applied as a policy question, with the replacement artifacts for each failing gate and the cost of the ceremony priced out.",
+      "assertions": [
+        "Applies the five-gate qualification and states that a review earns its place or is replaced",
+        "Names the specific replacement for each failed gate (async one-page value review, baselining working session, champion working session, escalation review, renewal-prep)",
+        "Prices the meeting in hours and dollars on both sides",
+        "Does not claim that holding business reviews causes renewals, and names the selection confound if the correlation is mentioned",
+        "Cites Lincoln Murphy's position on QBRs not being required, and cites no CS platform vendor as a source"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Northwind QBR is Thursday. We hit the close-cycle goal but missed the September integration by six weeks and Legal never started. Their FP&A team pulled the close numbers themselves in August — we agreed that baseline back in January. Jamie said on the 14th 'we took three and a half days out of the close'. Build it.",
+      "expected_output": "A deck whose shortfall section is generated and placed before the value section, one headline number carrying Jamie's quote, agreed lines ordered above retrospective ones, and every supporting metric moved to an appendix.",
+      "assertions": [
+        "The shortfall section is emitted before the value section, and it contains the missed integration and the unstarted Legal rollout with an owner and a date on each",
+        "The shortfall section carries no commercial ask (R11) and apologises at most once (R20)",
+        "Exactly one headline number appears in the value slot; every other metric appears under 'Appendix V — supporting metrics' rather than beside the headline",
+        "The headline number's row carries a Customer-stated cell containing the quote 'we took three and a half days out of the close', the speaker (Jamie / J. Alvarez) and the date 2026-08-14",
+        "Every benefit row has a non-empty 'Agreed?' cell reading either 'agreed <date>' or 'retrospective — weaker evidence'; the close-cycle line is agreed, and no retrospective row appears above an agreed row",
+        "Any benefit line without a customer-stated quote carries the literal tag 'vendor-asserted' and does not appear as the headline",
+        "Prints the computed benefit-line mix line: '<n> agreed · <n> retrospective · <n> customer-stated · <n> vendor-asserted'",
+        "Prints 'Milestones missed' as at least 1 and does not emit the deck build spec with an empty shortfall section"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "The EBR is next week and we need their VP Finance to approve the Legal extension. I haven't spoken to the VP or to their procurement lead about it yet. What do I send Jamie for his internal meeting?",
+      "expected_output": "A pre-wire ledger that refuses to carry the unwired approval into the room, plus the champion's internal one-pager as a distinct artifact in Jamie's voice with a populated credit slot.",
+      "assertions": [
+        "Emits an A4 Pre-Wire Ledger with one row per decision per person whose agreement it needs, each carrying a status of WIRED, PARTIAL or UNWIRED",
+        "Marks the VP Finance and the procurement lead UNWIRED, and states that the deck is not emitted with an UNWIRED position — the item is pre-wired by the computed deadline or dropped from the agenda, and says which",
+        "Prints the computed pre-wire deadline as the meeting date minus 3 business days, and a 'wired: <n>/<m>' count",
+        "Emits a PART F champion one-pager as a distinct artifact in a fenced text block, written in the champion's first person for their leadership, not a copy of our deck",
+        "Part F contains a credit slot naming what the customer's own team achieved, with their team as the grammatical subject of the sentence",
+        "No sentence in Part F has our company or our product as its grammatical subject, and no health score, risk band or forecast language appears in it (R18)",
+        "Part F carries exactly one number, and that number is one the champion has stated; where no customer-stated number exists it carries the unit metric and an ask instead",
+        "States that where no credit line can be sourced, Part F is not emitted and the pre-call question 'what do you want to be able to say your team did this quarter?' is asked first",
+        "Part F is addressed to the champion alone, and its shortfall block appears before its ask"
+      ],
+      "files": []
+    }
+  ]
+}

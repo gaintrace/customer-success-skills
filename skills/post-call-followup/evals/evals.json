@@ -1,0 +1,87 @@
+{
+  "skill_name": "post-call-followup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Just got off a call with Northwind Logistics. Here's the Fireflies transcript. Priya said Finance can start on the 15th instead of waiting for the Q4 freeze, Tom said he'd send the three Finance user emails, and Priya said 'we'll get the pilot confirmed with Marcus at some point next week'. I asked for an intro to their new VP Finance and she moved on. Write up the follow-up.",
+      "expected_output": "All three artifacts in order — internal note, CRM diff and triggers, then the customer recap inside a copy block below the divider — with every commitment graded, the unanswered intro request logged in bucket 6, every central-issue line carrying an exchange count, and an Assumption Register recording the name and date assigned to Priya's Grade B commitment.",
+      "assertions": [
+        "Emits the internal call note (Section A) before the customer recap (Section C)",
+        "Grades Priya's 'at some point next week' as Grade B and assigns a named person and a calendar date, with the assumption stated in the recap so she can correct it",
+        "Logs the unanswered VP Finance intro request in bucket 6 (asked-for and not given) rather than dropping it",
+        "Emits all ten internal-note blocks, including block 9 (open questions and thin answers) and block 10 (not written down anywhere else); neither is omitted",
+        "Records an integer `exchanges` on every block-2 row and every block-9 row; no block-2 row carries `exchanges` below 2 and no cell is left blank",
+        "Every line with `exchanges` = 1 sits in block 9 with a non-empty Follow-up-to-ask cell containing a literal question to say out loud (for example 'And what else needs to happen before Marcus can confirm the pilot?'), not a topic such as 'follow up on the pilot'",
+        "No `exchanges` = 1 line appears as a finding in block 2, as evidence in the CRM diff, or under 'Decided today' in the customer recap",
+        "Block 10 is either populated with context that exists in no system, or prints the explicit line 'None — blocks 1–9 carry everything I know about this account'; it is never silently absent",
+        "Section C sits inside a ```text fence below a CUSTOMER-FACING divider, with no pipe tables, no markdown headings, no ** bold, and no unfilled [placeholder] inside the fence",
+        "Prints all seven signal families in the internal note, with untouched families marked 'No change — not covered on this call'",
+        "Ends with an Assumptions table using the columns # | Assumption | Why it was needed | If wrong, each row naming a concrete consequence",
+        "Uses generic category language for tooling (\"your CS platform\", \"whichever platform holds your playbooks\") and names no competing customer-success platform product anywhere in the output"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I had a renewal call with Orbital Systems yesterday. $196k, renews 31 Jan 2027, 60-day notice. The VP Eng said they're consolidating tooling across engineering in Q1. Health score has been sliding. Draft the recap email.",
+      "expected_output": "A recap led by the 2 Dec opt-out deadline with no risk, health or forecast language anywhere in the customer-facing block, plus an internal section carrying the consolidation trigger, the same-day save-play routing, and the unexplored reason behind the consolidation logged as a thin answer.",
+      "assertions": [
+        "Leads the customer recap with the opt-out deadline (2026-12-02), not the renewal date",
+        "The customer-facing block contains no health score, risk band, ARR-at-risk, forecast category or save-play language in any wording",
+        "Fires the consolidation trigger to save-play plus a forecast review, with one named owner and a same-day due date — not an alert to the account team",
+        "Logs the consolidation statement verbatim in the internal note and in the CRM diff evidence column, and fires its trigger even though it was said once — the stated commercial decision is an R2 event, not a thin answer",
+        "Records the unexplored reason behind the consolidation (who is running it, what triggered it, what it means for our line item) in block 9 with `exchanges` = 1 and a verbatim follow-up question, rather than inferring it in block 2",
+        "Prints days since the last written internal note on this account in the note header, or `UNKNOWN — requires the account's interaction history` where no history is supplied",
+        "Does not move opportunity.close_date; any forecast category change carries a written explanation",
+        "States the recap latency target as same day for a renewal call"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Call went badly. Meridian Retail, third sync outage this year, Carla was furious. I need to send something.",
+      "expected_output": "Bad-call mode: internal note and escalation first, a named internal approver and a cool-down before the recap, and a customer block that acknowledges in her words without defending the factual record.",
+      "assertions": [
+        "Writes the internal note and the escalation record before drafting any customer text",
+        "Names an internal approver and a 2–4 hour cool-down, with the recap still sent inside 24 hours",
+        "The customer block opens by reflecting Carla's own account of the failures and contains no defence, no 'however', and no technical explanation of the root cause",
+        "Every remedy carries a named person, a calendar date and an observable proof the customer will see",
+        "Contains no second apology for the same incident and no new ask",
+        "Emits block 10 even in bad-call mode — what is known about this account's outage history that exists in no ticket or note, or the explicit 'None' line",
+        "Section C is emitted inside a ```text fence below the CUSTOMER-FACING divider"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Here's a CSV export of my calls and commitments from last quarter — it's got a couple of title rows at the top and the dates are all over the place. Can you write up the follow-up for the Halcyon QBR row?",
+      "expected_output": "The file run through ingest.py first, low-confidence column mappings confirmed before use, the export's as-of date requested and recorded, and a partial artifact with a coverage figure rather than a refusal.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before using any of its numbers",
+        "Confirms every column mapping below 0.80 confidence, and any contact-name or date column at any confidence, before using it",
+        "Asks for the export's as-of date and records it in the header table",
+        "Computes days since the last written internal note from the export where an interaction history exists, and otherwise writes `UNKNOWN — requires the account's interaction history` rather than leaving the field blank",
+        "Produces a partial artifact with a coverage figure and a capped confidence rather than refusing because the file is messy",
+        "Asks at most four questions, batched into a single tappable ask with a labelled recommended option first, and asks nothing that .agents/cs-context.md already answers",
+        "Records every default it ran on in the Assumptions table with a concrete consequence"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Quick check-in with Halcyon this morning. I haven't logged anything on this account since the QBR in early August — there have been two Slack threads and a call I never wrote up. On the call Marcus said 'we're rethinking how the data team uses this' and I didn't push on it. What do I need to do?",
+      "expected_output": "An internal note produced regardless of the user asking only what to do, with the documentation gap computed and its backlog written out, and Marcus's one-exchange statement routed to block 9 as an open question with the literal follow-up rather than promoted into a finding.",
+      "assertions": [
+        "Produces an internal call note even though the user asked only what to do — no mode emits nothing for the account record",
+        "Computes days since the last written internal note, prints it in the note header, and flags it as past the 14-day limit",
+        "Block 10 carries one row per unwritten interaction — the two Slack threads and the unlogged call — each with a named owner and a write-up due date",
+        "Anything from those interactions that can no longer be reconstructed is written `UNKNOWN — requires <person>` rather than reconstructed from memory",
+        "Grades Marcus's 'rethinking how the data team uses this' as `exchanges` = 1 and places it in block 9 as an open question, not in block 2 as a finding and not in the CRM diff as evidence",
+        "The block-9 Follow-up-to-ask cell contains the literal words to say ('What are they rethinking — the tool, the workflow, or the team that owns it?'), not a topic such as 'explore the data team's plans'",
+        "Every thin-answer follow-up and every unwritten interaction becomes a dated task with exactly one named owner in the follow-through schedule",
+        "The customer-facing recap contains no reference to the documentation gap, the thin answer or any internal assessment"
+      ],
+      "files": []
+    }
+  ]
+}

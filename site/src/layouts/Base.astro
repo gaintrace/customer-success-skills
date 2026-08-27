@@ -1,0 +1,169 @@
+---
+import '../styles/global.css';
+import { SITE_URL, BASE, SITE_NAME, SITE_TAGLINE, SITE_FULL_NAME, GITHUB_URL, CONTRIBUTOR, LICENSE, href } from '../lib/site.js';
+import GitHubIcon from '../components/GitHubIcon.astro';
+
+const {
+  title,
+  description,
+  ogTitle,
+  jsonld = [],
+  noindex = false,
+  mdTwin,
+} = Astro.props;
+
+// Self-referencing absolute canonical. Astro.url.pathname already carries `base`.
+// Normalise to a trailing slash so canonical, og:url and the sitemap agree exactly —
+// build.format is 'directory', so every page is served at a directory URL.
+const path = Astro.url.pathname;
+const canonical = new URL(/\.[a-z0-9]+$/i.test(path) ? path : path.replace(/\/?$/, '/'), SITE_URL).href;
+const ogImage = `${SITE_URL}${BASE}/og.png`;
+const graph = Array.isArray(jsonld) ? jsonld : [jsonld];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="author" content="Customer Success Skills contributors" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_FULL_NAME} />
+    <meta property="og:title" content={ogTitle ?? title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${SITE_FULL_NAME} — 30 open-source agent skills for churn, renewals and retention`} />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle ?? title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#fbf6e9" />
+
+    <link rel="sitemap" href={href('/sitemap-index.xml')} />
+    <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate" type="text/plain" href={href('/llms.txt')} title="llms.txt" />
+    {mdTwin && <link rel="alternate" type="text/markdown" href={mdTwin} title="Markdown source" />}
+
+    {graph.map((node) => (
+      <script type="application/ld+json" set:html={JSON.stringify(node)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <p class="visually-hidden" role="status" aria-live="polite" id="copy-status"></p>
+
+    <header class="masthead">
+      <div class="wrap masthead__in">
+        <a class="brand" href={href('/')}>
+          <span class="brand__mark">CS</span>
+          <span>Customer&nbsp;Success&nbsp;Skills</span>
+          <span class="brand__for">{SITE_TAGLINE}</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a class="nav__hide" href={href('/skills/')}>All&nbsp;30&nbsp;skills</a>
+          <a class="nav__hide" href={href('/#standard')}>Evidence&nbsp;standard</a>
+          <a class="nav__hide" href={href('/#install')}>Install</a>
+          <a class="is-cta" href={GITHUB_URL} rel="noopener"><GitHubIcon size={14} />GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <div class="wrap">
+        <div class="foot__grid">
+          <div>
+            <h2>Open source</h2>
+            <p
+              style="font-family: var(--serif); font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em; margin: 0;"
+            >
+              {LICENSE} licensed
+            </p>
+            <p class="foot__by">
+              Free to use, fork, and sell services with. Contributions welcome — see <a
+                href={`${GITHUB_URL}/blob/main/CONTRIBUTING.md`}
+                rel="noopener">CONTRIBUTING</a
+              >.
+            </p>
+            <p class="foot__by" style="margin-top: .9rem">
+              <span class="mono-sm muted">Contributors:</span>{' '}
+              <a href={CONTRIBUTOR.url} rel="noopener">{CONTRIBUTOR.name} ↗</a>
+            </p>
+          </div>
+          <div>
+            <h2>Library</h2>
+            <ul>
+              <li><a href={href('/skills/')}>All 30 skills</a></li>
+              <li><a href={href('/#chains')}>Common chains</a></li>
+              <li><a href={href('/#standard')}>Evidence standard</a></li>
+              <li><a href={href('/#install')}>Install</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Source</h2>
+            <ul>
+              <li><a href={GITHUB_URL} rel="noopener">Repository ↗</a></li>
+              <li><a href={`${GITHUB_URL}/blob/main/README.md`} rel="noopener">README ↗</a></li>
+              <li><a href={`${GITHUB_URL}/blob/main/docs/SKILL-STANDARD.md`} rel="noopener">The Skill Standard ↗</a></li>
+              <li><a href={`${GITHUB_URL}/blob/main/docs/worked-example.md`} rel="noopener">Worked example ↗</a></li>
+              <li><a href={`${GITHUB_URL}/blob/main/CONTRIBUTING.md`} rel="noopener">Contributing ↗</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Elsewhere</h2>
+            <ul>
+              <li><a href="https://agentskills.io" rel="noopener">Agent Skills spec ↗</a></li>
+              <li><a href={href('/llms.txt')}>llms.txt</a></li>
+              <li><a href={`${GITHUB_URL}/blob/main/LICENSE`} rel="noopener">MIT licence ↗</a></li>
+              <li><a href={CONTRIBUTOR.url} rel="noopener">{CONTRIBUTOR.name} ↗</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot__legal">
+          <span>{LICENSE} licence · An open-source library. <a href={CONTRIBUTOR.url} rel="noopener" style="color: var(--ink-2)">{CONTRIBUTOR.name}</a> is a contributor.</span>
+          <span>Skill content is rendered verbatim from the repository.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Copy-to-clipboard for install commands. Progressive enhancement only —
+      // every command is selectable text without it.
+      document.querySelectorAll('[data-copy]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-copy');
+          if (!text) return;
+          try {
+            await navigator.clipboard.writeText(text);
+            // Keep the visible label stable so it never diverges from the
+            // accessible name; announce the result in a live region instead.
+            btn.setAttribute('data-copied', '1');
+            const status = document.getElementById('copy-status');
+            if (status) status.textContent = 'Command copied to clipboard';
+            setTimeout(() => {
+              btn.removeAttribute('data-copied');
+              if (status) status.textContent = '';
+            }, 1600);
+          } catch {
+            /* clipboard unavailable — the text is still selectable */
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

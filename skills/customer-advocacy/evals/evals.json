@@ -1,0 +1,66 @@
+{
+  "skill_name": "customer-advocacy",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Sales needs a reference call this week for a logistics prospect doing multi-entity close. Who can we use? Here's the export from the CRM and last quarter's advocacy tracker — the tracker is an XLSX and the CRM one has the report title above the header row.",
+      "expected_output": "A ranked shortlist for a rung-8 ask: files ingested without a re-export being requested, the fit cell fixed before scoring, readiness scored across all seven families, every disqualifier evaluated with a clearing date, pool caps and rest intervals checked before the person, a top pick with the ask written inside a copy block, and a named alternative if no candidate is in cell.",
+      "assertions": [
+        "Runs the shared ingest step on both supplied files rather than asking the user to re-export or reformat them, finds the real header row beneath the report title, and confirms any column mapping below 0.80 confidence before using its numbers",
+        "Asks for and records the data as-of date rather than treating the export as current",
+        "Fixes the fit cell (segment, industry, use case, buyer persona, and the objection raised) before scoring anyone, and refuses to route a candidate whose fit is zero rather than substituting an enthusiastic mismatch",
+        "Reports all seven signal families for each shortlisted candidate — including the ones that came back clean — and ends with a Coverage Ledger giving a coverage percentage and a stated confidence cap",
+        "Evaluates every disqualifier and prints each one that fired with its evidence and the date it clears, rather than silently dropping the candidate from the shortlist",
+        "Checks pool caps, the 45-day rest interval and the one-open-ask rule before recommending a person, and names any account it is deliberately resting",
+        "Emits the ask inside a fenced text block below the customer-facing divider, plain-text formatted with no unfilled placeholders, and containing no readiness score, band, ARR, pool or fatigue language",
+        "Ends with an Assumptions table whose every row names a concrete consequence rather than 'may affect results'"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We keep asking the same three customers for everything and one of them has gone quiet. Can you look at our advocacy tracker and tell me what's going on?",
+      "expected_output": "A pool health check: caps consumed per customer, fatigue measured on the four observables rather than asserted, the declines and withdrawals read as relationship signals rather than scheduling problems, the empty coverage cells named, and a rest-and-repair plan with owners and dates.",
+      "assertions": [
+        "Measures fatigue on the four named observables — reply latency against the advocate's own baseline, declines in the trailing 12 months, enthusiasm delta, and delegation drift — rather than describing the customer as tired",
+        "Treats an advocate who agreed to a reference and then withdrew as a P0 relationship signal and routes the account to churn-risk in the same week, rather than recording it as a scheduling problem",
+        "Reports caps consumed per customer against the 3-asks-per-12-months and 4-reference-calls-per-year limits, and names who is over",
+        "Names the empty coverage cells and the accounts closest to filling each, so the fix is supply rather than more asking",
+        "Diagnoses which of the four burns applies before proposing a repair, and sets a dated freeze with no ask attached",
+        "Every recommendation carries an action, an owner, a date, an expected effect and a success measure",
+        "Uses no internal pool language in anything addressed to the customer — no readiness score, fatigue index, cap count or 'referenceable'"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Marketing wants a case study from Northwind by the end of the month. They renewed last week and their NPS is a 10.",
+      "expected_output": "An honest answer that the timeline is not achievable and why, the readiness and disqualifier check run anyway, the timing read against the renewal, and either a rung-5 ask started now with a realistic lead time or a lower rung that fits the month.",
+      "assertions": [
+        "States the 6–12 week approval lead time for a written case study and declines the end-of-month deadline rather than accepting it, offering the anonymised version and a lower rung as the alternatives",
+        "Treats the NPS 10 as one of seven inputs and verifies the respondent is still in role with standing and the response is inside 90 days, rather than treating the score as readiness",
+        "Confirms a customer-stated quantified outcome exists, in their numbers, before permitting any rung above 3, and marks it UNKNOWN — requires a source if it does not",
+        "Reads the timing against the renewal correctly — the 14–30 day window after signature is the strongest moment, and an ask inside an unresolved opt-out window is refused",
+        "Checks the publicity clause in the executed contract and the customer's comms policy before shortlisting, rather than assuming permission",
+        "Names the approval chain on the customer's side with lead times, and promises no publication date that a named owner has not agreed",
+        "Emits the ask inside a fenced text block below the divider with every slot filled with a real name, number or date"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Who's ready to join our customer advisory board next year? We've got two seats and I want to fill them with accounts that need some love.",
+      "expected_output": "A refusal of the premise plus a ranked shortlist: the advisory board is earned rather than therapeutic, at-risk accounts are excluded and routed to save-play, candidates are scored to the rung-9 floor with the charter and term stated, and the invitation is written for the CCO.",
+      "assertions": [
+        "Refuses to invite an at-risk or struggling account onto the board to repair the relationship, states why plainly, and routes those accounts to save-play instead",
+        "Applies the rung-9 readiness floor and requires an engaged executive sponsor, listing anyone excluded with the reason and the date it clears",
+        "States what the board is and is not — a strategy forum for peers, not a roadmap focus group — and names the charter contents including the term and what the board does not decide",
+        "Names the practitioner conventions it is applying (board size, one executive per company, the vendor-presenting share of the agenda, the 'you said / we did' artifact) and labels them as conventions rather than measured benchmarks",
+        "Emits the invitation inside a fenced text block below the divider, sent from the CCO, with the time commitment and term stated honestly and no unfilled placeholders",
+        "Reports coverage across all seven families and caps confidence at what coverage permits, marking gaps as UNKNOWN — requires a source",
+        "Treats a mid-term board resignation as a P0 retention signal in the guidance it gives, not as an administrative change"
+      ],
+      "files": []
+    }
+  ]
+}

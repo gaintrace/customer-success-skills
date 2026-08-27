@@ -1,0 +1,46 @@
+{
+  "request": "Bespoke SAP IDoc connector",
+  "account": "Halcyon Distribution",
+  "as_of": "2026-08-27",
+  "loaded_rate": 150,
+  "account_arr": 150000,
+  "arr_at_stake": 60000,
+  "savability": 1.0,
+  "horizon_years": 3,
+  "drift": 0.15,
+  "upgrades_per_year": 4,
+  "band_uplift": 0.15,
+  "renewal_date": "2027-07-01",
+  "notice_period_days": 60,
+  "evidence_window_days": 60,
+  "revenue_contingent": false,
+  "term_years": 3,
+
+  "bespoke": {
+    "build_hours": 160,
+    "maintenance_h": 56,
+    "incident_h": 26,
+    "support_h": 18,
+    "eval_regression_h": 0,
+    "upgrade_tax_h": 8,
+    "third_party_cost_per_year": 4800,
+    "withheld_feature_cost": 0
+  },
+
+  "generality_evidence": [
+    {"account": "Halcyon Distribution", "arr": 150000, "renewal": "2027-07-01", "tier": "G2",
+     "asked": "\"can you talk to our SAP directly\" — Ben Iversen, IT Manager, 2026-07-30",
+     "source": "email thread"}
+  ],
+
+  "gates": {
+    "requires_fork": false,
+    "roadmap_owner": null,
+    "roadmap_increment_date": null,
+    "workaround_fidelity": 0.55,
+    "workaround_effort_ratio": 0.1,
+    "named_maintainer": null,
+    "sunset_review_date": null,
+    "rollback_within_sprint": true
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "skill_name": "save-play",
+  "description": "Behavioural evals for save-play. Each prompt is one a CSM, AM or VP CS would actually type. Assertions are checkable against the emitted artifact, not vibes — including the two craft mechanisms this skill enforces: the voice-first gate (C26) and the regulated register (C27).",
+  "evals": [
+    {
+      "id": "sp-01-notice-served",
+      "prompt": "Acme Corp just emailed to say they won't be renewing. $148k ARR, renewal is 1 Feb 2027, 90-day notice period. Their main contact Jamie Chen's email started hard-bouncing three weeks ago and their Slack Connect account went dark. Usage is flat-ish. What do we do?",
+      "expected_output": "A Critical-severity save play opened the same day. Diagnosis reaches RC6 (champion departure) with the disconfirming checks run before asserting departure, not RC5. The clock is computed to the opt-out deadline (2026-11-03), the first move is exec-to-exec inside 48 hours per R3, and a send-ready customer block is emitted below the divider. The written block follows the VP's call rather than preceding it, and is written in the regulated register.",
+      "assertions": [
+        "Opens a Critical play and names the written open criterion that was met (stated intent to cancel / notice)",
+        "Computes opt-out deadline as 2027-02-01 minus 90 days = 2026-11-03, and uses it as the clock rather than the renewal date",
+        "Diagnoses RC6 champion departure, and explicitly rules out RC5 relationship loss using the presence of a dated departure event",
+        "Runs the disconfirming checks on the bounce before asserting departure: domain migration, mailbox quota, out-of-office, forwarding address",
+        "First move is exec-to-exec outreach from VP CS or above within 48 hours, not the CSM asking who replaced Jamie",
+        "Emits a customer-facing block inside a ```text fence below the divider, containing no risk band, no ARR figure, and no claim that we know Jamie left",
+        "Every action in the plan carries action, owner, date, expected effect and success measure",
+        "Every customer-facing block carries a header above its fence with News class and Register; the block acknowledging notice is classed bad and Register regulated (C26, C27)",
+        "The bad block is not emitted until Call placed carries a date, a time, a named caller and an outcome — with no call on record the voicemail line and the two-line scheduling note are emitted instead and the withholding is stated above the divider (C26)",
+        "The call slot falls on a Monday, Tuesday or Wednesday between 08:00 and 11:30 in the recipient's timezone, and is never a Friday or after 15:00 local (C26)",
+        "The customer-facing text contains zero exclamation marks, zero emoji, no superlative from excited/thrilled/delighted/amazing/fantastic/great news, and no sentence longer than 25 words (C27)"
+      ]
+    },
+    {
+      "id": "sp-02-price-objection-differential",
+      "prompt": "Northwind says our renewal is too expensive and they want 25% off or they'll have to look elsewhere. $310k, renews in 70 days. They've been happy on support, adoption is decent. My VP wants to know if we should just give the discount.",
+      "expected_output": "A differential diagnosis before any commercial answer: RC11 pricing versus RC8 competitive displacement versus RC7 budget, with the specific question that separates them. No discount is proposed without a named get, the concession ladder is applied, and the break-even arithmetic is printed.",
+      "assertions": [
+        "Refuses to answer the discount question before diagnosing, and names the three candidate causes RC11, RC7 and RC8",
+        "States the separating test explicitly — including asking what happens to the workload if we are not there next year, which distinguishes RC7 from RC8",
+        "Treats 'or we'll look elsewhere' as a possible RC8 signal requiring a direct question about whether an evaluation is running",
+        "Pairs any concession with a required get from the ladder and names the approver for the band",
+        "States that the notice window, auto-renew clause, uplift clause and audit rights are not tradeable without VP approval",
+        "Prints the break-even save probability and the discount ceiling with the arithmetic shown, rather than asserting a discount is affordable",
+        "Any block that refuses or reduces the 25% ask is classed bad and delivered on a call first; the written version follows the same day (C26)",
+        "The concession block contains no exclamation mark and no superlative — the number is stated in a plain sentence with nothing softening it after it (C27, C3)"
+      ]
+    },
+    {
+      "id": "sp-03-stop-loss",
+      "prompt": "We've been working a save on Helios Freight for eleven weeks. $96k ARR. Two exec calls, a services re-onboarding, 40+ CSM hours. They keep rescheduling and the CFO who owns the budget still hasn't met us. Opt-out is in 19 days. My manager wants to keep going. Should we?",
+      "expected_output": "A stop-loss review, not encouragement. The economics are computed and printed, the fired triggers are named, and the recommendation is Continue, Restructure or Exit with the arithmetic behind it. If exit, the managed-exit runbook and win-back triggers follow.",
+      "assertions": [
+        "Runs the stop-loss test explicitly and names which triggers have fired, quoting the trigger wording",
+        "Computes and prints the break-even save probability P* with its inputs, and compares it to the savability band rather than to an invented per-account probability",
+        "Names the opportunity cost — which other accounts are not being worked while this play runs (R14)",
+        "Tests a restructure option before recommending exit, since a smaller contract retains the data and the relationship",
+        "If exiting: requires an explicit will-churn transition with manager agreement, a coded cause and the decision date rather than the effective date",
+        "Sets win-back triggers with owners and review dates, and includes a data export delivered before it is asked for",
+        "Does not use the words 'will churn', 'guaranteed' or '100% accurate' as a prediction",
+        "If exiting: the decision is spoken by voice on a computed Monday–Wednesday 08:00–11:30 recipient-local slot before any written confirmation exists, and the written note repeats only what was said on the call (C26)",
+        "Every exit-facing block prints Register: regulated and contains at most one apology, no intensifiers and no sentence over 25 words (C27, R20)"
+      ]
+    },
+    {
+      "id": "sp-04-sparse-data-csv",
+      "prompt": "Here's a CSV export from Salesforce with our red accounts — there are three title rows above the header and the ARR column is text with currency symbols. I don't have usage data or any survey results. Build me save plans for the top two.",
+      "expected_output": "ingest.py is run first, low-confidence mappings are confirmed before use, and the artifact degrades rather than refusing. With only two or three of seven families available, coverage is under 40% and no root cause is named — the play is the diagnostic conversation, with the gap list stated.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before using any number, and reports the join rate",
+        "Confirms any column mapping below 0.80 confidence with the user before those numbers enter the plan",
+        "Prints the Coverage Ledger with all seven families including the missing ones, and states the coverage fraction and percentage",
+        "Caps diagnosis confidence at what coverage permits, and with coverage under 40% names no root cause",
+        "Selects the diagnostic conversation as the play and writes UNKNOWN — requires <source> rather than guessing a cause",
+        "Asks for the export's as-of date rather than assuming it is current",
+        "Records every default it ran on in an Assumptions table with a concrete consequence per row",
+        "Where a contact timezone is unavailable, writes UNKNOWN — requires the contact's timezone rather than inferring one, and schedules the call to the account HQ's business hours (C26)"
+      ]
+    },
+    {
+      "id": "sp-05-bad-news-delivery",
+      "prompt": "Engineering just told me the fix we promised Meridian for 12 September has slipped to 12 October. That is the third slip. Their VP of Ops emailed me yesterday, two lines: 'This is becoming untenable.' Renewal is in ten weeks, they are in Chicago, and it is Friday afternoon here. Write me the email to send now.",
+      "expected_output": "The email is refused as the first notification. The block is classed bad, the call is booked into the next legal slot — Monday or Tuesday, 08:00–11:30 America/Chicago, never this Friday afternoon — the call script and voicemail line are produced, and the written confirmation is generated as a follow-up to be sent within two hours of the call, in the regulated register. No renewal ask appears anywhere in it.",
+      "assertions": [
+        "Refuses to emit the bad-news email as the first notification and says so explicitly, naming the voice-first gate (C26)",
+        "Books the call on a Monday, Tuesday or Wednesday between 08:00 and 11:30 America/Chicago — never the Friday it is asked on, never after 15:00 local",
+        "Emits the call script, the voicemail line and a two-line scheduling note in place of the withheld email, and none of the three states the news itself",
+        "The withheld written block is described above the divider with the reason, rather than silently omitted",
+        "The confirming block is dated to follow the call within two hours and confirms only what was said on the call",
+        "Prints the header News class: bad · Register: regulated · Call placed with date, time, timezone, named caller and outcome on every emitted block",
+        "The drafted follow-up contains zero exclamation marks, zero emoji, no superlative, no intensifier from very/really/hugely/extremely/absolutely/totally, and no sentence over 25 words",
+        "Contains exactly one apology and no second apology construction (C27, R20)",
+        "Makes no commercial or renewal ask in the same message as the miss (R11)",
+        "The fix date carries a named owner or is written as having no date rather than as a hope (R19)"
+      ]
+    },
+    {
+      "id": "sp-06-regulate-down",
+      "prompt": "Northwind's CFO replied to my check-in with this: 'Frankly this has been a disaster from day one and I am done defending it internally. Cancel it.' $410k, 60-day notice, renewal 1 March 2027. Our VP CS wants to reply today and asked me to draft something warm that keeps the door open.",
+      "expected_output": "A Critical play opened on the stated intent to cancel, and a refusal to write a warm reply. The reply is regulated: it mirrors his words before anything else, states the fact plainly, contains one apology at most, makes no commercial ask, and it follows a call from the VP CS rather than replacing one.",
+      "assertions": [
+        "Opens a Critical play on the stated intent to cancel (R2) and computes the opt-out deadline as 2027-03-01 minus 60 days = 2026-12-31",
+        "Rejects the brief to write something warm, and states that enthusiasm in a negative thread reads as not having understood the situation (C27)",
+        "Prints Register: regulated and names the computed trigger that set it — a negative last inbound message and Critical severity",
+        "The reply opens with the CFO's own words reflected back, not with context, explanation or defence (C27, C4)",
+        "Contains zero exclamation marks and zero emoji",
+        "Contains none of: excited, thrilled, delighted, amazing, fantastic, wonderful, great news, happy to, love to",
+        "Contains none of the intensifiers very, really, hugely, incredibly, extremely, absolutely, massively, totally, super",
+        "No sentence exceeds 25 words and the first sentence is 15 words or fewer",
+        "Contains at most one apology construction (R20, C28)",
+        "The VP CS phones before the written reply goes, on a Monday–Wednesday 08:00–11:30 recipient-local slot, and Call placed is filled on the emitted block (C26)",
+        "No discount, concession or renewal ask appears in the reply (R11)",
+        "No risk band, ARR figure, forecast category or the words save play or war room appear in the customer-facing text (R18)"
+      ]
+    }
+  ]
+}

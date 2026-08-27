@@ -1,0 +1,128 @@
+{
+  "account": "Northwind Logistics",
+  "period": "FY26 (2025-10-01 .. 2026-09-30)",
+  "as_of": "2026-08-24",
+  "period_months": 12,
+  "sensitivity_driver": "attribution",
+  "costs": {
+    "subscription_fees": 180000,
+    "services": 26000,
+    "customer_internal_labour": 27880,
+    "customer_admin": 18400,
+    "training": 4200,
+    "integration": 0
+  },
+  "benefits": [
+    {
+      "name": "Tier-1 ticket deflection",
+      "class": "cost_avoided",
+      "baseline_rung": "B2",
+      "design": "D2",
+      "attribution": 0.7,
+      "attribution_level": "A1",
+      "attribution_set_by": "difference-in-differences, Claims (live) vs Billing (not live)",
+      "haircut": 0.1,
+      "haircut_reason": "their knowledge-base rewrite ran Feb-May 2026",
+      "unit_economics_source": "customer",
+      "inputs": {
+        "baseline_unit_cost": 18.4,
+        "volume_today": 141000,
+        "actual_cost": 2190000
+      }
+    },
+    {
+      "name": "Claims close cycle time",
+      "class": "time_released",
+      "baseline_rung": "B2",
+      "design": "D4",
+      "attribution": 0.7,
+      "attribution_level": "A3",
+      "attribution_set_by": "J. Alvarez, Controller, email 2026-08-14",
+      "haircut": 0.1,
+      "haircut_reason": "two teams changed process independently in April",
+      "unit_economics_source": "customer",
+      "inputs": {
+        "users": 26,
+        "adoption": 0.85,
+        "hours_per_user_per_week": 1.4,
+        "weeks": 46,
+        "loaded_hourly": 68.0,
+        "recapture": 0.5
+      }
+    },
+    {
+      "name": "Retired reconciliation tool",
+      "class": "hard_cash",
+      "baseline_rung": "B2",
+      "design": "D5",
+      "attribution": 1.0,
+      "attribution_level": "A3",
+      "attribution_set_by": "contract cancelled 2026-05-31; capability replaced in-product",
+      "haircut": 0.0,
+      "unit_economics_source": "customer",
+      "inputs": {
+        "amount": 34000
+      }
+    },
+    {
+      "name": "Invoice exception rework",
+      "class": "error_reduction",
+      "baseline_rung": "B2",
+      "design": "D4",
+      "attribution": 0.5,
+      "attribution_level": "A2",
+      "attribution_set_by": "set by us and disclosed as ours; no comparison group available",
+      "haircut": 0.2,
+      "haircut_reason": "a new approval step was added in March",
+      "unit_economics_source": "customer",
+      "inputs": {
+        "error_rate_delta": 0.017,
+        "volume": 74000,
+        "cost_per_error": 41.0
+      }
+    },
+    {
+      "name": "Onboarding time for new dispatchers",
+      "class": "time_released",
+      "baseline_rung": "B2",
+      "design": "D5",
+      "attribution": 0.6,
+      "attribution_level": "A4",
+      "attribution_set_by": "unestablished — two other changes landed in the same period",
+      "haircut": 0.0,
+      "unit_economics_source": "customer",
+      "inputs": {
+        "users": 12,
+        "adoption": 1.0,
+        "hours_per_user_per_week": 0.8,
+        "weeks": 46,
+        "loaded_hourly": 68.0,
+        "recapture": 0.5
+      }
+    },
+    {
+      "name": "Peer benchmark for depot throughput",
+      "class": "cost_avoided",
+      "baseline_rung": "B4",
+      "design": "D5",
+      "attribution": 0.5,
+      "attribution_level": "A2",
+      "attribution_set_by": "us, from a published sector figure",
+      "haircut": 0.5,
+      "haircut_reason": "industry proxy, 50% haircut applied",
+      "unit_economics_source": "proxy",
+      "inputs": {
+        "baseline_unit_cost": 7.1,
+        "volume_today": 512000,
+        "actual_cost": 3200000
+      }
+    }
+  ],
+  "exclusions": [
+    "The independent contribution of their knowledge-base rewrite",
+    "Two integrations their engineering team built and maintains",
+    "Any FY27 benefit",
+    "Every soft benefit — listed separately and un-monetised",
+    "Onboarding time for new dispatchers — attribution unestablished"
+  ]
+}

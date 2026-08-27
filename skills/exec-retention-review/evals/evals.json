@@ -1,0 +1,83 @@
+{
+  "skill_name": "exec-retention-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I present to the board in eight days. TTM GRR came in at 86.9% against a plan of 88.0% on a $100M opening base. Enterprise and Mid-Market are on plan; SMB GRR is 76.9% against a plan of 84%. Build me the pack.",
+      "expected_output": "A board pack in Board mode: a one-page pre-read carrying the five-sentence spine, ten slides, an appendix with definitions and a change log, and a Coverage Ledger over the seven signal families with a confidence cap. The driver sentence quantifies the SMB share of the variance. Exactly one strategic issue and one ask, with a dollar amount and a decision deadline.",
+      "assertions": [
+        "Produces the five-sentence spine (number, movement, driver, response, ask) before any chart or table",
+        "States the SMB share of the total variance as a computed percentage, not as an adjective",
+        "Every headline metric shows this period, the prior period, AND the plan",
+        "Includes a finance reconciliation line stating the bridge tie-out variance, and says the pack does not ship if it is not $0",
+        "Ends with a Coverage Ledger over exactly the seven signal families with a stated coverage fraction and confidence cap",
+        "Contains exactly one strategic issue and one ask, each with a dollar figure and a decision-needed-by date",
+        "Does not contain the words 'will churn', 'guaranteed', or '100% accurate'"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Blended NRR dropped from 99.8% to 97.0%. Enterprise went 105.5% to 104.2% and fell from 55% to 51% of the opening base; Mid-Market 96.2% to 93.8% at a flat 32%; SMB 84.5% to 80.8% and rose from 13% to 17% of the base. Our CFO is going to ask whether this is mix or performance. What do I say?",
+      "expected_output": "A shift-share decomposition of the NRR movement into mix, performance and interaction, expressed in basis points, with the one-sentence answer naming which dominates, and a pointer to scripts/retention_math.py for the arithmetic.",
+      "assertions": [
+        "Decomposes the movement into three named terms: mix, performance, and interaction",
+        "Reports each term in basis points and shows that they reconcile to the total movement",
+        "Reports the interaction term separately rather than folding it into mix",
+        "States which term dominates and expresses it as a share of the total movement",
+        "Distinguishes mix as a go-to-market outcome from performance as the CS org's own result",
+        "Does not present a blended NRR figure without the segment cut beside it",
+        "Names no CS-platform product as a source anywhere; any ARR-per-CSM or accounts-per-CSM reference point is either labelled [P] or omitted rather than quoted as a measured benchmark"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "We lost $13.1M of ARR this year and only $7.4M of it was flagged more than 60 days out. I have to tell the board. How do I structure this without torching my credibility?",
+      "expected_output": "The six-part bad-news structure, in order, with the detection gap quantified as a risk detection rate and split into flagged/flagged-late/never-flagged buckets, plus the pre-brief sequence with named recipients and timings.",
+      "assertions": [
+        "Follows the six-part order: name it, quantify it, separate what was known from what was not, root cause, the change, the leading indicator reported next time",
+        "Computes the risk detection rate as 7.4/13.1 = 56.5% and names the $5.7M surprise loss",
+        "Recommends pre-briefing the CEO and CFO before the meeting, with specific lead times",
+        "States the change with a named owner and a date, not a vague commitment",
+        "Names a specific leading indicator to be reported unprompted at the next meeting",
+        "Avoids the banned vague verbs (monitor closely, drive adoption, engage, align, circle back)",
+        "States that nothing in the pack is customer-facing (R18) and produces no customer-facing draft, email or recap"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I want two more CSMs. We have $14.2M of ARR with no named coverage across 62 accounts, $2.2M of it currently at risk. Covered books in the same segment retain at 91.4%, uncovered at 88.0%. Fully loaded cost is $185k per head and subscription gross margin is 81%. Make the case.",
+      "expected_output": "A one-page ask leading with the coverage gap and the cost, stating the breakeven before the expected case, deriving the expected case from the observed covered/uncovered differential rather than a benchmark, and closing with the counterfactual and a kill criterion.",
+      "assertions": [
+        "Computes breakeven retained ARR as $370,000 / 0.81 = $456,790 and shows the arithmetic",
+        "Expresses breakeven as a basis-point improvement on the $14.2M book (322 bps) and as a save rate on the $2.2M at risk (20.8%)",
+        "States the breakeven before the expected case",
+        "Derives the expected case from the observed 340bps covered/uncovered differential, not from an industry benchmark",
+        "Reports the margin of safety and flags it as thin",
+        "Includes an explicit counterfactual describing what happens if the answer is no",
+        "Includes a kill criterion with a metric, a threshold and a date"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Board meeting is next Thursday. Attached is the quarterly ARR export from finance — it has three title rows above the header and the ARR column is text with dollar signs — plus a churn list someone pulled from Salesforce at some point. I don't know yet exactly what I'm asking the board for. Get me something.",
+      "expected_output": "One batched tappable question set with recommended defaults, ingest.py run on both files with mapping confidences reported and sub-0.80 mappings confirmed, the as-of date requested and printed, then the spine plus one-page pre-read built on the recommended defaults, with an Assumptions table and a Coverage Ledger carrying the confidence cap.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on both supplied files before quoting any figure, and reports the detected header row and the per-column mapping confidence",
+        "Confirms every column mapping below 0.80 confidence with the user before using those numbers",
+        "Asks at most four questions in a single batched AskUserQuestion, each with 2-4 mutually exclusive options and the recommended one first and labelled '(Recommended)'",
+        "Asks for the as-of date of each export and prints it on the artifact rather than assuming the export is current",
+        "Does not block on unanswered questions: proceeds on the recommended defaults, names them in one line at the top of the output, and records each in an Assumptions table with the columns #, Assumption, Why it was needed, If wrong",
+        "Produces a partial artifact with a stated coverage figure and a confidence cap rather than refusing, stopping only if the bridge does not tie to finance or coverage is under 40% of the seven signal families",
+        "Names no CS-platform product anywhere in the output"
+      ],
+      "files": [
+        "finance_arr_export.csv",
+        "sfdc_churn_list.csv"
+      ]
+    }
+  ]
+}

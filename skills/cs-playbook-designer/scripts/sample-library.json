@@ -1,0 +1,33 @@
+{
+  "label": "Northwind Software — proposed launch set, 2026-08",
+  "eligible_accounts": 517,
+  "csm_count": 8,
+  "nominal_hours_per_week": 40,
+  "proactive_share": 0.25,
+  "hours_per_motion": 4,
+  "weeks_per_motion": 3,
+  "holdout_share": 0.10,
+  "renewal_base_rate": 0.82,
+  "target_delta": 0.05,
+  "plays": [
+    {"id": "PB-R01", "name": "Usage-decay rescue", "category": "risk",
+     "fires_per_30d": 20.3, "hours_per_motion": 4, "weeks_per_motion": 3},
+    {"id": "PB-R02", "name": "Champion continuity", "category": "risk",
+     "fires_per_30d": 3.1, "hours_per_motion": 6, "weeks_per_motion": 3},
+    {"id": "PB-R03", "name": "Support-cluster ownership", "category": "risk",
+     "fires_per_30d": 14.7, "hours_per_motion": 3, "weeks_per_motion": 2},
+    {"id": "PB-R05", "name": "Commercial-event response", "category": "risk",
+     "fires_per_30d": 1.4, "hours_per_motion": 8, "weeks_per_motion": 3},
+    {"id": "PB-L03", "name": "T-90 renewal rung", "category": "lifecycle",
+     "fires_per_30d": 9.0, "hours_per_motion": 2, "weeks_per_motion": 2},
+    {"id": "PB-A02", "name": "Activation stall", "category": "adoption",
+     "fires_per_30d": 6.2, "hours_per_motion": 2, "weeks_per_motion": 2},
+    {"id": "PB-X01", "name": "Payment failure", "category": "administrative",
+     "fires_per_30d": 11.5, "automated": true},
+    {"id": "PB-V04", "name": "Review request", "category": "advocacy",
+     "fires_per_30d": 8.0, "automated": true},
+    {"id": "PB-R06", "name": "Silence re-engagement", "category": "risk",
+     "fires_per_30d": 63.0, "hours_per_motion": 2, "weeks_per_motion": 2,
+     "state": "shadow"}
+  ]
+}

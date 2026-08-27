@@ -1,0 +1,57 @@
+{
+  "skill_name": "integration-health",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Northwind's ops lead says our numbers don't match theirs and they've stopped trusting the pipeline report. Every connector shows green in our console. Here's the connector export and last month's job log — the CSV has two title rows above the header and the record counts came through as text.",
+      "expected_output": "A per-connector integration health report that starts from the assumption that the dashboard is green and the data is wrong: the files ingested without a re-export being requested, all eight dimensions scored per connector, the full silent-failure sweep with clean results printed, record reconciliation shown as arithmetic with a named residual, a ranked remediation table with owners and dates and a detector per row, a Coverage Ledger with a confidence cap, an Assumptions table, and a decision on what the customer is told.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied files rather than asking the user to re-export or reformat them, finds the real header row beneath the title rows, parses the text-formatted counts as numbers, and confirms any column mapping below 0.80 confidence before scoring on it",
+        "Asks for and prints the data as-of date rather than treating the export as current",
+        "Runs the silent-failure sweep on every connector — at minimum partial batch drop, type coercion, filtered records, paused-not-failed, reduced scope and webhook 200-and-discard — and prints the checks that came back clean rather than dropping them",
+        "Shows record reconciliation as explicit arithmetic (submitted = succeeded + failed + unprocessed, then expected = submitted) and names the unaccounted count, or writes UNKNOWN — requires record counts at both ends for the window",
+        "Splits errors into auth, rate limit, validation, schema, transient and permanent before quoting any rate, and reports latency as p50 and p95 against the customer's own deadline rather than as a mean",
+        "Ranks remediation by impact times severity times urgency with the arithmetic shown and the tie-break rule stated, not by error volume, and gives every row an action, a named owner with a side, a date, an effort band, an expected effect, a success measure and a detector left behind",
+        "Ends with a Coverage Ledger over all seven signal families with a coverage percentage and a stated confidence cap, and an Assumptions table whose every row names a concrete consequence rather than 'may affect results'"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The Workday roster sync for this account hasn't run since early July and nobody has raised a ticket. Renewal is 5 February and they have 90 days' notice. What do I do?",
+      "expected_output": "A finding that separates the technical fact from the commercial one: the disconnect dated and scored, the observation that it went unreported treated as the Technical decoupling signal and kept internal, an offer of the fix at our cost as the diagnostic, remediation with an owner and a date measured against the opt-out deadline, and a customer-facing note that states the observation without the inference.",
+      "assertions": [
+        "Computes and uses the opt-out deadline (renewal date minus notice period days), not the renewal date alone, as the date the remediation is measured against",
+        "Names the unreported disconnect as the T2 signal feeding the Technical decoupling compound pattern in churn-risk, and hands it to churn-risk rather than treating it only as a support ticket",
+        "Keeps the renewal read and the observation that nobody noticed strictly internal, and emits no wording of it in any customer-facing text",
+        "Recommends offering the fix at our cost as the diagnostic, and states what a declined or deferred free fix would mean, with the next escalation named",
+        "Runs the disconfirming checks before escalating — a planned migration, a credential rotation, an agreed pause, or our own outage — rather than asserting decoupling from the silence alone",
+        "Any customer-facing text sits in a fenced text block below the divider, contains no placeholders, states the last successful run as an observation, and phrases the intent question as a question rather than a claim"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Give me a pre-renewal integration sweep across this account. I have connector status and error counts but no record counts from the customer's side.",
+      "expected_output": "A degraded but useful report: every dimension the available evidence supports is scored, reconciliation is marked UNKNOWN with the specific source that would close it, confidence is capped and the cap is explained, the credential calendar and deprecation runway are dated against the opt-out deadline, and the evidence-request list names what would lift the confidence.",
+      "assertions": [
+        "Degrades rather than refusing — produces a partial report with a coverage figure and a confidence cap instead of asking for better data first",
+        "Marks reconciliation as UNKNOWN — requires record counts at both ends for the window, and explicitly refuses to write 'no data loss detected' when loss was not measurable",
+        "Dates every credential expiry and API sunset against the opt-out deadline rather than the renewal date, and flags any that mature before it as a renewal dependency",
+        "Reports severity as a band rather than a failure probability, and states that the remediation ranking is an ordering rather than a forecast",
+        "States the confidence cap with the criteria that earned it and names which of the seven families are missing and what those gaps typically hide"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "We're retiring v1 of our ingest API on 30 November. Which of this customer's connectors break, and what do I send them?",
+      "expected_output": "A deprecation runway planned backwards from the customer's change process rather than from the sunset date: the affected connectors identified, the work-must-start date computed from verification, cutover, build and their change-approval lead time, the date compared against the opt-out deadline, and a customer-facing note asking for windows with the arithmetic shown.",
+      "assertions": [
+        "Identifies the affected connectors from the recorded API version per connector rather than assuming, and marks any connector whose version is unrecorded as UNKNOWN — requires the version in use",
+        "Computes the date the work must start by subtracting verification, cutover, build and the customer's change-approval lead time from the sunset date, and says so if that date has already passed",
+        "Compares the sunset and cutover dates against the opt-out deadline (renewal date minus notice period days) and flags a sunset landing before it as a renewal dependency",
+        "Assigns a named migration owner on each side and refuses to state a cutover date that the named owner has not agreed",
+        "Specifies the parallel-run period, the diff acceptance tolerance agreed in advance, the rollback trigger and who decides, and the explicit retirement of the old path",
+        "Emits the customer-facing text in a fenced text block below the divider, with no placeholders, showing the timeline arithmetic and asking for change windows rather than announcing a date"
+      ]
+    }
+  ]
+}

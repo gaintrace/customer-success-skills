@@ -1,0 +1,94 @@
+{
+  "account": { "name": "Northwind Logistics", "arr": 480000, "as_of": "2026-08-27" },
+  "subscription": { "renewal_date": "2027-02-01", "notice_period_days": 90 },
+  "plan": { "last_customer_confirmation": "2026-08-14", "horizon": "to opt-out deadline" },
+  "objectives": [
+    {
+      "id": "O1",
+      "statement": "Cut cost to serve per claim by 15% in FY27",
+      "state": "Accepted",
+      "customer_owner": "Priya N., Director Support Ops",
+      "vendor_owner": "Jo Nkemdirim, CSM",
+      "start_date": "2026-04-01",
+      "direction": "down",
+      "baseline": { "value": 412, "method": "reconstruct", "period": "2026-01-01..2026-03-31", "source": "support export ticket.type=tier_1", "as_of": "2026-04-04" },
+      "target": { "value": 290, "date": "2026-12-31" },
+      "current": { "value": 355, "as_of": "2026-08-27" },
+      "leading_indicator": { "name": "widget impressions on new surfaces per week", "threshold": 4000, "current": 4250, "direction": "up", "measured": true },
+      "blocking_dependency_open": false,
+      "adverse_periods": 0
+    },
+    {
+      "id": "O2",
+      "statement": "Close the books in 4 business days, from 11 at the April close",
+      "state": "Accepted",
+      "customer_owner": "Ray Alderman, Group Controller",
+      "vendor_owner": "Sam Iyer, Solutions Architect",
+      "start_date": "2026-05-01",
+      "direction": "down",
+      "baseline": { "value": 11, "method": "attested", "period": "April 2026 close", "source": "controller statement, in writing", "as_of": "2026-05-06" },
+      "target": { "value": 4, "date": "2026-09-30" },
+      "current": { "value": 8, "as_of": "2026-08-27" },
+      "leading_indicator": { "name": "intercompany journals auto-matched", "threshold": 85, "current": 61, "direction": "up", "measured": true },
+      "blocking_dependency_open": true,
+      "mitigation_date": null,
+      "adverse_periods": 1
+    },
+    {
+      "id": "O3",
+      "statement": "Claims team live on the new workflow across EMEA and APAC",
+      "state": "Delivered",
+      "customer_owner": "Dele Okafor, VP Claims Operations",
+      "vendor_owner": "Jo Nkemdirim, CSM",
+      "start_date": "2026-06-01",
+      "direction": "up",
+      "baseline": { "value": 214, "method": "reconstruct", "period": "week of 2026-05-25", "source": "product analytics weekly cohort", "as_of": "2026-06-01" },
+      "target": { "value": 405, "date": "2027-03-31" },
+      "current": { "value": 268, "as_of": "2026-08-27" },
+      "leading_indicator": { "name": "certification starts per week", "threshold": 45, "current": null, "direction": "up", "measured": false },
+      "blocking_dependency_open": false,
+      "adverse_periods": 0
+    },
+    {
+      "id": "O4",
+      "statement": "Cut first-contact resolution time for broker enquiries",
+      "state": "Proposed",
+      "customer_owner": "Nadia Farouk, Head of Broker Services",
+      "vendor_owner": "Jo Nkemdirim, CSM",
+      "start_date": "2026-07-01",
+      "direction": "down",
+      "baseline": { "value": null, "method": null, "period": null, "source": null, "as_of": null },
+      "baseline_order": {
+        "metric_definition": "Median minutes from broker enquiry received to first substantive reply; excludes out-of-hours and automated acknowledgements",
+        "source_system_field": "Contact centre platform · first_response_minutes",
+        "window_rule": "3 complete months, rule fixed before the pull",
+        "measured_by": "Nadia Farouk, Head of Broker Services",
+        "pull_by": "2026-09-12",
+        "unblocked_when": "Nadia confirms the figure in writing",
+        "escalation_if_unfilled": "Raised to D. Okafor (VP Claims Ops) as decision 1 in section 7"
+      },
+      "target": { "value": null, "date": "2027-03-31" },
+      "current": { "value": null, "as_of": null },
+      "leading_indicator": { "name": "broker enquiries routed through the new queue", "threshold": 60, "current": null, "direction": "up", "measured": false },
+      "blocking_dependency_open": false,
+      "adverse_periods": 0
+    }
+  ],
+  "milestones": [
+    { "id": "M1", "name": "Help widget live on 6 surfaces", "objective": "O1", "date": "2026-09-30", "owner_side": "customer", "status": "open", "slips": 0 },
+    { "id": "M2", "name": "Knowledge articles published for top 4 ticket topics", "objective": "O1", "date": "2026-10-31", "owner_side": "customer", "status": "open", "slips": 0 },
+    { "id": "M3", "name": "Reconciliation rules configured for all 6 entities", "objective": "O2", "date": "2026-08-15", "owner_side": "us", "status": "open", "slips": 2 },
+    { "id": "M4", "name": "First close run on the new process", "objective": "O2", "date": "2026-09-30", "owner_side": "customer", "status": "open", "slips": 0 },
+    { "id": "M5", "name": "EMEA claims team closed 50 claims in the new workflow", "objective": "O3", "date": "2026-07-31", "owner_side": "customer", "status": "closed", "closed_date": "2026-07-29", "slips": 0 },
+    { "id": "M6", "name": "APAC go-live", "objective": "O3", "date": "2026-11-30", "owner_side": "us", "status": "open", "slips": 0 }
+  ],
+  "coverage": {
+    "product_usage": "complete",
+    "commercial": "complete",
+    "relationship": "partial",
+    "support": "complete",
+    "sentiment": "missing",
+    "billing": "complete",
+    "firmographic": "partial"
+  }
+}

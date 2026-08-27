@@ -1,0 +1,64 @@
+{
+  "skill_name": "value-case",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Northwind renews in February and their new CFO wants to know what they got for $180k this year. I've got a ticket export and a usage CSV — the ticket one has two title rows above the header and the cost column is text with dollar signs in it.",
+      "expected_output": "A Measure-mode value case: files ingested without a re-export being requested, benefit lines by class with the arithmetic shown, attribution stated with its level and setter, the conservative scenario as the headline with a sensitivity sentence and a break-even, a cost side that includes the customer's own labour, a coverage ledger over the seven families with a defensibility band, an Assumptions table, and a customer-facing one-pager in a fenced text block below the divider.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied files rather than asking the user to re-export or reformat them, finds the header row beneath the title rows, parses the dollar-signed text column as money, and confirms any column mapping below 0.80 confidence before using it",
+        "Asks for and prints the data as-of date rather than treating the export as current",
+        "Names the baseline rung (B1-B4) or the counterfactual design (D1-D5) on every benefit line, with its caveat, and never presents an industry proxy as a measurement",
+        "States attribution as a factor with its level (A1-A4) and who set it, never 1.0 on a non-cash line, and reports gross alongside attributed movement",
+        "Presents the conservative scenario as the headline with central and stretch beside it, plus a break-even and a sensitivity sentence written for the customer artifact",
+        "Includes the customer's internal labour, services and training in the cost side, not just the subscription fees",
+        "Ends with a Coverage Ledger over all seven families, a defensibility band no higher than the weakest input permits, and an Assumptions table with a concrete consequence per row",
+        "Emits the customer-facing one-pager inside a fenced text block below the divider, in the customer's currency and fiscal calendar, containing no health score, risk band, ARR-at-risk, cost-to-serve or commercial ask"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We just closed Meridian Health and kickoff is next week. What should I be doing about ROI?",
+      "expected_output": "An Establish-mode run: the impact hypothesis form for one to three objectives, a baseline capture plan with a named customer owner and a date inside week one, the KPI instrumentation requirements, and the measurement date set 90 days before the opt-out deadline. No dollar figure yet, and the reason stated.",
+      "assertions": [
+        "Selects Establish mode from the account start date rather than asking which mode to run",
+        "Produces impact hypotheses in the six-slot form — named team, metric, baseline, target, measurement system, named customer verifier — and refuses any hypothesis missing a slot",
+        "Makes baseline capture a week-one milestone with a named customer owner and a date, and states plainly that the pre-period becomes unrecoverable once the product is live",
+        "Limits the scorecard to one to three KPIs, each measurable in a named system with a re-runnable query rather than a survey",
+        "Sets the measurement date 90 days before the opt-out deadline (renewal_date minus notice_period_days), not the renewal date",
+        "States no dollar figure at this stage and says why, rather than modelling a projected ROI as if it were delivered value"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Their QBR is in three weeks and we never captured a baseline. Can you still build me an ROI number?",
+      "expected_output": "A Recover-mode run: the recovery ladder worked in order, the highest available rung or design named, a defensibility band capped accordingly, unit metrics rather than a fabricated dollar figure where nothing is available, and a named ask with an owner and a date that fixes the gap for next year.",
+      "assertions": [
+        "Degrades rather than refusing — works the recovery ladder in order and states which rung or design it landed on",
+        "Does not fill the gap with an industry benchmark, and never presents a proxy as a measurement",
+        "Caps the defensibility band to what the weakest input permits and says which input caps it",
+        "Where no dollar figure is defensible, reports unit metrics instead and states plainly that no dollar figure is being given",
+        "Gives a named ask with an owner and a date to establish the baseline, and schedules the quarterly refresh",
+        "Records every default it ran on in the Assumptions table with a concrete consequence, not 'may affect results'"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Finance is pushing back on the $2.6M value number we gave Acme. They want to know where it came from.",
+      "expected_output": "A Defend-mode run: the input register with a source and an attester per input, the attribution register with levels and confounders, the sensitivity table with three scenarios and a break-even, the exclusions list, and an honest reduction of any line that cannot be defended.",
+      "assertions": [
+        "Leads with the input register — one source and one named attester per input — and marks anything unsourced as UNKNOWN rather than defending it",
+        "Prints the attribution register with the level (A1-A4), the setter and the named confounders for each benefit line",
+        "Reduces or removes any line whose attribution is correlation-only, rather than restating the original figure",
+        "Presents three scenarios plus the break-even, with the conservative figure as the number being defended",
+        "Includes a specific 'not counted in this figure' list rather than a generic disclaimer",
+        "Rounds the composite headline to two significant figures and states no probability without a cited backtest",
+        "Names no customer-success-platform vendor anywhere, referring to the category generically when it needs to point at where a number lives"
+      ],
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "skill_name": "health-score-designer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our health score is broken — green accounts keep churning and nobody on the team trusts it any more. Can you tell me what's wrong with it?",
+      "expected_output": "Audit mode, not a rebuild. The does-anyone-act-on-it test first, then findings ranked by severity with owners and dates, a Coverage Ledger over all seven families, and a Trustworthy / Repairable / Rebuild verdict.",
+      "assertions": [
+        "Runs Audit mode rather than starting a redesign from scratch, and says explicitly that the existing score's error history is the asset a rebuild would throw away",
+        "Runs the does-anyone-act-on-it test (reds worked, override rate, forecast use, CSM recall, green-at-churn, distribution) before the technical checks",
+        "Names the central-tendency collapse check — the share of accounts landing between 60 and 75 — as a specific diagnostic",
+        "Gives a single verdict (Trustworthy / Repairable / Rebuild) rather than a menu of options",
+        "Every finding carries a severity, an owner and a date, not just a description",
+        "Ends with a Coverage Ledger naming all seven signal families including the missing ones, and a stated confidence cap",
+        "Names no competing CS platform product anywhere in the output — any platform reference is generic ('your CS platform', 'whichever platform holds your playbooks')"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We're a 40-person Series A. We have Salesforce, Zendesk and Stripe but no product analytics at all. Everyone says we need a health score. Build me one.",
+      "expected_output": "The sparse-data variant: product usage printed as Missing at weight 0 with no redistribution, heavier reliance on override caps, deciles rather than probabilities, and a named instrumentation roadmap.",
+      "assertions": [
+        "Produces a score rather than refusing on incomplete data, and states the coverage figure and the confidence cap it forces",
+        "Sets the product usage family to weight 0 and states explicitly that its weight is NOT redistributed, because silent redistribution manufactures a false green",
+        "Leans on override caps (auto-renew off, notice served, sponsor departed, invoice overdue) and explains that caps need no calibration to be useful",
+        "Publishes bands or deciles and refuses to state a churn probability, citing the absence of a fitted calibration map",
+        "Includes a named instrumentation roadmap with an owner and a sequence, starting with login/MAU joined to account_id and then named value events",
+        "States the falsifiable prediction sentence with event, horizon, unit and population before choosing any dimension",
+        "Measures the horizon to the opt-out deadline (renewal_date minus notice_period_days), not the renewal date"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Here's an export of our scores and last year's renewal outcomes. The header is three rows down and the ARR column has dollar signs in it. Is our health score any good?",
+      "expected_output": "ingest.py run first, low-confidence column mappings confirmed, an as-of date requested, then backtest.py and a Backtest Report leading with base rate, top-decile lift and ARR capture — with accuracy explicitly not reported.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before quoting any number from it, and finds the real header row beneath the export preamble",
+        "Confirms every column mapping below 0.80 confidence before scoring on those numbers",
+        "Asks for the export's as-of date and records it, rather than assuming the export is current",
+        "Runs scripts/backtest.py rather than doing the arithmetic in prose",
+        "Reports base rate first, then top-decile lift and ARR capture, and does not report accuracy as a headline metric",
+        "States that a random train/test split would leak the future, and requires a temporal split",
+        "Records any default it proceeded on in an Assumptions table with a concrete 'if wrong' consequence"
+      ],
+      "files": ["scores_and_outcomes.csv"]
+    },
+    {
+      "id": 4,
+      "prompt": "Design a health score for us from scratch. We do annual contracts, about $18M ARR, and we have roughly 140 renewals from the last 18 months with outcomes.",
+      "expected_output": "One batched tappable question set, then a v1-lite outcome-derived rubric with override caps, capacity-set thresholds, an explainability contract and a governance block.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 mutually exclusive options and the recommended one first and labelled '(Recommended)'",
+        "Asks nothing that .agents/cs-context.md already answers, and says so",
+        "Proceeds on the recommended defaults rather than blocking if the questions go unanswered, states the defaults at the top of the output, and records them in an Assumption Register table with columns for the assumption, why it was needed, and what changes if it is wrong",
+        "Selects the v1-lite tercile-lift weight method for ~140 outcomes and states why the full logistic fit is not yet justified",
+        "Enforces weight hygiene: 5-8 dimensions, nothing below 5%, nothing above 35%, summing to 100",
+        "Derives the red threshold from a stated CSM save capacity with the arithmetic shown, not from F1",
+        "Gives each band a play with an action, an owner, a date and a success measure",
+        "Defaults to a Brief answer of about 20 lines and offers the full specification on request"
+      ],
+      "files": []
+    }
+  ]
+}

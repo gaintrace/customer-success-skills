@@ -1,0 +1,46 @@
+{
+  "request": "Custom approval-matrix engine",
+  "account": "Kestrel Health",
+  "as_of": "2026-08-27",
+  "loaded_rate": 150,
+  "account_arr": 600000,
+  "arr_at_stake": 600000,
+  "savability": 1.0,
+  "horizon_years": 3,
+  "drift": 0.15,
+  "upgrades_per_year": 4,
+  "band_uplift": 0.15,
+  "renewal_date": "2027-05-31",
+  "notice_period_days": 90,
+  "evidence_window_days": 60,
+  "revenue_contingent": true,
+  "term_years": 3,
+
+  "bespoke": {
+    "build_hours": 220,
+    "maintenance_h": 72,
+    "incident_h": 30,
+    "support_h": 20,
+    "eval_regression_h": 12,
+    "upgrade_tax_h": 10,
+    "third_party_cost_per_year": 0,
+    "withheld_feature_cost": 0
+  },
+
+  "generality_evidence": [
+    {"account": "Kestrel Health", "arr": 600000, "renewal": "2027-05-31", "tier": "G5",
+     "asked": "\"sign-off has to follow our delegated-authority matrix or we cannot go live\" — Ruth Adeyemi, Chief Compliance Officer, 2026-08-05",
+     "source": "MSA amendment, clause 7.2"}
+  ],
+
+  "gates": {
+    "requires_fork": false,
+    "roadmap_owner": null,
+    "roadmap_increment_date": null,
+    "workaround_fidelity": 0.3,
+    "workaround_effort_ratio": 0.4,
+    "named_maintainer": "Sam Okafor",
+    "sunset_review_date": "2027-08-31",
+    "rollback_within_sprint": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "skill_name": "onboarding-plan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We just closed Northwind — $180k, annual, starts 1 July, renews 30 June, 60 days notice. Enterprise, one integration to their ERP, and they want their monthly close under five days. What should the onboarding plan be?",
+      "expected_output": "A backwards-planned artifact anchored on a value gate derived from the opt-out deadline and the TTFV target, with G-day and V-day as separate gates, the months 2–4 decision window computed and compared to V-day, a first-renewal risk record scheduled to open at V-day, a stated float band, all ten stall signals instrumented, and an Assumptions table for anything defaulted.",
+      "assertions": [
+        "Computes the opt-out deadline as renewal_date minus notice_period_days (1 May) and derives V-day from it, never scheduling to the 30 June renewal date",
+        "Prints the value gate (V-day) and the go-live gate (G-day) as separate dates with different owners and different evidence, inside the first five lines",
+        "Sets value_lag to at least two monthly close cycles rather than the 14–21 day segment default, and says why",
+        "States float as a number and a band (Healthy / Tight / No absorption / NEGATIVE) with the critical path and the parallelism assumption named",
+        "Reports all ten stall signals — fired, checked-and-clear, and not-checkable — rather than only the ones that fired",
+        "Ends with an Assumptions table whose rows each carry a concrete 'if wrong' consequence, and a Coverage Ledger over all seven families with a confidence cap",
+        "Refers to the CS platform slot generically ('your CS platform', 'whichever platform holds your playbooks') and names no competing CS platform product anywhere in the output",
+        "Computes the months 2–4 decision window from contract_start (31 July → 29 October) and prints the verdict — 'decided on evidence' or 'decided on faith' — as a row in the Bottom Line table",
+        "Section 6b is present and its `opened_at` cell holds the V-day event date, never G-day, the last completed milestone or a project-completion date",
+        "Section 6b appears before section 7 and before section 10, and every one of its rows carries either a value or 'UNKNOWN — requires <source>' — no row is dropped",
+        "`record_owner` names a person rather than a team, and `first_renewal_decision_date` holds the opt-out deadline (1 May) rather than the 30 June renewal date"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Meridian signed in March and still isn't live. The admin has gone quiet and services have burned through the SOW. Is this recoverable?",
+      "expected_output": "An in-flight audit: the stall read across all ten signals, the burn/activation pairing, the compound-pattern check, recomputed float, and a dated decision — not a status report.",
+      "assertions": [
+        "Runs the audit against the ten stall signals and states each one's status, including the ones that could not be computed as NOT-CHECKABLE rather than clear",
+        "Reads services burn only against activation using the pairing rule, and does not call high burn a churn signal where activation was achieved",
+        "Checks the Failed launch compound (S2+S1+S8+S6) explicitly and states matched or not matched",
+        "Recomputes float from today and names the choice being made if it is negative — cut scope, move the gate, or accept a first renewal decided without value evidence",
+        "Separates vendor-side from customer-side overdue tasks and escalates to the exec sponsor rather than to the unresponsive admin",
+        "Gives at least one action with an owner, a calendar date and a success measure, and does not hedge with 'monitor closely' or 'consider reviewing'",
+        "Reports the risk record's `opening_state` as 'LIVE, NOT VALUED' or 'NOT LIVE' rather than describing the implementation as complete or on track, and states that onboarding does not close until the record reads VALUED",
+        "Where the Failed launch compound matched, hands the S2/S1/S8/S6 values to churn-risk as U9/U10/U11/Z4, names the 180–365 day lead time and the opt-out decision date, and withholds the renewal motion and the expansion ask (R8) with the reason stated rather than omitted",
+        "Treats any move of V-day as a decision with an owner, a date and a stated cause written into the record (R14), never as a silent re-baseline"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Here's the implementation tracker RevOps exported — there are two title rows above the header and the dates are dd/mm/yyyy. Build me the onboarding plan for these six accounts and draft the kickoff agenda for the worst one.",
+      "expected_output": "ingest.py run first, low-confidence mappings confirmed, an as-of date requested, a ranked stall queue, and a send-ready customer-facing kickoff agenda inside a fenced text block below the divider.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before quoting any number from it, and finds the real header row beneath the export preamble",
+        "Confirms every column mapping below 0.80 confidence, and confirms contract_start, renewal_date and notice_period_days at any confidence",
+        "Asks for the export's as-of date and records it, rather than assuming the tracker is current",
+        "Produces a ranked queue plus per-account plans with a coverage figure and a capped confidence rather than refusing on incomplete data",
+        "Emits the kickoff agenda inside a ```text fence below the CUSTOMER-FACING divider, formatted for an email client — no markdown headings, no pipe tables, no ** bold",
+        "The fenced block contains no unfilled placeholders such as [Name] or <date>; any genuinely missing value is raised above the divider as UNKNOWN — requires X",
+        "The fenced block contains no float number, gate language, mode name, stall signal name, ARR figure, opt-out date or assessment of a named person"
+      ],
+      "files": [
+        "implementation-tracker.csv"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "New logo, contract starts Monday. I don't have much detail yet — can you get me started?",
+      "expected_output": "One batched tappable question set, then a plan run on the recommended defaults with those defaults stated at the top and recorded in the Assumption Register — never a refusal and never a guessed activation event.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 mutually exclusive options and the recommended one first and labelled '(Recommended)'",
+        "Each option carries a one-line description of what it changes, and no question repeats anything .agents/cs-context.md already answers",
+        "Does not drip-feed questions one at a time, and does not block waiting for an answer",
+        "Proceeds on the recommended defaults, states them in one line above the Bottom Line, and records each one in the Assumptions table with a concrete consequence",
+        "Writes 'UNKNOWN — requires <source>' for the activation event, notice period or target TTFV where they are genuinely missing, instead of substituting a segment default or an industry benchmark",
+        "Does not produce a dated backwards plan when the activation event is undefined; derives or requests a candidate gate first",
+        "Prints the decision window and the risk record's scheduled `opened_at` even when running on defaults, writing 'UNKNOWN — requires contract_start' rather than inventing a window"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Harbourline went live last Friday — every milestone green, project plan at 100%, services came in under the SOW. Can I close the onboarding, open their account risk record and hand it over to the renewal CSM?",
+      "expected_output": "A refusal to close the onboarding at go-live. Go-live and first value are different events with different owners and different evidence; the risk record opens at V-day, the state is LIVE, NOT VALUED until the customer's business owner attests the activation event, and the handover section is not produced until that record exists.",
+      "assertions": [
+        "Refuses to mark onboarding complete on go-live evidence alone and names the state 'LIVE, NOT VALUED' rather than complete, on track, or delivered",
+        "States that the first-renewal risk record opens at the V-day event and never at G-day, and sets `opened_at` to the V-day date rather than the go-live date or the project-completion date",
+        "Names the missing evidence specifically: the activation event at cadence for at least two cycles, performed by the buying team, measured against the captured kickoff baseline, attested in writing by a named customer business owner",
+        "Emits section 6b with `opened_at`, `opening_state`, `record_owner` and `first_renewal_decision_date` each populated or written 'UNKNOWN — requires <source>', and does not emit the section 10 steady-state handover while section 6b is unpopulated",
+        "Computes the months 2–4 decision window from contract_start and states whether V-day falls inside it, with the verdict 'decided on evidence' or 'decided on faith'",
+        "Blocks the expansion ask until the record reads VALUED and states that it was withheld and why (R8), rather than omitting it silently",
+        "Does not defer the first-renewal read to the renewal window or propose opening a fresh risk record at T-90"
+      ],
+      "files": []
+    }
+  ]
+}

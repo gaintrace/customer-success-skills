@@ -1,0 +1,63 @@
+{
+  "skill_name": "retention-report",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "It's the 5th, billing closed yesterday. I need the monthly retention report for the ops review on Thursday. Beginning ARR was $103.94M, we added $1.42M new and $980k expansion, $60k reactivation, lost $392k to contraction and $1.196M to churn. Finance says ending ARR is $104.812M. TTM GRR is 83.4% against a plan of 85.6%; SMB is 69.5%, Mid-Market 81.0%, Enterprise 88.2%.",
+      "expected_output": "Brief first (≤20 lines) with an offer of the full report; on request, the full fourteen-section report in VP/ops-review mode. The bridge ties to finance at $0 variance and that line is printed. The GRR variance is decomposed into a share-of-variance figure per segment rather than described. Assumptions table and a Coverage Ledger over the seven families with a confidence cap.",
+      "assertions": [
+        "Leads with a Brief of 20 lines or fewer and offers the full report, rather than emitting the full document unprompted",
+        "Prints the finance tie-out line explicitly, with the computed ending, the finance balance and a $0 variance",
+        "States SMB's share of the GRR variance as a computed percentage of the total dollar variance, not as an adjective like 'weakness in SMB'",
+        "Reports GRR and NRR adjacent on the same denominator, and does not report any retention metric month over month",
+        "Every section's commentary follows What / Where / Why / So what / Now what, with a driver that could be disproved",
+        "Ends with an Assumptions table (# / Assumption / Why it was needed / If wrong) and a Coverage Ledger over exactly the seven signal families with a stated coverage fraction and confidence cap",
+        "Does not contain the phrases 'will churn', 'guaranteed', 'monitor closely' or 'drive adoption'"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Our board asked why our health scores don't seem to predict anything. I have last quarter's bands and this quarter's for all 1,232 accounts, plus which ones churned. What should I build?",
+      "expected_output": "A health migration matrix on a frozen t0 population with a Churned column, cells carrying both accounts and ARR, and the six derived rates — leading with the false-green rate expressed both as a rate and as a share of all ARR churned in the window. Predictive lift computed with a small-n caveat where the Secure churn numerator is thin.",
+      "assertions": [
+        "Builds a from-band/to-band matrix with a Churned column, not a distribution chart or a pie chart",
+        "Freezes the t0 population and states that accounts entering after t0 are a memo line excluded from the rates",
+        "Publishes cells on both an account basis and an ARR basis",
+        "Computes the false-green rate (Secure/Watch at t0 that churned) and expresses churned ARR that was green at t0 as a share of all ARR churned in the window",
+        "Computes predictive lift as High+Critical churn rate divided by Secure churn rate and states the 3x threshold below which the score is decoration",
+        "Flags the lift multiple as unstable when the Secure churn numerator is under n=5 and reports the two absolute rates alongside it",
+        "Points at health-score-designer for the refit rather than proposing an ad-hoc reweighting inside the report"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Here's a CSV export from our billing system and an XLSX from finance. The CSV has some junk rows at the top and the ARR column has dollar signs in it. Can you pull together our retention numbers for last month? Also I don't have a prior-period health snapshot.",
+      "expected_output": "Runs ingest.py first, confirms any column mapping below 0.80 before computing, asks for the as-of date of both exports, and degrades gracefully: publishes the distribution with a note that the migration matrix starts next period rather than reconstructing bands retrospectively. Coverage figure and confidence cap stated.",
+      "assertions": [
+        "Says it will run ../cs-context/scripts/ingest.py on the supplied files before computing anything",
+        "States that any column mapping below 0.80 confidence will be confirmed with the user before those numbers are used",
+        "Asks for the as-of date of each export rather than assuming the files are current or complete",
+        "Publishes the health distribution and explicitly declines to reconstruct prior-period bands retrospectively, noting that the matrix starts next period",
+        "Degrades to a partial report with a stated coverage figure and a confidence cap rather than refusing to produce anything",
+        "Marks any unavailable figure as UNKNOWN — requires <source> rather than substituting an industry benchmark"
+      ],
+      "files": ["billing_export.csv", "finance_arr.xlsx"]
+    },
+    {
+      "id": 4,
+      "prompt": "Our renewal forecast accuracy has been 94-97% every quarter for the last year, so why does our CFO keep saying she doesn't trust the number?",
+      "expected_output": "Identifies signed bias rather than dispersion as the defect: the roll-up accuracy hides that every quarter was called high. Recommends grading against a frozen snapshot by vintage, reporting WAPE and signed bias next to accuracy, and fixing the Commit category definition. Concrete owner and date.",
+      "assertions": [
+        "Distinguishes accuracy (magnitude of error) from signed bias (direction) and identifies bias as the defect",
+        "Explains that a roll-up accuracy figure hides dispersion because offsetting account-level errors cancel, and recommends WAPE alongside",
+        "Requires the forecast to be graded against an immutable snapshot taken at period start and re-taken at T-90 / T-60 / T-30 as separate vintages",
+        "Quantifies the effect of a sustained bias in dollars against the quarterly ATR rather than describing it",
+        "Recommends a specific change to the Commit category definition with an owner and a date",
+        "States that no methodologically clean public benchmark for renewal forecast accuracy exists and that circulating 90-95% targets are vendor claims"
+      ],
+      "files": []
+    }
+  ]
+}

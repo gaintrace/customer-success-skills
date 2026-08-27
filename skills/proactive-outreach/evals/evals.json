@@ -1,0 +1,127 @@
+{
+  "skill_name": "proactive-outreach",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "It's Monday. I've got 38 accounts and about 8 hours this week for proactive work. Who should I reach out to and what do I send them?",
+      "expected_output": "A ranked outreach queue built from a sweep of all seven signal families, with suppression gates applied and printed, ranked by Outreach Priority with arithmetic shown, cut to a stated capacity, plus Outreach Cards with drafted messages below a customer-facing separator, and a Coverage Ledger with a confidence cap.",
+      "assertions": [
+        "Sweeps all seven signal families and reports families with no fired triggers as 'checked, no triggers' rather than omitting them",
+        "Asks its clarifying questions as one batched tappable AskUserQuestion ask (scope, capacity, drafts, data as-of) with a recommended option first, rather than one question at a time or as open prose",
+        "Does not ask for anything .agents/cs-context.md already answers (segments, notice period, source inventory, book size)",
+        "Converts the 8-hour budget into a touch count using stated per-touch minute costs, and states the cut line as a rank",
+        "Ranks by Outreach Priority = (ARR / 1000) x Strength x Recency x Timing and shows the arithmetic for at least the top accounts",
+        "Uses opt_out_deadline (renewal_date minus notice_period_days) for the Timing multiplier, not the renewal date alone",
+        "Prints a Suppressed table naming the gate hit for each suppressed trigger rather than silently dropping it",
+        "Every drafted message sits inside a fenced ```text copy block below the CUSTOMER-FACING divider, contains no unfilled [placeholders], and carries no health score, risk band, ARR-at-risk, forecast or save-play language",
+        "Ends with a Coverage Ledger over the seven families, a coverage percentage, and a confidence cap",
+        "Ends with an Assumptions table (# / Assumption / Why it was needed / If wrong) naming every default it ran on, each with a concrete consequence rather than 'may affect results'",
+        "Prints a Register value (Standard or Regulated) on every queued row, computed from the trigger — detractor, escalation or Sev-1, broken integration, failed payment, overdue commitment, price increase, or a churn-risk band of At Risk or worse — rather than chosen while writing (C27)",
+        "Every drafted ask carries a specific anchor: a date or window, a named event, a named team or a named artifact. No question in the form 'how is X going', 'how are things', 'are you happy with', 'any feedback on' or 'thoughts on' appears in any draft (C1)",
+        "Every Plan row carries a verbatim ask and a non-empty Anchor cell; a touch with an empty Anchor is not emitted (C1)",
+        "Every Regulated draft opens on the acknowledgement slot before any explanation — the customer's own quoted words where they voiced the problem, what it cost them in their units where we found it first (C4)",
+        "Every Regulated draft contains zero exclamation marks, no superlatives or intensifiers, sentences of 20 words or fewer, and at most one apology (C27)",
+        "Any customer-voiced Regulated trigger with no verbatim sentence on record appears in the suppressed/held table under gate 'C4 - acknowledgement source' with the source it requires, and no message is written for it"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Acme's usage dropped about 60% over the last six weeks. Write me an email.",
+      "expected_output": "A single-trigger Outreach Card: the U1 trigger record with evidence and provenance, the recipient chosen by role and altitude, a three-touch cadence with a stop rule, and a customer-facing draft that obeys the craft rules.",
+      "assertions": [
+        "Separates buying-team usage from aggregate usage, or states UNKNOWN if the team split is unavailable",
+        "Checks whether one of our own releases caused the drop before implying the customer changed behaviour",
+        "Subject line is 1-4 words and lowercase; the first line of the body does not begin with 'I' or 'We'",
+        "Body contains at least two account-specific data points, each carrying a provenance tag naming system, field and window",
+        "Contains exactly one ask and an honest exit that makes 'no' cheap to send",
+        "Does not contain 'just checking in', 'touching base', 'circling back', 'hope you're well', 'drive adoption' or 'monitor closely'",
+        "States a stop rule and a decay/timing window for the trigger rather than an open-ended follow-up plan",
+        "The email is emitted inside a fenced ```text block formatted for an email client — plain text, blank lines between paragraphs, no markdown headings, no pipe tables, no ** bold — with real values and no [placeholders]",
+        "The single ask is anchored to the drop itself — the date the exports fell, the release, or the named team that stopped — and is never 'how is adoption going' or 'any feedback' (C1)",
+        "States the register for the card: Standard for a plain usage drop, Regulated if the drop is attributable to our own release or the account is At Risk or worse (C27)"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Our champion at Vertex just left — her email bounced this morning. Vertex renews 14 Feb and it's a $310k account. What do we do?",
+      "expected_output": "R1 handled as an escalation-override trigger: routed to save-play rather than the ordinary queue, with a 48-hour window, a parallel rung-1 and rung-3 send, and two drafted messages at different altitudes.",
+      "assertions": [
+        "Treats the hard bounce as an inference with a stated rule and names what would falsify it (e.g. an out-of-office or a forwarding address)",
+        "Computes and uses the opt-out deadline from the 14 Feb renewal and the notice period, or marks the notice period UNKNOWN and says the deadline cannot be computed",
+        "States the 48-hour window and does not place the trigger in an ordinary three-touch email cadence",
+        "Produces two messages at different altitudes: a CSM message to the remaining contact and an exec-signed message to the sponsor",
+        "Does not re-send to the bounced address and does not speculate about why the champion left",
+        "Flags that this trigger is never suppressed by fatigue caps and routes the account to churn-risk or save-play",
+        "The ask to the remaining contact is anchored to a named artifact or date — the work Jamie owned, the 14 Feb renewal, the opt-out deadline — not a general 'how are things' enquiry (C1)"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Leadership wants to know if our outreach programme is working. We sent 240 emails last quarter and retention was 94%. Can I say outreach saved those accounts?",
+      "expected_output": "A direct no, with the selection-bias explanation, the metric set that is honestly reportable now, and a holdout design that would actually answer the question.",
+      "assertions": [
+        "States plainly that retention cannot be attributed to outreach from observational data, and explains the selection-bias mechanism",
+        "Distinguishes activity metrics (reply rate, meeting-booked rate, action rate, time-to-first-touch) from outcome claims",
+        "Specifies a randomised holdout: one trigger at a time, account-level randomisation, 10-20% held out, held for a full renewal cycle, outcome pre-registered",
+        "Names which triggers must be excluded from any holdout because withholding them would harm the customer (operational triggers such as a broken integration or a failed payment)",
+        "Does not produce a dollar figure of 'ARR saved' or any claim of guaranteed or 100% accurate attribution",
+        "Recommends measuring reply and meeting-booked rates by trigger ID to set an internal baseline rather than quoting published cold-email benchmarks as targets",
+        "Names no customer-success-platform vendor as a source, a recommendation or an example, and quotes no action-rate or leadership-transition-churn benchmark that would require one — such a number is dropped with its source, never kept without it"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I've got a Salesforce export (CSV, three junk rows above the header, ARR column is text with dollar signs) and a usage extract from our warehouse as XLSX. No renewal dates in either. Build me this week's outreach list.",
+      "expected_output": "An ingest-first run: ingest.py normalises both files, low-confidence column mappings are confirmed before use, the missing renewal dates are marked UNKNOWN and the Timing multiplier is dropped rather than guessed, and a partial queue is produced with a coverage figure, a confidence cap and an Assumptions table.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on both files before reading any number, rather than parsing them ad hoc",
+        "Reports the per-column mapping confidence and explicitly confirms every mapping below 0.80 with the user before using those columns",
+        "Reports the cross-file join rate between the CRM export and the usage extract, and states how many accounts failed to resolve",
+        "Produces a partial queue rather than refusing: ranks on (ARR / 1000) x Strength x Recency with the Timing multiplier dropped, and says so",
+        "Marks the absent renewal and notice-period fields as 'UNKNOWN — requires ...' and never substitutes a default renewal date or an industry benchmark",
+        "Asks for the as-of date of both exports and prints it in the artifact header",
+        "Caps queue confidence based on the coverage figure and records every default used in the Assumptions table"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "We got an NPS 2 from Priya Raman at Meridian this morning. Her comment was: 'we're doing month-end twice because the sync keeps dropping, and nobody has told us anything for three weeks'. She's their ops lead. $180k account. Write the reply.",
+      "expected_output": "A single-trigger Outreach Card for V1 with Register: Regulated, a Customer words evidence row carrying Priya's verbatim sentence, a 24-hour window, phone recommended where a number exists, and a draft whose first sentence is her own words, in the regulated register, with one anchored ask.",
+      "assertions": [
+        "Marks the card Register: Regulated, computed from the V1 detractor trigger rather than chosen, and labels the trigger customer-voiced",
+        "Carries Priya's sentence as a 'Customer words' row in the Evidence table with speaker, source and date, tiered Observed",
+        "The first sentence of the customer-facing draft quotes her own words verbatim, before any explanation, context, our activity or an apology (C4)",
+        "Does not open with what we have been doing about the sync, when we noticed it, or the root cause",
+        "The draft contains zero exclamation marks and none of: amazing, incredibly, thrilled, delighted, absolutely, hugely, extremely, fantastic (C27)",
+        "Every sentence in the draft body is 20 words or fewer, ending in a full stop (C27)",
+        "The draft apologises at most once (R20 / C28)",
+        "The single ask carries a specific anchor — the duplicated month-end runs, the three weeks of silence, or the sync itself — and is not 'how are things going' or 'any feedback' (C1)",
+        "Acts inside the 24-hour V1 window and recommends phone first where a number exists, with the written note as the follow-up",
+        "Carries no health score, risk band, ARR-at-risk, forecast or save-play language into the customer-facing text, and the draft sits in a fenced text block below the divider with no placeholders",
+        "Makes no commercial ask in the message (R11)"
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Meridian scored us 2 on the NPS survey. Just the score, no comment. $180k, ops team of about 20. Draft the outreach.",
+      "expected_output": "A refusal to write the message: a customer-voiced Regulated trigger with no verbatim on record is held under gate 'C4 - acknowledgement source', with the specific source that would unblock it and a phone call as the recommended action.",
+      "assertions": [
+        "Does not produce a customer-facing email: the V1 trigger is customer-voiced, no verbatim sentence exists on record, and the message is held rather than written (C4)",
+        "Names the gate explicitly as 'C4 - acknowledgement source' in the suppressed/held table",
+        "Prints 'UNKNOWN - requires ...' naming the specific sources that would supply the acknowledgement: the survey free-text field, a ticket, or a call transcript",
+        "Recommends retrieving the quote or phoning the respondent so they say it in their own words, rather than paraphrasing what they probably meant",
+        "Invents no complaint, infers no cause, and does not substitute an account-level summary for the customer's own words",
+        "Any artifact produced is an internal call plan with an owner and a date, not a customer-facing copy block",
+        "The call plan's opening question is anchored — the survey response date, the month-end window, or the named team — not 'how are things going' (C1)",
+        "Still applies the 24-hour V1 window to the phone attempt"
+      ],
+      "files": []
+    }
+  ]
+}

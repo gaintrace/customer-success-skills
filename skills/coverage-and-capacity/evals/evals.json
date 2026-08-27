@@ -1,0 +1,66 @@
+{
+  "skill_name": "coverage-and-capacity",
+  "description": "Realistic prompts a CS Ops leader, VP CS or CCO would actually type. Assertions check the behaviours that separate a derived coverage model from a copied ratio.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "What's a good CSM-to-account ratio for mid-market? We're at $65M ARR and I want to know if our books are too big before I go into budget planning.",
+      "expected_output": "A refusal to answer from a benchmark, followed by the derivation: lines A-H for available hours, bottom-up required hours per account from motions and complexity, the resulting sustainable book size as an output, and a sensitivity range. Batched tappable questions up front, and defaults stated if unanswered.",
+      "assertions": [
+        "States explicitly that accounts-per-CSM is an output of a capacity model, not an input, and does not quote an external accounts-per-CSM or ARR-per-CSM benchmark as the answer",
+        "Asks up to four batched tappable questions (job, scope, hours basis, constraint) with a recommended option first, or proceeds on the stated defaults and records them",
+        "Prints lines A through H with a value and a basis for each, labelling every line measured or [P] default",
+        "Builds required hours per account bottom-up from named motions costed end to end, plus reactive hours and amortised onboarding, then applies a complexity multiplier",
+        "Reports the resulting book size as a range with the sensitivity drivers named, not as a single number",
+        "Any benchmark that does appear (CS spend as % of ARR, gross margin, GRR) carries source, year and population",
+        "Ends with a Coverage Ledger over all seven signal families and a stated confidence cap"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's our segmentation deck. Enterprise is >$250k with a named CSM and 4 EBRs, Mid-Market is $50-250k with a named CSM and 2 EBRs, Growth is $20-50k with a named CSM and 2 EBRs, and SMB is everything else on tech-touch. Does this hold up?",
+      "expected_output": "An audit that fails the Mid-Market/Growth pair on the differentiation test, interrogates whether the SMB tech-touch programme is real, and attaches ARR to every finding.",
+      "assertions": [
+        "Runs the differentiation test on every adjacent segment pair and flags Mid-Market vs Growth as decorative, since both get a named CSM and 2 EBRs",
+        "Recommends either merging the two segments or genuinely changing the Growth coverage model, and frames that as a funding decision",
+        "Scores the SMB tech-touch tier against all six conditions (named owner, dated journey, trigger inventory, exception queue with SLA, outcomes reported like a book, budget line)",
+        "States that a tech-touch tier failing the conditions means those accounts are uncovered, and puts them in the gap table with their ARR",
+        "Checks that each boundary is written as a computable expression over normalized-schema fields",
+        "Attaches ARR and ARR renewing inside 180 days to findings, and uses the opt-out deadline rather than the renewal date",
+        "Does not recommend a named CS platform product by name"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need to ask for 4 more CSMs in the mid-market team. They cover 210 accounts and $18.9M ARR with 6 CSMs today. Build me the case for the CFO.",
+      "expected_output": "A headcount memo: fully loaded cost, year-one delivered capacity after ramp, cash and value break-even stated separately, three priced alternatives plus do-nothing, an indifference point where the retention effect is unknown, and a dated decision deadline.",
+      "assertions": [
+        "Computes fully loaded cost from OTE and a loading factor, and states where the loading factor came from or that it is an assumption",
+        "Applies a ramp so year-one delivered capacity is less than 1.0 FTE per hire, and reports a year-one cost per delivered FTE",
+        "Reports cash break-even and value break-even as separate numbers in GRR percentage points, and names which one the case rests on",
+        "Does not assert a retention gain without evidence; either cites a cohort comparison or writes UNKNOWN and solves for the indifference point instead",
+        "Prices at least three alternatives to hiring, including do-nothing, with do-nothing quantified as a dated consequence with ARR attached",
+        "Ties the decision deadline to the earliest opt-out deadline in the uncovered set, not to the renewal date or the budget calendar alone",
+        "Ends with an Assumptions table where every row states a concrete consequence if the assumption is wrong"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "A CSM resigned and I need to redistribute her 24 accounts across the remaining 5 reps. One of them started six weeks ago. Also two of her accounts renew next month.",
+      "expected_output": "An assignment plan that respects the hard constraints, freezes the accounts inside their opt-out windows, limits the new hire's load, prices the move in hours, and produces handover packs plus a customer-facing introduction note.",
+      "assertions": [
+        "Computes the opt-out deadline (renewal_date minus notice_period_days) for the two renewing accounts and excludes them from reassignment, or escalates them rather than moving them",
+        "Caps the six-week hire's load at the ramp constraint (at most 40% of a steady book at month 3) and does not distribute evenly across all five reps",
+        "Balances on complexity and renewal-date concentration, not on ARR alone, and names which constraints are hard",
+        "Prices the reassignment in hours (roughly 8-12 hours per account) and states the total cost of the move",
+        "Requires a written handover pack per account including the customer's objective in their own words and the outgoing CSM's undocumented knowledge",
+        "Emits any customer-facing introduction inside a fenced text block below the divider, with real names and dates and no unfilled placeholders",
+        "The customer-facing text contains no tier, book, pool, coverage, capacity, ARR or headcount language, and does not say the change is due to staffing"
+      ],
+      "files": []
+    }
+  ]
+}

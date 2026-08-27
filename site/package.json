@@ -1,0 +1,25 @@
+{
+  "name": "customer-success-skills-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "astro": "^7.2.9",
+    "markdown-it": "^15.0.0",
+    "markdown-it-anchor": "^9.2.1"
+  },
+  "description": "Documentation and landing site for the Customer Success Skills library",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

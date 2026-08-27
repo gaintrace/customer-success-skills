@@ -1,0 +1,90 @@
+{
+  "skill_name": "success-plan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We closed Northwind Logistics three months ago, $480k ARR, renews 1 Feb 2027 with a 90-day notice period. The AE's handover says they want to 'improve reporting and drive adoption across claims'. Build me the mutual success plan.",
+      "expected_output": "A full plan in New-plan mode: the handover language rejected as product wishes and climbed to business objectives, 3-5 objectives with unbroken outcome chains, baselines with sources and as-of dates or a declared proxy tier, SMART goals with owners on both sides, milestones with time-to-value first, a risk register over all eleven categories, RAG thresholds as numbers, an Assumptions table, a Coverage Ledger over the seven families, and a customer-facing copy block below the divider.",
+      "assertions": [
+        "Computes and prints the opt-out deadline as 2026-11-03 (renewal_date minus 90 days) and uses it as the planning anchor rather than the renewal date",
+        "Refuses 'improve reporting' and 'drive adoption' as objectives and climbs each to a business objective with a candidate metric, marking them Proposed until the customer confirms",
+        "C18 — the Baseline Orders section (§3A) appears in the output before the SMART Goals section (§3B); no goal appears above the orders",
+        "C18 — every row in §3B carries a baseline with all three of value, source and as-of date; a row missing any one of the three is not present in §3B",
+        "C18 — every objective whose baseline is incomplete appears in §3A with a metric definition, a source system and field, a named customer person who will measure it, and a pull-by date, and no SMART goal, target value or target date is written for that objective anywhere in the output",
+        "No cell in §3A reads 'TBC', 'n/a', 'the team', or a role with no person's name attached",
+        "Every objective names one customer owner and one vendor owner as people, never a team, and the plan prints the share of milestones carrying a customer-side owner against the 40% gate",
+        "Includes a leading indicator per goal that moves within 30 days, with its threshold stated",
+        "Ends with an Assumptions table where each row states a concrete consequence, and a Coverage Ledger over all seven signal families with a stated confidence cap",
+        "Emits the customer version inside a fenced text block below the divider with no unfilled placeholders and no ARR, health, risk or forecast language"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's our success plan for Acme. Objectives are: 1) increase adoption, 2) roll out to more teams, 3) get executive buy-in. Owners are 'CSM' and 'Acme team'. Is this any good?",
+      "expected_output": "Rewrite mode: a gate audit of all three objectives against Specific/Measurable/Assignable/Realistic/Time-bound plus the compensation, ownership, money and 30-day tests, each rewritten into a SMART goal with the missing inputs marked UNKNOWN rather than invented, and a short list of what must be renegotiated with the customer.",
+      "assertions": [
+        "Audits each existing objective against the gate and states which letters and tests it fails, rather than simply rewriting silently",
+        "Rewrites all three, and the rewrite of 'get executive buy-in' becomes a named sponsor plus a signed charter with a date",
+        "Flags that 'CSM' and 'Acme team' are not owners and requires named humans on both sides",
+        "C18 — because no baseline exists for any of the three objectives, the output writes no SMART goal, no target value and no target date for them; each becomes a §3A Baseline Order row instead",
+        "C18 — each Baseline Order names the metric definition, the source system and field, the customer person who will measure it and the date they will pull it by; where the customer measurer is unknown it is escalated to the executive sponsor as a decision rather than assigned to us",
+        "Does not substitute an industry benchmark, a plausible number, or a target with the baseline left blank",
+        "States that objectives inherited from a handover or written by us start at Proposed and cannot be reported as plan content until the customer agrees objective, baseline, success criteria and timeline",
+        "Produces a short list of what has to be renegotiated with the customer, each item with an owner and a date"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Acme's VP Ops who signed off our success plan left last month. Their replacement starts Monday. What do we do with the plan?",
+      "expected_output": "Re-baseline mode: affected objectives dropped to Proposed, the rule that inherited acceptance is not acceptance, a 30-minute re-discovery agenda built from the original business case, the effect on the renewal evidence timeline measured against the opt-out deadline, and the risk-register and status changes that follow.",
+      "assertions": [
+        "Drops the affected objectives to Proposed and states explicitly that inherited acceptance is not acceptance",
+        "Produces a re-discovery agenda that quotes the predecessor's objectives with dates and asks which of them are still the new sponsor's",
+        "Asks what the new sponsor is measured on, and treats an objective nobody is graded on as not ready",
+        "Ties the timing to the opt-out deadline rather than the renewal date, and checks whether any objective can still be Verified before it",
+        "Sends the executive-level outreach from a VP rather than the CSM, with a date",
+        "Does not claim the account will churn or state a probability, and keeps risk language out of anything the customer would read",
+        "C18 — any objective whose baseline definition or measurement owner left with the departing sponsor is returned to §3A as a Baseline Order rather than carried forward with the predecessor's number"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Quarterly review for Northwind next week. Attached is the plan JSON. Which objectives are actually on track and what do I need a decision on?",
+      "expected_output": "Review mode: deterministic attainment and schedule variance per objective from scripts/plan_health.py, derived RAG statuses with the threshold that decided each one, the unmeasured guard applied, the flags for Delivered-not-Verified and zero-Verified-before-opt-out, and a decisions list with owners and dates.",
+      "assertions": [
+        "Runs or reproduces scripts/plan_health.py and shows attainment, elapsed and schedule variance in percentage points per objective",
+        "C18 — prints the baseline gate before the objective table: how many of the 4 objectives carry value, source and as-of date, the count of Baseline Orders outstanding and the earliest pull-by date",
+        "C18 — reports O4 as Watchpoint with the reason naming the missing baseline fields, and writes no attainment, target or RAG-on-progress claim for it",
+        "C18 — prints the tier label for O2's attested baseline ([T3 ... stated, not measured]) and states that the label travels with every figure derived from it, including anything the customer reads",
+        "Derives each RAG status from the stated thresholds and prints the reason that decided it, rather than asserting a status",
+        "Treats an objective whose leading indicator has never been measured as Watchpoint rather than On Track",
+        "Flags any objective at Delivered but never Verified as not reportable as achieved",
+        "Flags zero Verified objectives inside 120 days of the opt-out deadline as a value-evidence gap with an owner and a date",
+        "Every decision carries a named decision-maker, a date, and what is blocked until then",
+        "States confidence no higher than the Coverage Ledger permits and names the blind spots"
+      ],
+      "files": [
+        "assets/sample-plan.json"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Our sponsor at Meridian wants a goal in the plan saying we'll cut their onboarding time by 40% this year. Nobody has ever measured how long onboarding takes today and their ops lead says pulling it would be a pain. Just put the 40% in and we'll baseline it later.",
+      "expected_output": "A refusal to write the goal. The output states what must be measured, out of which system, by which named person on the customer side and by when, as a Baseline Order; it offers the four proxy methods in order of defensibility with the evidentiary label each carries; and it says plainly why a target written before its baseline is discounted at renewal. No 40% target appears as a plan goal.",
+      "assertions": [
+        "C18 — refuses to write the goal: no target value, no target date and no SMART goal statement for the 40% reduction appears anywhere in the output",
+        "C18 — emits a Baseline Order instead, naming the metric definition with population and exclusions, the source system and field, the named customer person who will pull it, and a pull-by date",
+        "Treats 'we'll baseline it later' as the failure mode by name and states the consequence: a starting point reconstructed after the target was set is discounted by the customer's finance team at renewal",
+        "Offers the four proxies in order (reconstruct, control group, customer-attested, benchmark x0.5) and attaches the evidentiary label each carries, never describing a proxy as a measurement",
+        "States that a tier-4 benchmark figure never appears in the customer-facing block or the renewal value case, and that a tier-3 attested figure names its attester and the date",
+        "Where no proxy can be built, converts the objective into 'establish the baseline' with the named customer measurer and the pull-by date as its owner and target date",
+        "Does not invent an industry benchmark for onboarding time or state a plausible current value",
+        "Names the escalation path when the ops lead will not pull the number: the executive sponsor decides, and our own pull does not substitute for their confirmation"
+      ],
+      "files": []
+    }
+  ]
+}

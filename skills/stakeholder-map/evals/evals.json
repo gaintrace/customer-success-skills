@@ -1,0 +1,97 @@
+{
+  "skill_name": "stakeholder-map",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Map the stakeholders at Northwind for me. I've got a Salesforce contact export (there are two title rows above the header and the Role column is half empty), a calendar CSV for the last year, and a Zendesk ticket dump. Renewal is in February.",
+      "expected_output": "A Brief answer first \u2014 coverage, the priced dependency, the one structural reason and the dated action \u2014 with the full artifact offered on request: files ingested without a re-export, an ASCII map distinguishing confirmed from inferred lines, a roster with role_confidence on every contact, depth/breadth/height against the ARR band, coverage X/4, champion risk 0-10, single-threading priced in dollars, a gap plan with owners and dates, a Coverage Ledger over the seven families and an Assumptions table.",
+      "assertions": [
+        "Runs the shared ingest step on the three files rather than asking the user to re-export or reformat them, and confirms any column mapping below 0.80 confidence before scoring on it",
+        "Asks for the data as-of date and prints it in the map header rather than treating the export as current",
+        "Leads with a Brief answer of 20 lines or fewer and offers the full map, coverage ledger and workings on request rather than dumping the full artifact unprompted",
+        "Assigns every contact a role_confidence of verified, evidenced or asserted, and never upgrades a role that only has a job title behind it",
+        "Computes and shows the opt-out deadline as renewal_date minus notice_period_days, not the February renewal date alone",
+        "Reports multithreading depth from two-way interactions only, states that one-way outbound was excluded, and draws every inferred reporting line dashed with a falsifier",
+        "Ends with a Coverage Ledger over all seven signal families including the ones that came back clean or missing, plus an Assumptions table whose every row names a concrete consequence",
+        "C7 \u2014 prints all three of `signs`, `decides` and `influences` as separate fields, each with a name and role_confidence or the literal `UNKNOWN \u2014 requires <source>`; never emits a single merged 'decision maker' field",
+        "C7 \u2014 flags CONCENTRATION when two or three of signs/decides/influences resolve to the same contact, and treats it as a finding priced at the depth-1 structural floor rather than as a simplification",
+        "C7 \u2014 with the February renewal inside 120 days of the opt-out deadline and `signs` unknown, caps coverage_score at 2/4 and makes the signatory trace (executed order form plus MSA notices clause) the primary play, emitting no claim that coverage is adequate",
+        "C8 \u2014 scores mobilising_capacity 0-3 on M1 (has moved a decision through this org), M2 (others cite them) and M3 (controls budget or headcount) before assigning any champion label, and names which M-tests fired for every contact labelled champion",
+        "C8 \u2014 any high-sentiment contact scoring M<=1 or with mobilising capacity untested is written `coach (supporter)`, scores 0.0 on the champion slot of coverage_score, and is never counted toward the 1-2-3 shape or the ARR-band coverage floor",
+        "C11 \u2014 the Blockers & Detractors section is generated before the Coverage Gaps & Plan section, and every contact with negative or hostile sentiment has a row; if none exist it prints 'Checked and clear', never omitting the section",
+        "C11 \u2014 every blocker row carries a disposition of exactly convert, contain or bypass plus a non-empty risk-of-this-disposition cell; no row is emitted with a blank disposition or a blank risk"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "My champion at Delta just changed his title on LinkedIn and my last two emails to him bounced. What do I do?",
+      "expected_output": "The champion-watch path: disconfirming tests run before departure is asserted, a champion risk score with every factor printed, the priced exposure, the day-by-day 30-day succession play with owners and dates, and a customer-facing successor request in a copy block that asks about the work rather than stating that someone left.",
+      "assertions": [
+        "Runs the disconfirming tests on the bounce (domain or MX migration, out-of-office in the bounce body, forwarding address, quota rejection) and records the result before asserting a departure",
+        "Writes the departure as an inference with the rule applied and what would falsify it, not as an observed fact",
+        "Scores champion risk 0-10 and prints every factor including the ones that did not fire",
+        "Prices the exposure as ARR times departure probability times loss rate times the structural multiplier, shows the arithmetic, reports the headline rounded to two significant figures, and labels the probabilities as vendor-sourced ordering rather than a calibrated forecast",
+        "Produces the 30-day succession play with a named owner and a date on every step, including rebuilding to at least two champions rather than one replacement",
+        "Emits any customer-facing draft inside a fenced text block below the divider with no unfilled placeholders, asking who is picking up the work and never stating that we noticed the champion left",
+        "Keeps the risk score, exposure figure, coverage score and the words single-threaded out of the customer-facing text entirely",
+        "C8 \u2014 before treating the departing contact as a champion, checks whether he ever scored mobilising_capacity >= 2; if the evidence is only enthusiasm, records him as a supporter and states that the champion slot was already scoring 0.0 before the bounce",
+        "C8 \u2014 the succession plan recruits from contacts scoring M >= 2 on M1-M3 rather than replacing like with like, and refuses to fill the champion slot by promoting a warm contact who cannot mobilise",
+        "C7 \u2014 states who `signs` and who `decides` independently of the departed contact, and marks either UNKNOWN with the source required rather than assuming the champion held both"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Across my book, which accounts are single-threaded and what is that actually costing us? I only have a CRM contact export and a calendar dump \u2014 no product analytics and no survey data.",
+      "expected_output": "A degraded but useful book-level coverage check: depth, breadth and height where derivable, single-thread exposure in dollars ranked by closable amount, an explicit statement of which families are missing and what they hide, and a confidence cap. No score is invented for the families with no source.",
+      "assertions": [
+        "Degrades rather than refusing \u2014 still produces depth, breadth and height from the interaction and calendar data available",
+        "Ranks accounts by closable exposure in dollars rather than by depth or by a raw score, and shows the arithmetic for the top accounts",
+        "Applies the single-thread tax at depth 1 \u2014 flags the account's full ARR as at-risk, distinct from the ranking exposure figure",
+        "Marks the product usage, sentiment and billing families as UNKNOWN \u2014 requires a named source, and does not substitute an industry benchmark or impute a sentiment value",
+        "Computes coverage across the seven families, states the percentage, and caps confidence at the level the coverage permits",
+        "Names what the missing families typically hide in a stakeholder context, such as unidentified power users and unmodelled detractors",
+        "Records the reduced-coverage run and any defaulted scope or horizon in the Assumptions table",
+        "C7 \u2014 ranks accounts where two or three of signs/decides/influences sit on one person alongside the depth-1 accounts, applying the 1.00 structural floor to concentration cases at any measured depth",
+        "C8 \u2014 states that mobilising capacity cannot be scored from a CRM export and a calendar dump alone, marks it UNKNOWN per contact, and therefore reports every claimed champion as an unverified supporter rather than counting it in coverage",
+        "C11 \u2014 with no sentiment or VoC source connected, states that zero detractors is unmeasured rather than none, and does not report any account as having no blockers"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Acme was acquired last month and a new CIO started. Our champion is still there and everything looks fine \u2014 usage is up and NPS was 9 in June. Should I be doing anything?",
+      "expected_output": "Recognition that the account's human structure changed even though the account-level metrics did not: the executive-change variant escalated harder than a champion departure, the acquirer's buying centre mapped as a separate entity, the multi-entity coverage rule applied, and the stale NPS discounted.",
+      "assertions": [
+        "Treats the executive change as a distinct and harder event than a champion departure, with the 30-day briefing window and our own executive as the owner",
+        "Resolves the business model before mapping, so roles that do not exist in this model are not scored as gaps",
+        "Maps the acquirer's buying centre as a separate entity rather than relying on the existing champion, and applies the minimum-across-entities coverage rule instead of averaging",
+        "Discounts the June NPS as stale sentiment past the 90-day rule rather than carrying it forward as current",
+        "Separates observed facts from inferences and states the inference rule for anything derived about the new reporting structure",
+        "Recommends actions that each carry an action, owner, date, expected effect and success measure",
+        "Uses the opt-out deadline rather than the renewal date when timing the executive briefing",
+        "C7 \u2014 re-resolves `signs`, `decides` and `influences` for the acquiring entity rather than carrying the pre-acquisition triangle forward, and marks each UNKNOWN with the source required where the acquisition has not yet been evidenced",
+        "C8 \u2014 does not treat the still-present champion as coverage until mobilising capacity is re-tested against the new structure, since M1 and M3 evidence predates the acquisition and the budget line may have moved",
+        "C11 \u2014 opens a blocker row with a convert/contain/bypass disposition for anyone in the acquirer's organisation on record against the incumbent vendor, and never selects bypass for a contact holding a security, legal or procurement veto"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Quick one on Delta \u2014 renewal is 15 Nov, 60 days' notice. Sam in Ops loves us, he's our champion, he's been there through the whole rollout. Procurement opened a competitive review last week and I'd rather just go around them to the CFO. Are we in good shape?",
+      "expected_output": "A refusal to confirm 'good shape' on three separate grounds, each stated structurally rather than as advice: the champion label does not survive the mobilising test, procurement cannot be bypassed, and nobody has established who signs with the opt-out deadline inside the window.",
+      "assertions": [
+        "Computes the opt-out deadline as 15 Nov minus 60 days and states the account is inside the renewal window, rather than working to the November renewal date (R1)",
+        "C8 \u2014 tests Sam against M1 (has he moved a decision through Delta before), M2 (do others cite him) and M3 (does he control budget or headcount) before accepting the champion label, and asks for the specific instance rather than accepting tenure or enthusiasm as evidence",
+        "C8 \u2014 if no M-evidence exists, records Sam as `coach (supporter)`, states that the champion slot of coverage_score scores 0.0 exactly as an empty slot would, and does not let the supporter satisfy the champion requirement for the renewal",
+        "C11 \u2014 refuses the bypass: procurement holds a veto, so the disposition falls back to convert or contain, and the refusal is stated with the risk that a bypassed blocker who later acquires authority becomes both the reason the renewal is lost and the argument",
+        "C11 \u2014 the blocker row for procurement carries a disposition and a non-empty risk cell, and if the objection behind the competitive review is not known, prints `TEST \u2014 <what must be found out>` with a named owner and a date rather than leaving the disposition UNKNOWN inside the renewal window",
+        "C7 \u2014 asks who `signs` and who `decides` as separate questions, does not treat the CFO as automatically both, and where `signs` is unknown caps coverage at 2/4 and makes the signatory trace the primary play instead of answering that the account is in good shape",
+        "Emits a Brief answer of 20 lines or fewer with the call, the dated action, the owner and the falsifier, offering the full map on request",
+        "Keeps the coverage score, the supporter label, the blocker disposition and the exposure figure out of any customer-facing text (R18)"
+      ],
+      "files": []
+    }
+  ]
+}

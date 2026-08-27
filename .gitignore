@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Node / Astro (site/)
+node_modules/
+dist/
+.astro/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Agent working files
+.agents/
+.claude/settings.local.json

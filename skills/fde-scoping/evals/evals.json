@@ -1,0 +1,67 @@
+{
+  "skill_name": "fde-scoping",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We just closed Northwind and I've got to write the SOW for the invoice-approval deployment. Here's the discovery call transcript and a CSV of their contract fields. Kickoff is meant to be in two weeks.",
+      "expected_output": "A full scoping analysis and SOW draft: the problem statement in the customer's quoted words with a measurable current state, out-of-scope written before in-scope with all seven mandatory categories, milestones with given/when/then acceptance criteria and named acceptors, a dependency register with named customer-side owners and day-for-day slip stated, a three-point estimate with a P80 ceiling and visible project-level contingency, the chosen commercial shape, change-control triggers and approvers, a kickoff-gate score, and the last acceptance date tested against the opt-out deadline.",
+      "assertions": [
+        "Reads .agents/cs-context.md before asking anything, and asks nothing that file or the transcript already answers",
+        "Runs ../cs-context/scripts/ingest.py on the CSV before quoting any contract figure, and confirms renewal_date, notice_period_days and contract_start regardless of mapping confidence",
+        "Quotes the problem in a named customer person's own words with a date and a source, and states a measurable current state with a number, unit, period, source and a named customer owner of that number",
+        "Prints all seven mandatory out-of-scope categories, including any marked not applicable, with each exclusion phrased as inclusion plus boundary plus route rather than a bare negative",
+        "Gives every milestone an acceptance criterion in given/when/then form with a named tester, a named acceptor and a deemed-accepted window, and no criterion reads 'customer is satisfied', 'works as expected' or 'go-live'",
+        "Produces a dependency register where every row has a named person (not a team), a needed-by date, what it blocks and the day-for-day slip consequence, plus a stated customer engineering-hours line attributed to the manager who agreed it or marked UNKNOWN",
+        "States effort as a three-point estimate with sigma summed in quadrature and a P80 commitment presented as a ceiling, with contingency held once at project level and a named releaser",
+        "Computes the opt-out deadline as renewal_date minus notice_period_days and tests the last acceptance date against it minus the evidence window, reporting slack as a number and a band",
+        "Scores the kickoff-readiness gate out of 10 and, below 8, states that the kickoff moves and names the open items",
+        "Ends with a Coverage Ledger over all seven signal families and a confidence cap, and names no CS platform vendor by product name anywhere"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "The customer just asked if we can also pull in their archive going back three years, and dedupe the supplier records while we're in there. Is that a change order? I don't want to be difficult about it — they're lovely.",
+      "expected_output": "The request classified against the signed SOW using the classification tree, priced with an effort delta, and a same-day change order plus a send-ready reply that says yes to the outcome, names the trade specifically and offers three options rather than an invoice.",
+      "assertions": [
+        "Runs the classification tree in order and states which row answered — both requests land outside the signed scope as historical migration beyond N months and data cleanup, not as defects",
+        "Classifies each request separately rather than bundling them, and states the effort delta for each",
+        "Produces a change order the same day with an acceptance criterion, effort, fee effect, schedule effect and two named approvers",
+        "The customer-facing reply says yes to the outcome first with no conditions, names the specific trade in days or weeks, and offers three options including parking it to a dated deferred-scope entry",
+        "The reply contains no estimate workings, contingency percentage, margin, utilisation, absorbed-hours ledger, opt-out deadline or risk language, and sits inside a ```text fence below the CUSTOMER-FACING divider with no unfilled placeholders",
+        "Does not use the phrase 'that's out of scope' as the opening move, and does not say 'it's on the roadmap' for anything without a named owner and an agreed date",
+        "Flags whether either request has arrived before, and if the same category has come up three or more times, says the SOW boundary was drawn wrong rather than proposing to invoice the past"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Scope a four-week pilot for Meridian before they commit to the production rollout. All I have is one discovery call — no data yet.",
+      "expected_output": "A pilot SOW built around one falsifiable question, with sampled data, a threshold agreed before the build, and the four conversion clauses named at pilot signature; a concept-stage estimate presented as a range with a recommendation to quote the discovery rather than a fixed fee for the build.",
+      "assertions": [
+        "States the pilot question in falsifiable form with a threshold and who measures it, and treats a 'no' as a successful pilot outcome",
+        "Names the production go/no-go criteria, the production owner and the production budget line at pilot signature, not after the pilot",
+        "Excludes SSO, historical migration, integrations beyond the one under test and end-user enablement from the pilot by default, phrased as inclusion plus boundary plus route",
+        "Recognises the scoping stage as concept-only and presents a 0.5x-2x range while explicitly refusing to quote the build at a fixed fee, offering a paid discovery or spike instead with what it costs and what it narrows",
+        "Freezes the evaluation set before the build and draws it from the customer's own distribution rather than assembling it after delivery",
+        "Records every default it ran on in an Assumptions table with the columns '# | Assumption | Why it was needed | If wrong', each row naming a concrete consequence rather than 'may affect results'"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "This deployment has grown and I can feel it. We're six weeks in, three milestones supposedly delivered, and I keep saying yes to small things. Can you tell me where I actually am?",
+      "expected_output": "A scope audit: a creep ledger of absorbed requests against what was signed, acceptance status rather than delivery status for every milestone, the re-run estimate and slack against the opt-out deadline, and the single decision needed this week with an owner and a date.",
+      "assertions": [
+        "Reports acceptance status, not delivery status, and ages anything delivered-but-unaccepted, treating an unaccepted milestone as unrecognised revenue and an unproven value claim rather than a formality",
+        "Builds a creep ledger with cumulative absorbed hours against a stated ceiling, and states what happens at the ceiling under R21 — a change order or a written decline",
+        "Reads the ledger for pattern as well as total, and where three or more requests fall in one category, says the boundary in that category was drawn wrong and fixes the next SOW's default rather than invoicing the past",
+        "Re-runs the estimate and re-tests the last acceptance date against renewal_date minus notice_period_days minus the evidence window, reporting slack as a number and a band, with negative slack stated in the first five lines",
+        "Defaults to Brief — twenty lines or fewer with the call, the number, the single decision with an owner and a date, confidence in three words and a falsifier — and offers Full on request",
+        "Names one recommendation with action, owner, date, expected effect and success measure, and does not present a menu of options without a recommendation",
+        "Uses bands and stated confidence rather than certainty language, and caps confidence at what the Coverage Ledger permits"
+      ],
+      "files": []
+    }
+  ]
+}

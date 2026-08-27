@@ -1,0 +1,91 @@
+{
+  "skill_name": "renewal-negotiation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Procurement at Northwind just emailed asking for 20% off to renew. $480k ARR, renews 1 Feb 2027, 90-day notice. I haven't spoken to Dana (their VP Ops, who signs) since early July. What do I say?",
+      "expected_output": "Live-demand mode. Computes the opt-out deadline as 2026-11-03 and days_since_business_thread, runs both gates, finds Gate B failed (procurement active, business thread stale), blocks the ladder, and makes re-opening a business thread with Dana the first dated action rather than pricing a counter. Costs the ladder anyway for the approver, with a required get in every row, and emits the business-thread re-opener as the customer-facing draft — containing no price.",
+      "assertions": [
+        "Computes and prints the opt-out deadline as 2026-11-03 (renewal date minus the 90-day notice period) and treats it, not the renewal date, as the governing date",
+        "C10 — prints days_since_business_thread as an integer computed from the last non-commercial conversation, compares it against the stated 21-day threshold, and marks Gate B as FAIL because procurement is active and the value is over 21",
+        "C10 — prints an explicit ladder status of BLOCKED, and the first row of the actions table is a dated non-commercial meeting with the named economic buyer, owned and dated before any commercial reply",
+        "C14 — prints Gate A with its evidence (who signs, whether that person is in the conversation) as PASS or FAIL",
+        "No concession rung is offered while either gate reads FAIL: every Offer? cell reads BLOCKED, and no discount percentage is proposed to the customer",
+        "C12 — the concession ladder's column is headed 'What we get' and every row has a non-empty cell in it; no row uses an em dash, 'n/a', 'goodwill', 'the relationship', 'they renew' or 'they stop asking' as the get",
+        "Diagnoses the constraint before pricing it — asks whether the driver is the budget line, the timing or the scope — rather than negotiating the 20% downward",
+        "Any customer-facing text sits inside a fenced text block below the CUSTOMER-FACING divider, contains no price, and carries no unfilled placeholder such as [Name]",
+        "No walk-away number, ladder rung, gate status, health band or ARR-at-risk language appears anywhere in the customer-facing text"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Acme renews in March, ARR is about $310k and there's a 5% escalator in the contract. I want to put the increase to them. Here's the CRM export — it has three junk rows above the header and the ARR column is stored as text.",
+      "expected_output": "Position mode. Runs ingest.py on the file first and confirms the arr, uplift_pct and notice_period_days mappings before pricing anything, then picks exactly one uplift rung with its evidence, orders the justification value-first, states the break-even added churn probability as arithmetic rather than a forecast, schedules the ask at T-90 against the opt-out deadline, and emits an announcement-style notification whose price paragraph is declarative, carries no question mark, and ends on the number.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the supplied file before using any of its numbers, reports the real header row found beneath the export preamble, and asks for the export's as-of date",
+        "Confirms the arr, uplift_pct and notice_period_days column mappings explicitly, and any other mapping below 0.80 confidence, before a number is priced from them",
+        "Selects exactly one uplift rung and names the evidence that rung requires, refusing to assert a standard uplift without a documented value-realisation artifact",
+        "Orders the justification value-first — outcomes in the customer's own metrics before the contractual clause — and does not lead with the clause or with a published market index",
+        "States the break-even added churn probability for the chosen uplift as u/(1+u) arithmetic and labels it an ordering aid, not a forecast, with no probability quoted without a cited backtest",
+        "Anchors the timing on the opt-out deadline, delivering the price at T-90, and refuses to raise an increase for the first time inside the notice window",
+        "C13 — the paragraph of the customer-facing draft that carries the price contains zero question marks and none of the request constructions 'would you be open to', 'how do you feel about', 'is there room', 'would that work', 'we were hoping', 'would you consider'",
+        "C3 — justification precedes the number: the price figure is the last thing in its paragraph, no clause follows it in that sentence, and none of 'of course', 'that said', 'however', 'happy to discuss', 'there is flexibility' or 'nothing is set in stone' appears after it",
+        "The effective date, the opt-out deadline in plain words, and any meeting offer sit in a paragraph after the price paragraph and do not restate the number",
+        "Cites the 3-5% negotiated uplift range as practitioner guidance with its source and year rather than as a measured benchmark, and never quotes a market index to the customer as justification"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Contoso want to cut from 500 seats to 350 at renewal. Their admin raised it at the QBR last month with a headcount number. Do we fight it?",
+      "expected_output": "Scores the request against all five genuine-versus-tactical tests, concludes it is genuine right-sizing, recommends taking it, and structures the reduction so it buys something: real usage plus a named growth buffer, a trade for term or the removal of an expiring discount, an entitlement floor, a pre-agreed unit price for adds, and the correct contraction reason code.",
+      "assertions": [
+        "Scores the request against all five tests — utilisation, who is asking, when it was raised, how specific it is, and what happens if refused — and states the count on each side",
+        "Recommends taking the right-size rather than fighting it, and says plainly why a fought renewal that churns later is worse than a smaller one that keeps the logo and the reference",
+        "Right-sizes to measured active usage plus a named growth buffer rather than to the number the customer asked for",
+        "Requires the reduction to buy something — term length, removal of an expiring discount, reference rights — rather than being taken silently",
+        "C12 — the trade is written as a row pairing the reduction with a named non-price get (term length, removal of an expiring discount, reference rights, or a pre-agreed in-term add price); no row leaves the get cell empty or fills it with goodwill or the renewal itself",
+        "Keeps entitlement above the point where the use case breaks, and puts a pre-agreed unit price for in-term adds into the paper as the recovery path",
+        "Books the change as contraction with value_delta_reason = seat_reduction and warns that booking it as a flat renewal misstates gross retention",
+        "Cites the gross-retention benchmark with its source and year, and does not present it as a measurement of this company's own book",
+        "Any customer-facing reply is fenced, placeholder-free, and contains no risk band, revenue-at-risk figure or internal assessment of a named person"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Their procurement lead has come back at T-14 asking for our best and final, and says the offer expires Friday. They also want a three-year deal with an annual termination-for-convenience right and a price cap. $620k.",
+      "expected_output": "Structure plus live-demand mode. Refuses the manufactured deadline by anchoring on the opt-out deadline and offering a 30-60 day extension at current terms, makes the best-and-final conditional on a named signature date and a named get, prices the three-year-with-annual-opt-out as an annual deal, treats the price cap as a costed concession, and routes the termination-for-convenience clause through the never-concede register rather than to legal.",
+      "assertions": [
+        "Runs both gates before pricing any structure: prints Gate A with the named signer and whether they are in the conversation, prints days_since_business_thread against the 21-day threshold for Gate B, and states ladder status as OPEN or BLOCKED",
+        "Anchors on the opt-out deadline rather than the customer's Friday deadline, and names the 30-60 day extension at current terms as a real, prepared option rather than a bluff",
+        "Makes any best-and-final conditional on a named signature date and a named get, and refuses to treat it as simply a lower price",
+        "States that a multi-year with an annual termination-for-convenience right is not a multi-year — every anniversary is its own renewal event with its own opt-out deadline, and it is priced, forecast and staffed as annual",
+        "Treats price protection as a concession that must be paid for, and requires the cap to carry a floor, a named index and an end date",
+        "Routes the termination-for-convenience demand and any late-arriving unprecedented term to the never-concede register with its approval level, rather than sending it straight to legal",
+        "Writes each year's fee in dollars on the order form rather than as an escalator formula, and says why",
+        "Does not manufacture urgency in return, and does not match any competitor number whose scope has not been seen",
+        "States the forecasting consequence of the chosen structure, including the reason code, so gross retention is not overstated",
+        "C12 — every counter row pairs what is given with what we get in the same row; the price cap, the three-year term and the termination right are each priced against a named get rather than conceded to close"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Their IT manager says he can get the renewal over the line if we take 10% off. He's been our main contact all year. $260k, renews in May, 60-day notice. I'd rather give the 10% than lose it — can I just approve that?",
+      "expected_output": "Refuses the concession on the authority gate. signs is not established for the IT manager, so Gate A fails, the ladder prints BLOCKED, and the recommended next action is the authority test in its exact words rather than the 10%. The costed ladder is still built for the approver with a non-empty What-we-get cell in every row, and the reply draft carries the authority question in its own paragraph with no number in it.",
+      "assertions": [
+        "C14 — establishes that the IT manager is not confirmed as the person who signs, marks Gate A as FAIL with that evidence, and does not treat 'main contact all year' as signing authority",
+        "C14 — the recommended next action is the authority test, quoted verbatim as 'If I could get that approved, is this something you could sign this quarter?', or the signer-unknown variant asking who signs the order form",
+        "C14 — no discount is offered while Gate A reads FAIL: every Offer? cell in the ladder reads BLOCKED and the 10% is not approved, countered or split",
+        "States plainly why the concession would otherwise be spent twice — once with the person who cannot sign and again with the person who can, who then opens from the reduced number",
+        "C12 — the ladder is still costed for the approver and every row carries a non-empty What we get cell; a row that cannot name a get is deleted rather than shipped with an empty cell",
+        "C10 — prints days_since_business_thread and Gate B status alongside Gate A rather than reporting only the authority gate",
+        "Computes the opt-out deadline as the renewal date minus 60 days and anchors every date on it (R1)",
+        "Any customer-facing draft keeps the authority question in its own paragraph, carries no price figure in that paragraph, is fenced below the CUSTOMER-FACING divider, and contains no rung, gate status, walk-away or [Name] placeholder"
+      ],
+      "files": []
+    }
+  ]
+}

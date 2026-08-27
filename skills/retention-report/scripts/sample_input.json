@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "company": "Northwind Analytics",
+    "period_label": "July 2026",
+    "period_end": "2026-07-31",
+    "units": "thousands of USD",
+    "basis": "constant currency; cohort method; billing system as source of truth"
+  },
+  "bridge": {
+    "Month (Jul-26)": {
+      "beginning_arr": 103940,
+      "new_arr": 1420,
+      "expansion_arr": 980,
+      "reactivation_arr": 60,
+      "contraction_arr": 392,
+      "churn_arr": 1196,
+      "stated_ending_arr": 104812
+    },
+    "TTM (Aug-25\u2192Jul-26)": {
+      "beginning_arr": 92600,
+      "new_arr": 16840,
+      "expansion_arr": 11120,
+      "reactivation_arr": 640,
+      "contraction_arr": 4510,
+      "churn_arr": 11878,
+      "stated_ending_arr": 104812
+    }
+  },
+  "cohort_retention": {
+    "t0_date": "2025-08-01",
+    "t1_date": "2026-07-31",
+    "t0_arr": 92600,
+    "cohort_churn": 11102,
+    "cohort_contraction": 4268,
+    "cohort_expansion": 9986,
+    "total_period_movements": {
+      "churn": 11878,
+      "contraction": 4510,
+      "expansion": 11120,
+      "reactivation": 640
+    },
+    "logos": {
+      "beginning": 1148,
+      "cohort_churned": 131
+    }
+  },
+  "segments": [
+    {
+      "name": "Enterprise (>$150k ACV)",
+      "t0_arr": 50300,
+      "cohort_churn": 3820,
+      "cohort_contraction": 2110,
+      "cohort_expansion": 6940,
+      "t0_logos": 96,
+      "cohort_logos_churned": 7
+    },
+    {
+      "name": "Mid-Market ($25\u2013150k)",
+      "t0_arr": 30100,
+      "cohort_churn": 4180,
+      "cohort_contraction": 1540,
+      "cohort_expansion": 2620,
+      "t0_logos": 352,
+      "cohort_logos_churned": 46
+    },
+    {
+      "name": "SMB (<$25k)",
+      "t0_arr": 12200,
+      "cohort_churn": 3102,
+      "cohort_contraction": 618,
+      "cohort_expansion": 426,
+      "t0_logos": 700,
+      "cohort_logos_churned": 78
+    }
+  ],
+  "cohort_table": [
+    {
+      "cohort": "2024-Q3",
+      "arr_by_tenure": [
+        3820,
+        3735,
+        3660,
+        3600,
+        3540,
+        3490,
+        3450,
+        3420
+      ]
+    },
+    {
+      "cohort": "2024-Q4",
+      "arr_by_tenure": [
+        4180,
+        4070,
+        3980,
+        3900,
+        3830,
+        3770,
+        3720
+      ]
+    },
+    {
+      "cohort": "2025-Q1",
+      "arr_by_tenure": [
+        3960,
+        3830,
+        3730,
+        3640,
+        3560,
+        3490
+      ]
+    },
+    {
+      "cohort": "2025-Q2",
+      "arr_by_tenure": [
+        4450,
+        4270,
+        4130,
+        4010,
+        3900
+      ]
+    },
+    {
+      "cohort": "2025-Q3",
+      "arr_by_tenure": [
+        4310,
+        4090,
+        3930,
+        3790
+      ]
+    },
+    {
+      "cohort": "2025-Q4",
+      "arr_by_tenure": [
+        4820,
+        4480,
+        4260
+      ]
+    },
+    {
+      "cohort": "2026-Q1",
+      "arr_by_tenure": [
+        5140,
+        4640
+      ]
+    },
+    {
+      "cohort": "2026-Q2",
+      "arr_by_tenure": [
+        4390
+      ]
+    }
+  ],
+  "migration": {
+    "t0_date": "2026-04-30",
+    "t1_date": "2026-07-31",
+    "counts": {
+      "Secure": {
+        "Secure": 498,
+        "Watch": 78,
+        "At Risk": 19,
+        "High Risk": 6,
+        "Critical": 1,
+        "Churned": 2
+      },
+      "Watch": {
+        "Secure": 62,
+        "Watch": 231,
+        "At Risk": 44,
+        "High Risk": 15,
+        "Critical": 4,
+        "Churned": 5
+      },
+      "At Risk": {
+        "Secure": 11,
+        "Watch": 43,
+        "At Risk": 88,
+        "High Risk": 21,
+        "Critical": 6,
+        "Churned": 7
+      },
+      "High Risk": {
+        "Secure": 2,
+        "Watch": 9,
+        "At Risk": 21,
+        "High Risk": 24,
+        "Critical": 6,
+        "Churned": 6
+      },
+      "Critical": {
+        "Secure": 0,
+        "Watch": 1,
+        "At Risk": 4,
+        "High Risk": 5,
+        "Critical": 6,
+        "Churned": 7
+      }
+    },
+    "arr": {
+      "Secure": {
+        "Secure": 44900,
+        "Watch": 5900,
+        "At Risk": 1300,
+        "High Risk": 430,
+        "Critical": 90,
+        "Churned": 180
+      },
+      "Watch": {
+        "Secure": 5400,
+        "Watch": 17700,
+        "At Risk": 3400,
+        "High Risk": 1080,
+        "Critical": 300,
+        "Churned": 520
+      },
+      "At Risk": {
+        "Secure": 900,
+        "Watch": 3500,
+        "At Risk": 6700,
+        "High Risk": 1400,
+        "Critical": 500,
+        "Churned": 900
+      },
+      "High Risk": {
+        "Secure": 140,
+        "Watch": 620,
+        "At Risk": 1500,
+        "High Risk": 1540,
+        "Critical": 400,
+        "Churned": 700
+      },
+      "Critical": {
+        "Secure": 0,
+        "Watch": 80,
+        "At Risk": 320,
+        "High Risk": 400,
+        "Critical": 400,
+        "Churned": 700
+      }
+    }
+  },
+  "forecast_history": [
+    {
+      "period": "FY26 Q1",
+      "called": 16900,
+      "closed": 16100
+    },
+    {
+      "period": "FY26 Q2",
+      "called": 18200,
+      "closed": 17050
+    },
+    {
+      "period": "FY26 Q3",
+      "called": 17400,
+      "closed": 16900
+    },
+    {
+      "period": "FY26 Q4",
+      "called": 20300,
+      "closed": 18600
+    }
+  ]
+}

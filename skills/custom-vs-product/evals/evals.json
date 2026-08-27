@@ -1,0 +1,67 @@
+{
+  "skill_name": "custom-vs-product",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Meridian want a nightly close-out export with their supplier codes already translated. Dana's asking hard and their renewal is 31 March. I think it's about two days of work. Should we just build it? Here's the export of our feature-request portal and a CSV of contract fields.",
+      "expected_output": "A decision memo returning one of four outcomes from the ordered gate sequence, with the generality claim evidenced by named accounts and tiers, the three-year carrying cost priced across all three interest streams, the break-even generality threshold, and a disposition with a named owner and a sunset review date.",
+      "assertions": [
+        "Reads .agents/cs-context.md before asking anything, and asks nothing that file or the prompt already answers",
+        "Runs ../cs-context/scripts/ingest.py on both supplied files before quoting any figure, and confirms arr, renewal_date and notice_period_days regardless of mapping confidence",
+        "Reduces the request to the job without naming a mechanism, keeps 'what they proposed' as a separate field, and quotes the customer's own words with a named person, a title and a date",
+        "Runs all six gates in order and prints every row including those not reached, naming the gate that returned the outcome; does not revisit an earlier gate after a later one matched",
+        "Prices carrying cost across engineering, upgrade and renewal-exposure streams over a stated horizon with a stated drift, shows the arithmetic, and reports the interest rate and share of account ARR rather than build cost alone",
+        "States renewal exposure as ARR at stake times a band midpoint, labelled exposure, and never as a churn probability",
+        "Counts generality as named accounts with ARR, renewal date and evidence tier G0-G5, states N_evidenced and the break-even K*, and checks the two-accounts-at-G3-plus requirement separately from the weighted sum",
+        "Computes the decision window as renewal_date minus notice_period_days minus the evidence window, and never uses the renewal date alone as the deadline",
+        "Ends with a Coverage Ledger over all seven signal families with a confidence cap, an Assumptions table whose rows each name a concrete consequence, and names no CS platform vendor by product name anywhere"
+      ],
+      "files": ["feature-requests.csv", "contracts.csv"]
+    },
+    {
+      "id": 2,
+      "prompt": "Sales say the Halcyon deal closes this quarter if we agree to build the depot-split view. It's a fork of our reporting module but it's a $400k deal. What do I tell them?",
+      "expected_output": "A Gate 0 decline that revenue does not override, the counterfactual written out, the priced trade shown to the account owner so the concession is visible rather than absorbed, and a send-ready reply that declines and offers the nearest alternative.",
+      "assertions": [
+        "Returns DECLINE at Gate 0 on the fork test and states explicitly that no revenue, score or seniority overrides it, without running later gates to justify a different answer",
+        "Distinguishes a fork from a documented extension point and names the seam that would have to exist for the answer to change",
+        "Prices what absorbing the build would cost as effective_discount_pct over the term and states plainly that an absorbed build is a discount that never appears in the discount report",
+        "Recommends one structure rather than surveying three, and defaults to the term-commitment-plus-sunset structure where the arithmetic supports it",
+        "Writes the counterfactual if we decline as a sentence rather than leaving it implicit",
+        "Emits the customer-facing reply inside a fenced text block below the CUSTOMER-FACING divider, with no unfilled placeholders, no carrying cost, interest rate, margin, outcome word or comparison to another customer, and no roadmap date without a named owner who agreed it",
+        "Gives every recommendation an action, owner, date, expected effect and success measure"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "We built a carrier EDI normaliser for Northwind during the pilot eighteen months ago and it's still in production. Nobody owns it. Is it time to productise it or kill it?",
+      "expected_output": "A review of a past decision: the gates re-run with today's numbers, the carrying cost recomputed, generality re-counted, and one of keep, graduate, migrate or retire returned with a date and an owner.",
+      "assertions": [
+        "Re-runs the gate sequence with current ARR, rate and release cadence rather than treating the original decision as settled",
+        "Prices the component as it stands today, including a renewal-exposure uplift because it is unowned, and reports the interest rate against the original build",
+        "Re-counts generality across the base with the four sources searched and the negatives printed with search dates, distinguishing not-measured from measured-and-empty",
+        "Returns exactly one disposition from keep, graduate, migrate or retire, with a date and a named person rather than a team",
+        "Where the disposition is retire, requires proof of no invocations in 90 days, dated notice to a named customer-side owner, a rollback window, and removal from the diagram, ledger, risk register, runbook and alert routing",
+        "Where the disposition is graduate, produces a Graduation Contract with all five fields including a product counterpart and a decision date rather than a ship date",
+        "Opens or updates the debt-register row in the account's standing custom-work ledger and states the paydown reserve as a share of delivery capacity"
+      ],
+      "files": ["custom-work.json"]
+    },
+    {
+      "id": 4,
+      "prompt": "Three different customers have asked for a webhook when an order closes. Feels like we should just build it properly once. Am I right?",
+      "expected_output": "The reduction test applied before the count, the generality evidence tiered and searched rather than asserted, the break-even threshold computed against the general and bespoke variants, and a recommendation with the premature-generalisation risk named.",
+      "assertions": [
+        "Reduces all three requests to the job before counting them, and splits the count where one job sentence cannot be written that all three accounts would accept",
+        "Assigns an evidence tier G0-G5 to each account with its source, and does not count internal opinion as evidence",
+        "Computes K* from the general and bespoke variants and compares it to N_evidenced rather than treating three accounts as automatically sufficient",
+        "Names the premature-generalisation risk, citing that duplication is cheaper than the wrong abstraction, and enforces the two-accounts-at-G3-plus clause alongside the arithmetic",
+        "Chooses an abstraction shape built on a documented extension point and names the seam and its version policy",
+        "Defaults to Brief at twenty lines or fewer with the outcome, the number, the deciding gate, one action with an owner and a date, confidence in three words and a falsifier, offering Full on request",
+        "Uses bands and stated confidence rather than certainty language, and caps confidence at what the Coverage Ledger permits"
+      ],
+      "files": []
+    }
+  ]
+}

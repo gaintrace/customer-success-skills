@@ -1,0 +1,43 @@
+{
+  "account_name": "Meridian Logistics",
+  "as_of": "2026-08-28",
+  "mode": "white-glove",
+  "contract_start": "2026-03-02",
+  "renewal_date": "2027-03-01",
+  "notice_period_days": 90,
+  "target_ttfv_days": 150,
+  "activation_event": "weekly carrier reconciliation run by the ops team, four consecutive weeks",
+  "actual_go_live": "2026-05-18",
+  "customer_owner_count": 3,
+  "phases_complete": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "value_lag_days": 30,
+  "observed": {
+    "milestones_overdue": 1,
+    "cumulative_slip_days": 9,
+    "activation_event_observed": false,
+    "overdue_tasks_customer_side": 2,
+    "overdue_tasks_total": 6,
+    "weeks_customer_side_majority": 0,
+    "days_since_bilateral_touch": 4,
+    "prod_events": 118,
+    "total_events": 940,
+    "core_events_since_start": 118,
+    "new_users_l30": 0,
+    "seat_utilisation": 0.31,
+    "services_hours_burned": 260,
+    "services_hours_sold": 180,
+    "scope_change_count": 2,
+    "sold_use_case_ever_performed": false,
+    "value_gate_attested": false,
+    "value_gate_attested_on": null,
+    "kickoff_date": "2026-03-16",
+    "config_complete_date": "2026-04-20"
+  },
+  "record_owner": "Priya Raman (receiving CSM)"
+}

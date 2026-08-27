@@ -1,0 +1,14 @@
+---
+// The primary install command, sized to be the first thing anyone copies.
+const { command, note, label = 'Install' } = Astro.props;
+---
+<div class="cmdbar">
+  <div class="cmdbar__row">
+    <span class="cmdbar__prompt" aria-hidden="true">$</span>
+    <code class="cmdbar__cmd">{command}</code>
+    <button class="cmdbar__copy" type="button" data-copy={command} aria-label={`Copy ${label} command: ${command}`}>
+      Copy
+    </button>
+  </div>
+  {note && <p class="cmdbar__note" set:html={note} />}
+</div>

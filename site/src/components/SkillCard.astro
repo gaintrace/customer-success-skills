@@ -1,0 +1,14 @@
+---
+import { href } from '../lib/site.js';
+const { slug, blurb, role, version } = Astro.props;
+const primaryRole = (role ?? '').split('|')[0].trim();
+---
+<a class="card" href={href(`/skills/${slug}/`)}>
+  <span class="card__arrow" aria-hidden="true">→</span>
+  <span class="card__name">{slug}</span>
+  <p class="card__blurb">{blurb}</p>
+  <span class="card__meta">
+    {primaryRole && <span>{primaryRole}</span>}
+    {version && <span>v{version}</span>}
+  </span>
+</a>

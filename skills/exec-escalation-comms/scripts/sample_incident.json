@@ -1,0 +1,53 @@
+{
+  "as_of": "2026-08-28",
+  "note": "Fictional. Shape only — replace every value before using this for a real account.",
+
+  "incident": {
+    "reference": "INC-4471",
+    "severity": "S1",
+    "detected_at": "2026-08-27T09:12:00Z",
+    "customer_impact_confirmed_at": "2026-08-27T09:41:00Z",
+    "resolved_at": null,
+    "updates_sent_at": [
+      "2026-08-27T10:05:00Z",
+      "2026-08-27T11:10:00Z"
+    ]
+  },
+
+  "impact": {
+    "unit_name": "nightly reconciliation job",
+    "units_affected": 3,
+    "manual_minutes_per_unit": 120,
+    "people_involved": 2,
+    "loaded_hourly_rate": 85,
+    "currency": "USD"
+  },
+
+  "planned_change": {
+    "kind": "price_increase",
+    "announce_on": "2026-09-15",
+    "effective_on": "2026-12-01",
+    "required_notice_days": 90
+  },
+
+  "accounts": [
+    {
+      "name": "Northwind Logistics",
+      "arr": 620000,
+      "renewal_date": "2027-02-05",
+      "notice_period_days": 90
+    },
+    {
+      "name": "Delta Systems",
+      "arr": 310000,
+      "renewal_date": "2026-11-30",
+      "notice_period_days": 60
+    },
+    {
+      "name": "Acme Corp",
+      "arr": 148000,
+      "renewal_date": "2026-12-15",
+      "notice_period_days": null
+    }
+  ]
+}

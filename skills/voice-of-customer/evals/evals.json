@@ -1,0 +1,64 @@
+{
+  "skill_name": "voice-of-customer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our Q3 NPS came back at 34, down from 41. Here's the export. What do I tell the exec team on Thursday?",
+      "expected_output": "A readout that leads with representativeness before the score, ranks themes by ARR rather than mention count, and asks its scoping questions in one batched tappable ask.",
+      "assertions": [
+        "Asks scope, period, capacity-to-act and output audience as a single batched AskUserQuestion of no more than four, each with 2-4 options and the recommended one first and labelled '(Recommended)'",
+        "Never states the 34 or the 41 without the response rate, respondent count and ARR represented in the same place",
+        "Prints §1 representativeness, including a Silent ARR table by segment with renewals inside 120 days, before any theme ranking",
+        "Ranks themes by attributed ARR x severity x trajectory x tractability, never by mention count, and shows the arithmetic",
+        "Labels the attributed-ARR column as revenue of accounts that mentioned the theme, not revenue at risk or recoverable",
+        "Ends with a Coverage Ledger over all seven signal families and a confidence capped by coverage",
+        "Names no CS-platform vendor product anywhere; refers to the category generically (\"your CS platform\", \"whichever platform holds your playbooks\")"
+      ],
+      "files": ["nps_q3_export.csv"]
+    },
+    {
+      "id": 2,
+      "prompt": "Here's a dump of 400 support tickets and 60 survey verbatims from the last two quarters. Pull out the themes and tell me which ones to take to Product.",
+      "expected_output": "Coded themes against a versioned taxonomy with an inter-coder alpha, ARR attached per theme, one accountable owner each, and everything below the capacity cut written into a Not Doing section.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the supplied files before quoting any number from them",
+        "Confirms every column mapping below 0.80 confidence before using those numbers, and asks for the export's as-of date",
+        "Codes the problem rather than the requested solution, and states one primary code per mention",
+        "Reports an inter-coder alpha with its sample size and coder types, and states that an LLM coder is held to the same double-coding audit",
+        "Assigns exactly one accountable owner per routed theme with an action, a date, an expected effect and a success measure",
+        "Puts every theme below the capacity-gate cut into a 'Not Doing' section with a reason and a reconsider trigger",
+        "Records any default it proceeded on in an Assumptions table with a concrete 'if wrong' consequence, not 'may affect results'"
+      ],
+      "files": ["tickets.csv", "verbatims.xlsx"]
+    },
+    {
+      "id": 3,
+      "prompt": "Draft the follow-up to the three detractors from this quarter's survey, and the you-said-we-did note that goes out to everyone.",
+      "expected_output": "Internal analysis above an unmissable divider, then each customer-facing draft inside its own fenced text block, formatted for an email client and free of internal language.",
+      "assertions": [
+        "Every customer-facing draft sits inside a fenced ```text block below the CUSTOMER-FACING divider, with the internal analysis above it",
+        "The fenced blocks contain no unfilled placeholders such as [Name] or [Date]; any genuinely unavailable value is raised above the divider as 'UNKNOWN — requires X'",
+        "No health score, risk band, ARR figure, forecast category, save play, coverage tier or internal theme code appears inside any fence",
+        "Blocks are formatted for an email client: plain text with blank lines between paragraphs and bullet characters, no markdown headings, no pipe tables, no ** bold",
+        "None of 'just checking in', 'touching base', 'circling back', 'hope you're well', 'reaching out', 'we value your partnership' or 'let me know your thoughts' appears in any draft",
+        "The outer-loop note includes a 'what we are not doing, and why' section and is addressed to non-respondents as well as respondents",
+        "The promoter path makes an advocacy ask only, with no expansion ask in the same conversation"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "We only have NPS from about 12% of accounts and no call transcripts. Is it even worth doing a VoC readout this quarter?",
+      "expected_output": "A direct answer with the coverage arithmetic, a partial artifact rather than a refusal, and an explicit capacity-to-act recommendation.",
+      "assertions": [
+        "Computes sentiment ARR coverage as ARR of accounts with feedback divided by in-scope ARR, and states the figure",
+        "Says plainly that below roughly 50% ARR coverage the sentiment section is anecdote rather than measurement, and caps confidence accordingly",
+        "Produces a partial artifact with a coverage figure rather than refusing, stopping only below 40% coverage",
+        "Names the missing signal families in a Coverage Ledger and says what those gaps typically hide",
+        "Runs the capacity-to-act gate and recommends against collecting more survey data if nobody can act on it",
+        "Gives a decisive recommendation rather than a menu of options, with an owner and a date"
+      ],
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "skill_name": "renewal-prep",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Northwind Logistics renews 1 Feb 2027, $480k ARR, enterprise. Their contract has a 90-day notice period. Build me the renewal plan.",
+      "expected_output": "A full renewal plan anchored on the opt-out deadline of 2026-11-03, not the renewal date, with a gate audit showing which gates are already behind, MEDDPICC-R and readiness scores with their gates evaluated, a paper critical path built backwards from D, a risk register, an Assumption Register for anything it defaulted, and a Coverage Ledger over the seven signal families with a confidence cap. The header table carries a Commercial touch on record (C25) row and a Paper movement (C15) row, and section 7 carries the five-row paper-movement ledger with the Commit entry stated PASS or REFUSED.",
+      "assertions": [
+        "Computes and prints the opt-out deadline as 2026-11-03 (renewal_date minus 90 days) and labels it the governing date",
+        "States days to the opt-out deadline separately from days to the renewal date",
+        "Audits earlier gates (T-180, T-150, T-120, T-90) as Passed / Missed / N/A rather than starting the plan from today",
+        "Scores MEDDPICC-R out of 18 and states the Commit gate as PASS or FAIL, requiring E, P and C at 2",
+        "Scores renewal readiness across all 10 dimensions out of 20 with the advance gate stated",
+        "Builds the paper critical path backwards from the opt-out deadline and reports it as a floor if any lead time is unknown",
+        "Every action line carries action, owner, date, expected effect and success measure",
+        "Ends with an Assumptions table and a Coverage Ledger over all seven signal families with a stated confidence cap",
+        "Names no competing CS platform product anywhere in the output, referring to the tooling slot generically such as 'your CS platform' or 'whichever platform holds your playbooks'",
+        "Prints the paper-movement ledger with all five qualifying events (security or vendor-risk re-review started, legal redlines returned, PO requested or requisition raised, vendor portal or supplier record created, order form in signature routing) as rows, including the ones that are 'no'",
+        "States the Commit entry criterion as PASS or REFUSED; with no paper-movement event on record it prints REFUSED with the reason 'C15 - verbal only, no paper movement' and caps the forecast category at Most Likely",
+        "Prints days since the last commercial touch, or 'NONE IN 12 MONTHS' where there is none, in the header table rather than leaving the field out"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have 14 renewals closing in Q4 and no idea which ones to work on first. Give me a plan for the window.",
+      "expected_output": "One batched tappable question set, then Window Batch mode: a renewal window board sorted by days to opt-out deadline with ATR, gates missed, readiness, paper slack, category and owner, an exception list naming which accounts need a full plan this week, a capacity check against what the team can actually run, and an Assumption Register for every default it ran on.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 mutually exclusive options and the recommended one first and labelled, rather than asking them one at a time in prose",
+        "Proceeds on the recommended defaults rather than blocking if the questions go unanswered, states the defaults above the Bottom Line, and records each in an Assumptions table with a concrete consequence",
+        "Runs in Window Batch mode and emits the Renewal Window Board before any single-account detail",
+        "Sorts by days to the opt-out deadline, not by renewal date and not by ARR alone",
+        "Names the exception criteria explicitly (missed gate, negative paper slack, readiness below 16/20)",
+        "Includes a capacity check comparing renewals in the window against motions the team can run, and names what is dropped if the first exceeds the second",
+        "Marks a missing notice period as UNKNOWN requiring the executed contract rather than assuming one, and does not ask the user for anything cs-context already holds",
+        "Does not use the banned vague verbs (engage, align, touch base, monitor closely, drive adoption, ensure success, circle back, leverage)",
+        "The window board carries a paper-movement column and a commercial-touch column, and the exception list names any account where Commit is refused under C15 or where no commercial touch exists inside 12 months"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Renewal is in 3 weeks and I have basically nothing. $210k account. What do I do?",
+      "expected_output": "Rescue mode: recompute the governing date from the executed contract, an ordered short list of the moves that still change the outcome, only the required serial paper workstreams, a bridge-extension path prepared in advance with a send-ready draft, expansion asks dropped, and a risk-register row with a VP owner.",
+      "assertions": [
+        "Enters Rescue mode rather than emitting the full T-180 ladder",
+        "Recomputes the opt-out deadline from the executed contract and checks whether the notice window has already opened or passed",
+        "Prioritises a written intent question to the economic buyer within 24-48 hours",
+        "Maps only the required serial paper workstreams and compares the path length against days remaining",
+        "Prepares a bridge extension at current terms as a named option rather than a last-minute improvisation",
+        "Emits any customer-facing text inside a fenced ```text block below the CUSTOMER-FACING divider, with no unfilled placeholders such as [Name] left inside the fence",
+        "No health band, risk band, readiness score, ATR or forecast category appears in any customer-facing text",
+        "Drops or defers any expansion ask to the post-renewal window",
+        "Does not claim the renewal will close or state a probability without a cited backtest",
+        "Refuses to call the renewal Commit on the strength of a verbal yes alone, naming an observable paper-process event as the entry criterion instead"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Acme wants to renew but procurement just told us they need a security review and a new PO. Here's the CSV export from Salesforce — it's got a few junk rows at the top and the ARR column is text. How long does this usually take and how do I plan around it?",
+      "expected_output": "Runs ingest.py on the supplied file first, confirms any low-confidence column mappings, then a paper critical path built backwards from the opt-out deadline, with lead times taken from the company's own prior renewals or marked UNKNOWN rather than filled with an industry default, the serial chain identified, slack computed, and the bridge extension named if slack is negative.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the supplied file before using any of its numbers, and reports the header row it found beneath the export preamble",
+        "Confirms every column mapping below 0.80 confidence with the user before relying on it, and confirms the renewal_date and notice_period_days mappings explicitly",
+        "Asks for or records the export's as-of date rather than assuming the file is current",
+        "Refuses to supply an invented default duration for the security review or PO cycle, writing missing lead times as 'UNKNOWN — requires cycle time from prior renewals' and excluding them from the critical path",
+        "Reports the critical path as a floor when any lead time is unknown",
+        "Explains how to measure the company's own lead times from prior renewals, and recommends planning against the 80th percentile rather than the median",
+        "Identifies which workstreams are serial and which are parallel, and builds the plan backwards from the opt-out deadline",
+        "Produces a partial plan with a coverage figure and a capped confidence rather than refusing when the export is incomplete",
+        "Names the bridge extension as the option when slack is negative, and says it should be prepared before it is needed"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Good news - the VP said on Friday's call that they're definitely renewing Meridian Freight, $340k, renewal 20 Dec, 60-day notice. Can I move it to Commit for the forecast call tomorrow?",
+      "expected_output": "No. A verbal yes is not a yes until paper moves. The answer states the Commit entry criterion, prints the five-row paper-movement ledger with every row empty, caps the category at Most Likely with the reason printed verbatim, computes days since the verbal yes, and gives one dated paper-process ask with a named owner - not another value conversation.",
+      "assertions": [
+        "Refuses the Commit call and says so directly in the first five lines rather than hedging",
+        "Prints the paper-movement ledger with all five qualifying events as rows, each marked on-record yes/no with a date and a source where present",
+        "Every ledger row that is not on record is still printed rather than omitted",
+        "Prints the cap reason verbatim as 'C15 - verbal only, no paper movement' and states the resulting maximum forecast category as Most Likely",
+        "Computes and prints the number of days since the verbal yes with no paper movement, and names the 14-day register threshold and the 21-day escalation to the Renewal Manager",
+        "The recommended next action is a paper-process ask naming a specific person, document and date - not another value conversation, QBR or check-in",
+        "Anchors the dates on the opt-out deadline of 2026-10-21 (20 Dec minus 60 days), not on the renewal date",
+        "Does not state a probability of closing without a cited backtest",
+        "Names no competing CS platform product"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Halvorsen Group renews 1 Mar 2027, 90-day notice, $260k. Looking back through the record, we've done QBRs and support reviews all year but nobody has talked money with their VP Finance since we signed. I want to send them the uplift proposal next week.",
+      "expected_output": "The T-180 gate fails on the commercial-touch criterion. The plan inserts a commercial-context conversation before T-120 as a prerequisite to the price decision, with an owner and a date, holds it under R11 so it is not attached to any miss or apology, and refuses to issue the uplift proposal until it has happened. The send-ready note carries no price.",
+      "assertions": [
+        "States that the T-180 gate fails because there is no commercial touch on record, and computes days since the last one",
+        "Refuses to send the uplift proposal next week, and says the price decision waits for the prerequisite conversation",
+        "The stage plan carries a commercial-context conversation as a dated row before T-120, with a named owner",
+        "Cites R11 and states that the conversation is not attached to an apology, an outage, a service credit or a missed milestone, moving it if one landed within 14 days either side",
+        "Any customer-facing note for that conversation sits in a fenced ```text block below the CUSTOMER-FACING divider, with no unfilled placeholders",
+        "That customer-facing note contains no price, no uplift percentage and no forecast, health or readiness language",
+        "Anchors on the opt-out deadline of 2026-12-01 (1 Mar 2027 minus 90 days) rather than the renewal date",
+        "Does not use hedged constructions such as 'you may want to consider' - it states the sequence as a requirement"
+      ],
+      "files": []
+    }
+  ]
+}

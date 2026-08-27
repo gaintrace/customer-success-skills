@@ -1,0 +1,108 @@
+{
+  "skill_name": "pre-call-brief",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a call with Acme tomorrow at 10. Prep me.",
+      "expected_output": "A full brief with the One-Pager on top: objective in the person/commitment/date form, §1 carrying the three authority fields, §2 carrying a pre-wire status per decision, the calendar signals printed, opt-out deadline, overdue commitments surfaced at the top, usage broken out by team, three anchored questions, a walk-out commitment with a fallback, and the talk track fenced below the customer-facing divider.",
+      "assertions": [
+        "Reads .agents/cs-context.md before asking anything, and asks nothing that file or the calendar invite already answers",
+        "Classifies the meeting type before assembling the brief",
+        "States the objective in the form 'By the end of this call, <person> will have <commitment>, and we will have scheduled <next step> for <date>'",
+        "C7 — §1 prints three separate rows labelled signs, decides and influences, each holding a person's name or the string 'UNKNOWN — requires'; no row holds a job title, a team name, a blank or 'TBD'",
+        "C7 — where two or three of signs/decides/influences resolve to the same person, a concentration line is printed naming that person and both fields, with a second relationship to build carrying an owner and a date; it is never described as a simple or straightforward account",
+        "C9 — §2 exists and contains one row per decision the meeting must reach, each row carrying a status of Wired, Partially wired or Unwired, the person who must say yes, their position, and an Unresolved cell; no cell in any row is empty, and '—' appears in Unresolved only on rows whose status is Wired",
+        "C22 — acceptance latency, reschedule count and who accepted are all three printed even when none of them fired, or all three carry 'UNKNOWN — requires a calendar source' when no calendar is connected",
+        "C1 — §11 is a table and every question row has a non-empty Anchor cell naming a time, an event, a named team or a named artifact, and that anchor appears verbatim inside the question text",
+        "C6 — no question in §11 is answerable from any figure or fact already stated in §3 through §9 of the same brief",
+        "C1/C6 — no question matches the forms 'how is X going', 'are you happy with X', or 'any feedback'",
+        "Section ordering: §1 Attendees and Decision Authority precedes §2 Pre-Wire Status, which precedes §3 Relationship State and Calendar; §11 Three Questions precedes §12 Walk-Out Commitment",
+        "Computes and displays the opt-out deadline with days remaining, not just the renewal date",
+        "Places any overdue commitment we owe in the warning block at the top",
+        "Breaks product usage out by team, including the buying team",
+        "Prepares exactly three questions and at least three objections including one uncomfortable one",
+        "Emits the talk track inside a ```text fence below the CUSTOMER-FACING divider, with no unfilled slots and no health band, risk, ARR, forecast, authority field, pre-wire status or calendar signal in it",
+        "Names no CS platform vendor by product name anywhere in the brief",
+        "Ends with a Coverage Ledger listing all seven signal families"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm covering Northwind for Sam who's on leave. QBR is Thursday and I've never spoken to them.",
+      "expected_output": "A handover-depth brief: every section at full depth, §6a emitted as a gap list rather than prose, inherited authority fields marked UNKNOWN and raised into the warning block, every QBR decision carrying a pre-wire status with unwired items flagged as derailment risk, and an Assumption Register for anything taken as a default.",
+      "assertions": [
+        "Detects the handover/covering situation and uses the full-depth variant",
+        "C30 — §6a is a table, not prose; every row resolves to either 'Answered — <finding>' with a source, or 'GAP — requires <named person>' with the exact question to ask, a named chaser and a calendar date",
+        "C30 — §6a prints a count in the form 'N items · M open gaps · K unchased'",
+        "C30 — no open gap is left without a named person and a date, and no gap is written as a sentence of prose in place of a row",
+        "C30 — the gap list covers at minimum the discount rationale, verbal promises, unknown detractors, who signs and decides, and what went wrong at the last renewal",
+        "C30 — any open gap that bears on a decision in §2 is repeated in the ⚠️ block",
+        "C7 — signs and decides are printed as inherited-UNKNOWN with the specific record required to close them ('UNKNOWN — requires the executed order form' or similar), never filled with the most senior attendee",
+        "C7 — because this is a QBR and decides is UNKNOWN, that fact appears in the ⚠️ block rather than only in §1",
+        "C9 — every decision on the QBR agenda carries a pre-wire status; any Unwired decision appears in the ⚠️ block with one of exactly two recommendations, pre-wire by a named date or drop it from this meeting",
+        "C9 — the champion pre-brief is treated as a pre-wire and its absence is reported as an unwired agenda, not as a scheduling detail",
+        "Applies the QBR variant ordering — business objectives first, usage as evidence only",
+        "Marks unanswerable items as 'UNKNOWN — requires a handover conversation with Sam' rather than guessing",
+        "Ends with an Assumptions table with the columns '# | Assumption | Why it was needed | If wrong', each row naming a concrete consequence rather than 'may affect results'"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Quick prep for a 15 minute check-in with Meridian — I've got 5 minutes.",
+      "expected_output": "The One-Pager only, carrying the authority row, the pre-wire row and the calendar row alongside one specific data-grounded observation worth the customer's time — or a recommendation to cancel or convert the meeting if no such observation exists.",
+      "assertions": [
+        "Emits the One-Pager form rather than the full brief given the stated time constraint",
+        "C7 — the One-Pager carries a 'Signs · decides · influences' row with three values, each a name or 'UNKNOWN — requires X'; the row is not dropped for brevity",
+        "C9 — the One-Pager carries a decisions-and-pre-wire row, holding either the decision with its status or the explicit string 'no decision on the table'",
+        "C22 — the One-Pager carries a Calendar row holding acceptance latency, reschedules and who accepted, or 'checked, clear', or 'UNKNOWN — requires a calendar source'",
+        "C1 — the three questions are emitted with an Anchor column and no anchor cell is empty",
+        "Supplies at least one specific, data-grounded observation the customer does not already have, with a provenance tag",
+        "Recommends cancelling or converting the meeting if no substantive observation can be produced",
+        "Still surfaces any overdue commitment we owe",
+        "Keeps to three questions and a single walk-out ask",
+        "The opening line of the talk track contains a number, a team or a date — never 'just checking in', 'touching base' or 'hope you're well'"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Renewal call with Brightline on Sept 9. All I have is this CRM export and a Zoom transcript I pasted below — I don't know when the export was pulled.",
+      "expected_output": "A renewal-variant brief built from the messy export and the transcript: ingest run first, low-confidence column mappings confirmed, a stated as-of gap, partial coverage with a capped confidence, the authority fields filled or explicitly UNKNOWN, and defaults recorded rather than guessed.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the export before quoting any number from it",
+        "Confirms every column mapping below 0.80 confidence with the user before using those numbers",
+        "Asks for the export's as-of date and, absent an answer, records it as an assumption rather than treating the file as current",
+        "Batches its clarifying questions into a single tappable AskUserQuestion ask of no more than four questions, each with a recommended option listed first",
+        "C7 — signs and decides are resolved from the transcript and the export, or printed as 'UNKNOWN — requires <specific record>'; a senior title in the export is never substituted for a known signer",
+        "C7 — if signs is UNKNOWN or not attending, §12's primary ask is the authority test ('if I could get that approved, is this something you'd be able to sign this quarter?') and the brief contains no price, no concession and no expansion ask; the fallback is an introduction",
+        "C9 — every decision the renewal call must reach carries a pre-wire status with each stakeholder's position quoted from the transcript with its date, and an explicit Unresolved cell",
+        "C22 — reschedule count and acceptance latency for the 9 Sept meeting are printed; if the economic buyer moved it twice in a row, that is stated in the ⚠️ block as a relationship signal and is not explained away by usage or a health band",
+        "Produces a partial brief with a coverage figure and a capped confidence rather than refusing because the data is incomplete",
+        "Leads the renewal variant with the opt-out deadline and days remaining, not the renewal date",
+        "Records every default it ran on in the Assumption Register with a concrete 'if wrong' consequence"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Prep me for Vantage on Friday. Usage is up and health is green, but Dana has moved this meeting twice and hasn't accepted the new invite yet. She's the only person we ever talk to.",
+      "expected_output": "A brief that treats the calendar behaviour and the single thread as the finding, refuses to let the green health band explain them away, and gates the ask on whether Dana can actually sign.",
+      "assertions": [
+        "C22 — the two consecutive reschedules by Dana are reported in the ⚠️ block as a relationship signal with their dates, stated as independent of usage and of the green health band",
+        "C22 — the unaccepted invite is reported as acceptance latency with the hours or days elapsed, not treated as an acceptance",
+        "C22 — 'who accepted' is printed, and delegation to a more junior attendee is called out if it occurred",
+        "C7 — signs, decides and influences are each printed; if all three resolve to Dana, the brief prints a concentration risk citing R5 and names the second relationship to build with an owner and a date",
+        "C7 — the account is never described as simple, straightforward or low-maintenance because one person holds the relationship",
+        "C7 — if signs is UNKNOWN, §12 carries the authority test rather than a price, a concession or an expansion ask",
+        "C9 — any decision Friday must reach carries a pre-wire status, and an Unwired decision is flagged with pre-wire-by-date or drop-it",
+        "C1 — none of the three questions asks how things are going, whether they are happy, or for general feedback; each carries an anchor naming a time, an event, a named team or a named artifact",
+        "C6 — no question asks for a fact the brief already states from product usage",
+        "The green health band is stated alongside the contradicting relationship signals rather than used to conclude the account is fine",
+        "The talk track contains no reference to the reschedules as a concern about the relationship, no health band and no risk language"
+      ],
+      "files": []
+    }
+  ]
+}

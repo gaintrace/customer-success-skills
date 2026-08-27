@@ -1,0 +1,62 @@
+{
+  "skill_name": "cs-data-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our data is a mess and my VP wants to buy a CS platform next quarter. Can you audit what we actually have and tell me what to fix first?",
+      "expected_output": "One batched tappable question set, then a full audit across all eight domains ending in a ranked remediation plan and a three-tier funding case, with an Assumption Register for anything run on a default.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 mutually exclusive options, the recommended one first and labelled '(Recommended)', and a one-line description of what each option changes",
+        "Does not ask for anything .agents/cs-context.md already answers (segments, notice-period default, fiscal year, source inventory, business model)",
+        "Reports all eight audit domains including any that tested clean, rather than silently omitting a domain with nothing to report",
+        "Ranks remediation by B x D x (1 + 0.1U) x C / E with the arithmetic printed, and sequences irreversible items ahead of higher-blast-radius reversible ones",
+        "Names no CS platform product anywhere - refers to the platform slot generically ('your CS platform', 'whichever platform holds your playbooks')",
+        "Ends with an Assumptions table whose every row states a concrete 'if wrong' consequence, not 'may affect results'",
+        "Prints a Coverage Ledger with all seven signal families including the missing ones, and a downstream confidence cap derived from the coverage percentage"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's the contracts export our RevOps lead sent over. There are three title rows above the header and the ARR column has dollar signs and commas in it. Tell me whether our renewal data is good enough to forecast on.",
+      "expected_output": "ingest.py run first, low-confidence column mappings confirmed before use, an as-of date requested, and a partial audit with a coverage figure and a stated confidence cap rather than a refusal.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before quoting any number from it",
+        "Finds the real header row beneath the export preamble instead of failing to parse, and normalises the money column from text",
+        "Confirms every column mapping below 0.80 confidence with the user before using those numbers",
+        "Asks for the export's as-of date and records it against the source in the Source Inventory, rather than assuming the export is current",
+        "Produces a partial audit with a coverage percentage and an explicit confidence cap instead of refusing on incomplete data",
+        "Reports opt_out_deadline computability (renewal_date minus notice_period_days) against ARR, and states that accounts without one cannot enter Commit"
+      ],
+      "files": ["contracts_export.csv"]
+    },
+    {
+      "id": 3,
+      "prompt": "Do we have enough data to build a churn prediction model? We've got about 18 months of Salesforce and Mixpanel.",
+      "expected_output": "Readiness-check mode: Steps 6 and 9 only, the churn-label audit, a label-sufficiency verdict stated as a band, and the specific blocking condition - not an encouraging maybe.",
+      "assertions": [
+        "Runs in Readiness check mode (Steps 6 and 9 only), not a full eleven-step audit",
+        "Audits churn_event.decision_date separately from effective_date and states plainly that without a captured decision date and a closed-list reason code predictive work is not possible",
+        "Gates the modelling verdict against label volume using the sufficiency table, and states the verdict as a band or a named minimum rather than as a churn probability",
+        "Names the leakage fields that must be excluded from any backtest (churn reason, renewal_status, cancellation ticket type, post-notice sentiment)",
+        "Cites no CS platform vendor documentation as the source for any minimum, and names no competing CS platform product",
+        "Publishes the downstream confidence cap for the families that would feed the model, with the coverage arithmetic shown"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Finance says our GRR is 91% and the CS dashboard says 86%. Which one is right?",
+      "expected_output": "Metric dispute mode: Step 8 only - reproduction from raw subscription and ARR-movement rows, variance against tolerance, a per-field source-of-truth ruling, and a recommendation to stop reporting the figure until it reconciles.",
+      "assertions": [
+        "Runs in Metric dispute mode (Step 8 only) rather than launching a full audit",
+        "Recomputes GRR from subscription and ARR-movement rows and states the variance against the 0.5pp tolerance",
+        "Checks whether a dated, versioned definition exists naming the denominator, cohort-vs-formula method, reactivation treatment and currency policy",
+        "Rules a source of truth per field rather than per system, and says so explicitly",
+        "States decisively that a figure varying by more than 2pp should stop being reported until it reconciles, without hedging",
+        "Quotes any benchmark with its population, sample size and year (for example Benchmarkit 2025, CY2024 actuals, private B2B SaaS) or does not quote it at all"
+      ],
+      "files": []
+    }
+  ]
+}

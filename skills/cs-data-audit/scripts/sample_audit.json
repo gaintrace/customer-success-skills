@@ -1,0 +1,66 @@
+{
+  "company": "Sample Co",
+  "as_of": "2026-08-20",
+  "families": {
+    "product_usage": {
+      "presence": "warehouse", "account_coverage": 0.88,
+      "field_completeness": 0.81, "freshness_ratio": 1.4, "fidelity": 0.62
+    },
+    "commercial": {
+      "presence": "api", "account_coverage": 0.99,
+      "field_completeness": 0.72, "freshness_ratio": 0.8, "fidelity": 0.71
+    },
+    "relationship": {
+      "presence": "export", "account_coverage": 0.54,
+      "field_completeness": 0.61, "freshness_ratio": 3.2, "fidelity": 0.55
+    },
+    "support": {
+      "presence": "api", "account_coverage": 0.93,
+      "field_completeness": 0.88, "freshness_ratio": 0.6, "fidelity": 0.84
+    },
+    "sentiment": {
+      "presence": "none", "account_coverage": 0.0,
+      "field_completeness": 0.0, "no_write_30d": true, "fidelity": 0.0
+    },
+    "billing": {
+      "presence": "api", "account_coverage": 0.97,
+      "field_completeness": 0.94, "freshness_ratio": 0.5, "fidelity": 0.91
+    },
+    "firmographic": {
+      "presence": "manual", "account_coverage": 0.44,
+      "field_completeness": 0.38, "freshness_ratio": 6.0, "fidelity": 0.31
+    }
+  },
+  "remediation": [
+    {
+      "gap": "Core action not emitted on mobile or the API surface",
+      "blast_radius_arr": 8200000, "degradation": "caps", "unlocks": 4,
+      "irreversible": true, "effort_days": 12, "owner": "Priya (Eng)"
+    },
+    {
+      "gap": "notice_period_days wrong on a third of enterprise contracts",
+      "blast_radius_arr": 11400000, "degradation": "blocks", "unlocks": 3,
+      "irreversible": false, "effort_days": 9, "owner": "Sam (CS Ops)"
+    },
+    {
+      "gap": "Health-score history overwritten in place, no snapshots",
+      "blast_radius_arr": 4100000, "degradation": "blocks", "unlocks": 2,
+      "irreversible": true, "effort_days": 4, "owner": "Priya (Eng)"
+    },
+    {
+      "gap": "Churn reason is free text; no closed list, no decision_date",
+      "blast_radius_arr": 6300000, "degradation": "blocks", "unlocks": 5,
+      "irreversible": true, "effort_days": 6, "owner": "Sam (CS Ops)"
+    },
+    {
+      "gap": "Firmographic refresh has not run since March",
+      "blast_radius_arr": 900000, "degradation": "noise", "unlocks": 1,
+      "irreversible": false, "effort_days": 3, "owner": "Marketing Ops"
+    }
+  ],
+  "document_tests": [
+    { "field": "subscription.renewal_date", "n": 45, "matches": 41 },
+    { "field": "subscription.notice_period_days", "n": 45, "matches": 29 },
+    { "field": "subscription.auto_renew", "n": 45, "matches": 38 }
+  ]
+}

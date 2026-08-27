@@ -1,0 +1,62 @@
+{
+  "skill_name": "renewal-forecast",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Here's our renewals export from Salesforce — it's a CSV with a couple of title rows on top and the amounts came out as text. Give me the Q4 renewal forecast, the board asks for NRR on Thursday.",
+      "expected_output": "A full Renewal Forecast artifact: ATR base built from run-rate at the opt-out deadline, category roll-up with entry criteria, three reconciled views, scenarios, ARR bridge, GRR/NRR under both denominators with the gap explained, concentration, coverage ledger and an Assumption Register.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the CSV before using any number, and states which column mappings fell below 0.80 confidence",
+        "Does not refuse or ask for a cleaner file — produces a partial artifact with a coverage figure and a confidence cap if fields are missing",
+        "Asks its clarifying questions as one batched tappable AskUserQuestion set of at most 4, with a recommended option first, and does not ask anything cs-context already answers",
+        "Computes opt_out_deadline = renewal_date − notice_period_days and sorts by it; never forecasts on the renewal date alone",
+        "Reports GRR/NRR under both the ATR and cohort denominators, labels each, and explains the gap in dollars",
+        "Ends with a Coverage Ledger over the seven signal families and an Assumption Register whose every row names a concrete consequence, not 'may affect results'",
+        "Names no competing CS-platform product anywhere in the output, using generic category language such as 'your CS platform' instead",
+        "States the export's as-of date in the header rather than assuming the data is current"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "My VP says my forecast feels too optimistic. 14 renewals, $2.1M, I've got 9 of them in Commit. Prep me for tomorrow's forecast call.",
+      "expected_output": "Weekly call pre-read mode: roll-up, movement table, at-risk register, paper and notice exceptions, and a bias scan run in both directions with the specific Commit rows that fail an entry criterion named.",
+      "assertions": [
+        "Tests every Commit row against all six entry criteria and names the rows failing one, including economic-buyer contact within 30 days",
+        "Runs the bias scan in both directions (sandbagging and happy ears) with measured values, not adjectives",
+        "Flags any row still in Commit inside T-45 with no order form issued, and any row held above At Risk past its opt-out deadline",
+        "Checks whether called value equals ATR across the whole book and flags it if it does",
+        "Marks unavailable fields as 'UNKNOWN — requires <source>' rather than substituting a benchmark or a health-score-derived probability",
+        "Every recommendation carries action, owner, date, expected dollar effect and a success measure"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I don't have an export handy. Can you still help me put a number on next quarter? About 20 renewals, mostly annual, I know the big ones off the top of my head.",
+      "expected_output": "A conversation-driven forecast: the skill accepts answers instead of a file, batches its questions, runs on recommended defaults where the user does not answer, and produces a forecast whose confidence is explicitly capped by the missing coverage.",
+      "assertions": [
+        "Proceeds without a file rather than blocking on one, taking the inputs conversationally",
+        "Batches its questions into a single tappable ask of at most 4 with a recommended default on each",
+        "Proceeds on the recommended defaults if questions go unanswered, states them in one line at the top of the artifact, and records each in the Assumption Register",
+        "Caps confidence explicitly because coverage across the seven signal families is low, and says which families are missing and in which direction they bias the number",
+        "Does not invent base rates, a health-score-to-probability mapping, or an industry retention benchmark to fill the gaps"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Score last quarter's renewal forecast. We called $4.2M and closed $3.6M and I need to explain the miss to the CFO on Monday.",
+      "expected_output": "Post-mortem mode: accuracy, WAPE and signed bias by vintage, segment and owner, graded against the frozen snapshot, plus a dollar decomposition of the variance into category, value and timing error with one process change per class.",
+      "assertions": [
+        "Grades against the frozen snapshot by vintage and says so; refuses to score against a forecast edited during the quarter",
+        "Publishes WAPE and signed bias beside headline accuracy, not accuracy alone",
+        "Decomposes the $600k variance in dollars into category error, value error and timing error, naming the top contributing accounts in each",
+        "Assigns a different owner and a dated process change to each error class",
+        "Does not quote a published or vendor renewal-forecast-accuracy benchmark; sets the target from the company's own trailing four-quarter accuracy",
+        "Labels the artifact internal — no forecast category, risk band, ARR-at-risk figure or save play is framed as customer-facing text"
+      ],
+      "files": []
+    }
+  ]
+}

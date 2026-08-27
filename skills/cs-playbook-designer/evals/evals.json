@@ -1,0 +1,65 @@
+{
+  "skill_name": "cs-playbook-designer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our alerts fire constantly and nobody acts on them. We've got 22 plays in our CS platform, 8 CSMs, about 640 accounts. I exported the play list and 90 days of alert history — the CSV has two title rows above the header and the dates came through as text. Can you tell me which ones to keep?",
+      "expected_output": "A library audit: files ingested without a re-export being requested, every play scored against the five parts, fire rates computed as a percentage of the eligible book, the capacity gate arithmetic showing the intake budget against modelled intake, a ranked kill list with the criterion each play hit, a Coverage Ledger over the seven families showing which the stack can actually trigger on, and an Assumptions table for anything defaulted.",
+      "assertions": [
+        "Runs the shared ingest step on the supplied file rather than asking the user to re-export or reformat it, finds the real header row beneath the two title rows, and confirms any column mapping below 0.80 confidence before sizing a trigger on it",
+        "Computes each trigger's fire rate as distinct accounts per 30 days divided by the eligible population, states the eligible population and its exclusions, and applies the band verdict (above roughly 15% it is a report, not a trigger)",
+        "Shows the capacity-gate arithmetic from usable hours (nominal x 0.60, R13) to a weekly intake budget per CSM, and compares it against the summed modelled intake of the live human-run plays",
+        "Names the plays missing one or more of the five parts (trigger, qualification, steps with owners and SLAs, exit criteria, measurement) and counts triggers firing with no capacity-feasible action attached",
+        "Produces a kill list where each retirement names the specific kill criterion it hit, and states that retired plays are archived rather than deleted",
+        "Ends with a Coverage Ledger over the seven signal families with a coverage fraction and a stated confidence cap, and an Assumptions table whose every row names a concrete consequence rather than 'may affect results'",
+        "Names no customer-success-platform vendor anywhere in the output, referring to the category generically"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Design the playbook for when a champion leaves. We're enterprise, annual contracts, 90-day notice periods.",
+      "expected_output": "A single complete playbook spec: trigger with detect/qualify/route/act, the false-departure guards, suppression block, steps with owner roles and SLAs from fire, four exits with windows, the measurement plan with the honest statement about power, kill criteria, and the customer-facing content handled correctly for a play that must never be automated.",
+      "assertions": [
+        "Specifies all five parts — trigger, qualification, steps with owners and SLAs, exit criteria, measurement — and states that anything missing one of the five is a document, not a playbook",
+        "Carries a 48-hour SLA measured from trigger fire with a VP-or-above sender for the first outreach, citing R3, and marks the play as never automated",
+        "Runs the false-departure disconfirming checks before asserting a departure — mailbox-full or out-of-office bounces, domain migration, a forwarding address, and a successor already visible in product or ticket data",
+        "Gives four exits each with a window, including the failure exit and what it hands off to, not only a success exit",
+        "States that the retention delta cannot be claimed without a holdout or matched control, gives the required sample size or says 'not powered' plainly, and names the leading outcome that is measured instead (R22)",
+        "Keys any renewal-related timing to the opt-out deadline (renewal_date minus notice_period_days), never the renewal date alone (R1)",
+        "Either emits no customer-facing block, or emits one inside a fenced text block below the divider with no unfilled placeholders and a merge-field contract, and states that champion-departure outreach is written by a human"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Leadership wants to know whether our save play works. We ran it on 47 accounts last year and 39 renewed — that's 83%. Can I put that in the board deck as ARR saved?",
+      "expected_output": "A direct refusal of the causal claim with the reasoning, the arithmetic showing what sample would be needed, the sentence that may honestly be written instead, and a concrete holdout design to start now so the question is answerable in two cycles.",
+      "assertions": [
+        "States plainly that no causal claim is supported without a control arm, and refuses to convert the renewal count into ARR saved (R22)",
+        "Names the specific confounds — selection (accounts entered the play because they were worse), regression to the mean, and the intervention breaking the prediction",
+        "Gives the required accounts per arm from a two-proportion calculation at the stated base rate and target improvement, and says how long that would take at the current fire rate, or says 'not powered' plainly",
+        "Supplies the exact sentence that may be written instead, reporting activity and outcomes separately without a causal verb",
+        "Specifies a holdout design to start now — share withheld, randomisation at fire time, exclusions with their biasing effect stated, the assignment log, and the duration in renewal cycles",
+        "Recommends powering the leading outcome instead of retention, and explains why that reaches significance at a sample a real book produces",
+        "Does not invent a benchmark for how much playbooks typically improve retention"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "We're self-serve monthly, about 4,000 paying accounts, 3 people in CS total, and we have product analytics and Stripe but no CRM to speak of. What plays should we even have?",
+      "expected_output": "A model-appropriate starting set: the review-window, sponsor-cadence and opt-out-ladder plays explicitly ruled out, billing and in-product plays carrying the book, a capacity gate computed for three people against 4,000 accounts, and a Coverage Ledger that caps confidence on the families this stack cannot read.",
+      "assertions": [
+        "Resolves the business model first and explicitly rules out plays that do not apply to a self-serve monthly book — review windows, executive-sponsor cadence, and the opt-out ladder, because every day is the deadline rather than a notice period",
+        "Recommends a small set sized to capacity rather than a full catalogue, and shows the intake arithmetic for three people against the eligible population",
+        "Leans on automatable administrative and billing plays (payment failure, dunning, payment-method expiry) and in-product activation plays, since involuntary churn is material in this model",
+        "Marks the relationship and sentiment families as not instrumentable or partial in the Coverage Ledger, states the coverage fraction, caps confidence accordingly, and names what those gaps hide",
+        "Degrades rather than refusing — produces a usable starting set from product analytics and billing alone rather than asking for a CRM first",
+        "States which plays it deliberately did not build and when they get revisited (R14), rather than silently omitting them",
+        "Every recommended play carries an owner role, an SLA measured from trigger fire, an exit with a window, and a leading outcome"
+      ],
+      "files": []
+    }
+  ]
+}

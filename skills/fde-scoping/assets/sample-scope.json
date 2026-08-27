@@ -1,0 +1,50 @@
+{
+  "_note": "Sample input for scripts/scope_estimate.py. Effort is in hours. Omit any block you do not have — the script reports UNKNOWN rather than defaulting silently.",
+  "engagement": "Northwind — AP invoice approval deployment",
+  "scoping_stage": "requirements",
+  "planned_start": "2026-09-14",
+  "vendor_fte": 1.5,
+  "milestone_count": 5,
+
+  "work_packages": [
+    {"name": "Environment and access setup",        "optimistic": 4,  "most_likely": 8,  "pessimistic": 20, "owner": "FDE"},
+    {"name": "ERP extract mapping and config",      "optimistic": 24, "most_likely": 40, "pessimistic": 90, "owner": "FDE"},
+    {"name": "Invoice classification build",        "optimistic": 40, "most_likely": 60, "pessimistic": 110, "owner": "FDE"},
+    {"name": "Golden set + eval harness",           "optimistic": 16, "most_likely": 24, "pessimistic": 40, "owner": "FDE"},
+    {"name": "Approval workflow integration",       "optimistic": 20, "most_likely": 32, "pessimistic": 64, "owner": "FDE"},
+    {"name": "Historical migration (12 months)",    "optimistic": 12, "most_likely": 20, "pessimistic": 48, "owner": "FDE"},
+    {"name": "Test data preparation",               "optimistic": 6,  "most_likely": 10, "pessimistic": 18, "owner": "FDE"},
+    {"name": "Re-delivery after one rejection",     "optimistic": 4,  "most_likely": 12, "pessimistic": 28, "owner": "FDE"},
+    {"name": "Admin + end-user enablement",         "optimistic": 12, "most_likely": 16, "pessimistic": 24, "owner": "FDE"},
+    {"name": "Runbook and handover pack",           "optimistic": 8,  "most_likely": 12, "pessimistic": 20, "owner": "FDE"},
+    {"name": "Delivery management and readouts",    "optimistic": 20, "most_likely": 30, "pessimistic": 45, "owner": "Delivery lead"}
+  ],
+
+  "dependencies": [
+    {"name": "Service account + VPC access",   "owner": "Ravi Shah, Infrastructure Lead", "needed_by": "2026-09-18", "wait_days": 10},
+    {"name": "ERP sample extract + schema doc", "owner": "Priya Raman, AP Manager",       "needed_by": "2026-09-21", "wait_days": 5},
+    {"name": "Field mapping sign-off",          "owner": "Priya Raman, AP Manager",       "needed_by": "2026-10-02", "wait_days": 3},
+    {"name": "Named tester and acceptor free",  "owner": "Priya Raman, AP Manager",       "needed_by": "2026-10-12", "wait_days": 0},
+    {"name": "Security review slot",            "owner": "UNKNOWN",                        "needed_by": "2026-09-25", "wait_days": 15},
+    {"name": "PO raised",                       "owner": "Dana Osei, Finance Director",    "needed_by": "2026-09-11", "wait_days": 0}
+  ],
+
+  "contract": {
+    "renewal_date": "2027-07-05",
+    "notice_period_days": 60,
+    "segment": "enterprise"
+  },
+
+  "kickoff_gate": {
+    "problem_statement_measurable": true,
+    "definition_of_done_agreed": true,
+    "exclusions_acknowledged": true,
+    "criteria_and_acceptors": true,
+    "dependency_owners_named": false,
+    "customer_hours_confirmed": false,
+    "access_requested": true,
+    "security_path_started": false,
+    "po_or_payment_path": true,
+    "sponsors_named_and_briefed": true
+  }
+}

@@ -1,0 +1,457 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Install from '../components/Install.astro';
+import CommandBar from '../components/CommandBar.astro';
+import GitHubIcon from '../components/GitHubIcon.astro';
+import SkillCard from '../components/SkillCard.astro';
+import { CATEGORIES, BLURBS, assertCatalogComplete, routingPromptCount } from '../lib/catalog.js';
+import { SITE_URL, BASE, SITE_NAME, SITE_TAGLINE, SITE_FULL_NAME, GITHUB_URL, REPO_SLUG, CONTRIBUTOR, LICENSE, href, abs, metaDescription } from '../lib/site.js';
+
+const entries = await getCollection('skills');
+const byId = new Map(entries.map((e) => [e.id, e]));
+assertCatalogComplete(entries.map((e) => e.id));
+const skillCount = entries.length;
+const routingPrompts = routingPromptCount();
+
+const title = `${SITE_FULL_NAME} — churn, renewals & QBRs`;
+// The long-form pitch lives in the JSON-LD and the page copy; the meta
+// description has to survive a ~155-character truncation intact.
+const description = metaDescription(
+  `${skillCount} open-source agent skills for customer success: churn risk, renewal forecasting, QBRs, expansion, health scores and board reporting.`,
+  'MIT licensed, works with any Agent Skills client.'
+);
+const ldDescription = `${skillCount} MIT-licensed agent skills for customer success: churn risk, renewal forecasting, QBRs, expansion, escalations, health scores and board reporting. Every number carries its source. Works with Claude Code, Codex, Cursor and any Agent Skills client.`;
+
+const FAMILIES = [
+  ['Product usage & adoption', 'Are they still getting work done in the product?'],
+  ['Commercial & contract', 'Have they taken an action that signals a decision?'],
+  ['Relationship & engagement', 'Do we have a live, multithreaded relationship?'],
+  ['Support & reliability', 'Is the experience costing them more than it returns?'],
+  ['Sentiment & VoC', 'What have they actually told us?'],
+  ['Billing & payment', 'Is the money still flowing cleanly?'],
+  ['Firmographic & external', 'Has their world changed?'],
+];
+
+const MECHANISMS = [
+  ['Provenance tags', 'Every number carries <code>[system · field · date]</code>. No tag, no number.'],
+  ['Three evidence tiers', 'Observed / Inferred / Unknown, never blurred. Inferences state their rule <em>and</em> what would falsify them.'],
+  ['The Coverage Ledger', 'Every analysis ends with all seven signal families printed — including the ones with no data — plus a coverage percentage and the confidence cap it forces.'],
+  ['Confidence with entry criteria', 'High / Medium / Low / Insufficient, each with stated conditions. Confidence can never exceed what coverage permits.'],
+  ['Override floors', 'Commercial decisions — auto-renew off, notice served, data export — set a risk floor no healthy-looking aggregate can wash out.'],
+  ['No certainty language', '“100% accurate”, “guaranteed”, “will churn” are banned. Bands and confidence only.'],
+];
+
+const CHAINS = [
+  ['Monday morning', ['book-of-business-triage', 'churn-risk', 'proactive-outreach']],
+  ['Before a call', ['pre-call-brief', null, 'post-call-followup']],
+  ['A renewal', ['churn-risk', 'renewal-prep', 'renewal-negotiation', 'renewal-forecast']],
+  ['An account goes red', ['churn-risk', 'save-play', 'churn-postmortem']],
+  ['Quarterly', ['qbr-builder', 'success-plan', 'expansion-finder']],
+  ['Month end', ['retention-report', 'exec-retention-review']],
+  ['Setting up', ['cs-context', 'cs-data-audit', 'health-score-designer', 'cs-playbook-designer']],
+];
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: SITE_FULL_NAME,
+    alternateName: ['Customer Success Skills', 'customer-success-skills'],
+    description: ldDescription,
+    url: abs('/'),
+    codeRepository: GITHUB_URL,
+    programmingLanguage: ['Markdown', 'Python'],
+    runtimePlatform: 'Agent Skills (Claude Code, Claude, Codex, Cursor, Gemini CLI, Copilot)',
+    keywords: [
+      'customer success', 'churn prediction', 'churn risk', 'retention', 'renewal forecast',
+      'QBR', 'net revenue retention', 'NRR', 'GRR', 'customer health score', 'expansion',
+      'voice of customer', 'CS ops', 'agent skills', 'claude skills', 'B2B SaaS',
+    ],
+    license: 'https://opensource.org/licenses/MIT',
+    contributor: { '@type': 'Organization', name: CONTRIBUTOR.name, url: CONTRIBUTOR.url },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: CONTRIBUTOR.name,
+    url: CONTRIBUTOR.url,
+    description:
+      'A contributor to the Customer Success Skills library. GainTrace is an AI customer success platform for B2B SaaS.',
+    sameAs: [CONTRIBUTOR.solutionsUrl],
+  },
+];
+---
+
+<Base title={title} description={description} jsonld={jsonld}>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow reveal">{skillCount} agent skills · {LICENSE} licence</p>
+      <h1 class="hero__title reveal">{SITE_NAME} <em>{SITE_TAGLINE}</em></h1>
+      <div class="reveal" style="margin-bottom: clamp(2rem, 5vw, 3.25rem)">
+        <CommandBar
+          command={`npx skills add ${REPO_SLUG}`}
+          note={`Installs all ${skillCount} skills for Claude Code, Codex, Cursor, Windsurf, Gemini CLI, Copilot and <a href="https://agentskills.io/clients" rel="noopener">20+ other clients</a>.`}
+        />
+      </div>
+    </div>
+
+    <div class="wrap hero__grid">
+      <div class="reveal">
+        <p class="hero__lede">
+          Agent skills for churn risk, renewal forecasting, QBRs, expansion, escalations and board
+          reporting — written to the bar a Chief Customer Officer would sign, and structured so an
+          agent <strong>produces the same quality every&nbsp;time</strong>.
+        </p>
+        <div class="hero__actions">
+          <a class="btn" href={GITHUB_URL} rel="noopener"><GitHubIcon size={16} />View on GitHub</a>
+          <a class="btn btn--ghost" href={href('/skills/')}>Browse all {skillCount} skills →</a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <Install
+          title="Claude Code — plugin"
+          rows={[
+            `/plugin marketplace add ${REPO_SLUG}`,
+            '/plugin install customer-success@customer-success-skills',
+          ]}
+          note={`Or say what you mean — <em>“is northwind going to churn”</em>, <em>“prep me for the acme call”</em>. Skills fire on the prompt, not the command name.`}
+        />
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top: clamp(2.5rem, 6vw, 4.5rem)">
+      <div class="ledger reveal">
+        <div class="ledger__cell">
+          <span class="ledger__n">{skillCount}</span>
+          <span class="ledger__l">Skills, each self-contained</span>
+        </div>
+        <div class="ledger__cell">
+          <span class="ledger__n">7</span>
+          <span class="ledger__l">Signal families, fixed vocabulary</span>
+        </div>
+        <div class="ledger__cell">
+          <span class="ledger__n">24</span>
+          <span class="ledger__l">Operating rules, cited by number</span>
+        </div>
+        <div class="ledger__cell">
+          <span class="ledger__n">{routingPrompts}</span>
+          <span class="ledger__l">Routing prompts in CI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE PROBLEM ============ -->
+  <section class="section section--rule" id="standard">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">The evidence standard</p>
+        <h2>Most AI output in customer success fails the same three ways.</h2>
+        <p>
+          It <strong>invents a number</strong> to fill a gap, and someone repeats it to a customer.
+          It <strong>silently omits</strong> what it could not check, so the reader assumes it was
+          checked and clear. And it produces <strong>false precision</strong> — an “87% churn
+          probability” from a rules-based score that has never been backtested against a single
+          renewal.
+        </p>
+      </div>
+
+      <table class="mech">
+        <thead>
+          <tr><th scope="col">Mechanism</th><th scope="col">What it does</th></tr>
+        </thead>
+        <tbody>
+          {MECHANISMS.map(([k, v]) => (
+            <tr><td>{k}</td><td set:html={v} /></tr>
+          ))}
+        </tbody>
+      </table>
+
+      <p style="margin-top: 1.75rem; max-width: var(--measure); color: var(--ink-2)">
+        “Never misses anything” here means something checkable: a fixed checklist walked every
+        time, non-findings printed rather than dropped, blind spots declared, and no number that
+        is not either computed or marked <code>UNKNOWN — requires X</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SEVEN FAMILIES ============ -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">Shared vocabulary</p>
+        <h2>The seven signal families.</h2>
+        <p>
+          Every skill reasons over the same seven. Fixed vocabulary is what lets a risk
+          assessment, a QBR, a forecast and a board report agree with each other.
+        </p>
+      </div>
+      <div class="families">
+        {FAMILIES.map(([name, question], i) => (
+          <div class="family">
+            <span class="family__n" aria-hidden="true">{i + 1}</span>
+            <span>
+              <span class="family__t">{name}</span>
+              <span class="family__q">{question}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLE OUTPUT ============ -->
+  <section class="section section--rule">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">What it actually produces</p>
+        <h2>Brief by default. Twenty lines, one recommendation, and the thing that would prove it wrong.</h2>
+        <p>
+          An excerpt from the <a href={`${GITHUB_URL}/blob/main/docs/worked-example.md`} rel="noopener">worked example</a> —
+          a complete <code>churn-risk</code> run over a four-account renewal window. Read it for the
+          mechanics, not the numbers.
+        </p>
+      </div>
+
+      <div class="sample">
+        <div class="sample__bar">
+          <span>churn-risk · brief</span>
+          <span>Internal document</span>
+        </div>
+        <div class="sample__body">
+          <pre><b>Renewal window · $1.12M assessed · $410k at risk (37%) · 2 accounts escalating regardless of score</b>
+
+<b>1. Delta Systems — <span class="t-red">High Risk</span>. $310k. Decide in 5 days.</b>
+A P1 has been open 19 days past SLA [Zendesk · #48211 · as-of 2026-08-26], seats were
+cut 25% in March [Salesforce · Asset.Quantity], and invoices have slipped from 4 to 22
+days late [Stripe · 180d]. Three separate pressures, one direction.
+<b>Do:</b> Priya opens the exec call and names an engineering owner by <b>28 Aug</b>.
+
+<b>2. Acme Corp — <span class="t-red">Critical</span>. $148k. Decide in 6 days.</b>
+Auto-renew was switched off on 2 Aug [Salesforce · Contract.AutoRenew__c] and the
+champion's email has hard-bounced since 11 Aug. The score is irrelevant — a decision
+has been made.
+<b>Do:</b> Marcus runs exec-to-exec outreach by <b>28 Aug</b>, after verifying in 24h that
+the flag change was not our own re-papering.
+
+<b>3. Beta Industries — Watch band, escalating anyway. $620k.</b>
+RevOps, who signed and hold the budget, went from 22 active users to 4 since May, while
+the account total rose 18% because Marketing grew [Amplitude · distinct_users_30d].
+Aggregate health reads green; the buying team has left.
+<b>Do:</b> Jo meets Dana Osei (VP RevOps) by <b>10 Sept</b> with RevOps' own numbers, not the
+account total.
+
+Confidence: <span class="t-ok">high</span> on Delta and Beta (7/7 families), <span class="t-ok">high</span> on Acme (6/7 — no VoC source).
+<b>What would change this:</b> RevOps back above 12 weekly actives; Delta's P1 closing with
+a committed date; confirmation that Acme's auto-renew change was ours.</pre>
+        </div>
+        <p class="sample__note">
+          Beta Industries scores 34.7/100 on the <code>churn-risk</code> scale — where higher is
+          worse — with every aggregate metric healthy, and escalates anyway, because the team that
+          holds the budget stopped using the product while the account total grew. The scoring is
+          reproducible:
+          <code class="mono-sm">python3 skills/churn-risk/scripts/risk_score.py …</code>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE SKILLS ============ -->
+  <section class="section section--rule" id="skills">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">The library</p>
+        <h2>All {skillCount} skills.</h2>
+        <p>
+          Each is a self-contained folder — <code>SKILL.md</code> plus its references, assets,
+          scripts and evals. Take the whole library, or the two you want.
+        </p>
+      </div>
+
+      {CATEGORIES.map((cat) => (
+        <div class="cat" id={cat.id}>
+          <div class="cat__head">
+            <h3>{cat.label}</h3>
+            <span class="cat__count">{String(cat.skills.length).padStart(2, '0')}</span>
+            <span class="cat__note">{cat.note}</span>
+          </div>
+          <div class="cards">
+            {cat.skills.map((slug) => (
+              <SkillCard
+                slug={slug}
+                blurb={BLURBS[slug]}
+                role={byId.get(slug)?.data?.metadata?.role}
+                version={byId.get(slug)?.data?.metadata?.version}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ CHAINS ============ -->
+  <section class="section section--tint" id="chains">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">How they fit together</p>
+        <h2>The common chains.</h2>
+        <p>
+          Skills hand off to each other on a shared schema, so the output of one is a legitimate
+          input to the next. <code>cs-context</code> runs first and every other skill reads it.
+        </p>
+      </div>
+      <div class="chains">
+        {CHAINS.map(([when, steps]) => (
+          <div class="chain">
+            <span class="chain__when">{when}</span>
+            <span class="chain__steps">
+              {steps.map((s, i) => (
+                <>
+                  {i > 0 && <span class="chain__sep" aria-hidden="true">→</span>}
+                  {s ? <a href={href(`/skills/${s}/`)}>{s}</a> : <span class="muted">(the call)</span>}
+                </>
+              ))}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTALL ============ -->
+  <section class="section section--rule" id="install">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">Install</p>
+        <h2>One command in Claude Code. A clone anywhere else.</h2>
+        <p>
+          Works with Claude Code, Claude, Codex, Cursor, Windsurf, Gemini CLI, Copilot and
+          anything supporting the <a href="https://agentskills.io" rel="noopener">Agent Skills standard</a>.
+        </p>
+      </div>
+
+      <div style="margin-bottom: clamp(1.75rem, 4vw, 2.5rem)">
+        <CommandBar
+          command={`npx skills add ${REPO_SLUG}`}
+          note={`The one that works everywhere. Add <code>--skill churn-risk</code> for a single skill, or <code>-a claude-code</code> to target one agent.`}
+        />
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 1.5rem">
+        <Install
+          title="Claude Code — plugin"
+          rows={[
+            `/plugin marketplace add ${REPO_SLUG}`,
+            '/plugin install customer-success@customer-success-skills',
+          ]}
+          note="Skills are namespaced — <code>/customer-success:churn-risk</code> — though you rarely type them."
+        />
+        <Install
+          title="Shell"
+          rows={[
+            `claude plugin marketplace add ${REPO_SLUG}`,
+            'claude plugin install customer-success@customer-success-skills',
+          ]}
+        />
+        <Install
+          title="Clone"
+          rows={[
+            `git clone ${GITHUB_URL}.git`,
+            'cp -r customer-success-skills/skills/* ~/.claude/skills/',
+          ]}
+          note="Or point your agent's skills directory at <code>skills/</code>."
+        />
+      </div>
+
+      <div style="margin-top: clamp(2rem, 5vw, 3rem); max-width: 46rem">
+        <p class="eyebrow">First run</p>
+        <p>
+          Start with <a href={href('/skills/cs-context/')}><code>cs-context</code></a>. It writes
+          <code>.agents/cs-context.md</code>, and every other skill reads it. Skip it and the skills
+          will tell you the output is generic rather than guess your commercial model.
+        </p>
+        <div class="install" style="margin-top: 1rem">
+          <div class="install__body">
+            <div class="install__row"><span class="install__prompt" aria-hidden="true">&gt;</span><code class="install__cmd">Set up customer success context for my company</code></div>
+            <div class="install__row"><span class="install__prompt" aria-hidden="true">&gt;</span><code class="install__cmd">Which of my renewals in the next 90 days are at risk, and why?</code></div>
+            <div class="install__row"><span class="install__prompt" aria-hidden="true">&gt;</span><code class="install__cmd">Prep me for the Acme call tomorrow</code></div>
+            <div class="install__row"><span class="install__prompt" aria-hidden="true">&gt;</span><code class="install__cmd">Where's my expansion revenue hiding?</code></div>
+            <div class="install__row"><span class="install__prompt" aria-hidden="true">&gt;</span><code class="install__cmd">What went wrong with the accounts we lost last quarter?</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTRIBUTOR TOOLING ============ -->
+  <section class="section section--rule" id="always-on">
+    <div class="wrap">
+      <div class="band">
+        <div class="band__split">
+          <div>
+            <p class="eyebrow">From skills to always-on</p>
+            <h2>These skills do the thinking. They do not do the watching.</h2>
+            <p>
+              An agent session ends and the sweep goes stale the moment you close it. The signals
+              that decide a renewal arrive <em>between</em> reviews — a champion's email starts
+              hard-bouncing on a Tuesday, an auto-renew flag flips on a Friday, a P1 ages past its
+              SLA over a weekend. Run the seven-family sweep by hand on Monday and it is accurate
+              on Monday.
+            </p>
+            <p>
+              That gap is a job for a platform, not a prompt. Every skill closes with an <code
+                >Automate This</code
+              > note naming the manual cost it just incurred, so you can decide what is worth
+              wiring up — with whatever tooling you already run.
+            </p>
+            <p class="mono-sm muted" style="margin-top: 1.5rem; border-top: 1px dashed var(--rule); padding-top: 1rem">
+              <a href={CONTRIBUTOR.url} rel="noopener">{CONTRIBUTOR.name}</a>, a contributor to this
+              library, builds one such platform — the column on the right is what it automates.
+              The library is MIT and vendor-neutral: nothing here requires it.
+            </p>
+          </div>
+
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">The skills, manually</th>
+                  <th scope="col">What a platform automates</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>You reconcile CRM, billing, support, product analytics and email by hand, per account</td>
+                  <td>Pre-built connectors resolved into one live account timeline</td>
+                </tr>
+                <tr>
+                  <td>You score risk once, in a session that ends</td>
+                  <td>Continuous scoring that ranks who needs attention today</td>
+                </tr>
+                <tr>
+                  <td>You explain the score by hand so people trust it</td>
+                  <td>Signal-by-signal reasoning shown, never an opaque number</td>
+                </tr>
+                <tr>
+                  <td>You find risk when you happen to look</td>
+                  <td>Risk flagged ahead of the renewal call rather than at it</td>
+                </tr>
+                <tr>
+                  <td>You write the play and then chase it</td>
+                  <td>Playbooks that fire when risk signals cross a threshold</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="mono-sm muted" style="margin-top: 1rem">
+              <a href={CONTRIBUTOR.url} rel="noopener">gaintrace.com ↗</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

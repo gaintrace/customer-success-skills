@@ -1,0 +1,68 @@
+{
+  "skill_name": "expansion-finder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I've got 42 accounts in my book and my NRR target is 112%. Where's my expansion pipeline for this quarter? Book export is attached — it's a Salesforce CSV with the report header rows still on top and ARR stored as text.",
+      "expected_output": "One batched tappable question set, then a ranked expansion pipeline: gross and risk-adjusted ARR, a Pipeline View ranked by throughput ($ per CSM-hour) with the arithmetic shown for the top five, a refusal list naming the accounts blocked by the health gate with the ARR withheld, a Gaps table for unsized candidates, an Assumption Register for every default it fell back on, and a Coverage Ledger across the seven signal families with a stated confidence cap.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 options and the recommended one first and labelled '(Recommended)'",
+        "Runs cs-context/scripts/ingest.py on the CSV before reading any number out of it, and finds the real header row beneath the export preamble",
+        "Confirms any column mapping below 0.80 confidence before using those numbers, naming the columns in question",
+        "Sweeps all seven signal families and prints every one, including families that came back clean",
+        "Ranks by throughput (ranked value / CSM hours), not by opportunity size, and states the tie-break rule",
+        "Computes timing from the opt-out deadline (renewal_date - notice_period_days), not the renewal date",
+        "Produces a refusal list for accounts below the health floor, with the ARR withheld quantified",
+        "Ends with an Assumption Register whose every row names a concrete consequence, and a Coverage Ledger with a coverage percentage and a confidence cap",
+        "Names no competing customer-success platform product anywhere; refers to the health-band source generically ('a field in your CS platform')"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Helios Health is at 96% seat utilisation and they just closed a Series C. Build me the upsell case — I want to send it this week.",
+      "expected_output": "A refusal if the account is below the health floor or a hard block applies, stating the decision first, the blocking evidence with dates, the economics of refusing, what runs instead with an owner and a date, and the re-test condition. If the account passes the gate, a sized case with floor/base/ceiling and a value-first sequence check.",
+      "assertions": [
+        "Runs the health gate before sizing anything, and names the source of the health band generically rather than naming a competing CS platform product",
+        "Refuses and explains rather than complying if the account is At Risk or a hard block fires",
+        "States the business-unit exception and requires all three conditions to be evidenced",
+        "Treats the funding round as a T6 exogenous signal that is never sufficient on its own",
+        "Waits 30-90 days after a funding announcement rather than acting on day one",
+        "Checks that a customer-validated value artifact exists within 120 days and is worth at least 3x the ask before any ask",
+        "Expresses the constraint as named blocked people rather than a utilisation percentage"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Northwind is on our $60k tier with 1M API calls included and they're doing 1.6M a month, growing about 12% month over month. Overage is $0.002 a call. Should we push them to the $96k tier that includes 5M?",
+      "expected_output": "The indifference point computed first (2.5M calls/month), the months-to-crossing at the observed growth rate (~3.9 months), a 12-month total-cost comparison for both tiers, the customer saving, and the two-sided read showing that year-one billings fall while committed ARR rises. An explicit honest recommendation, including the case where the answer is to stay.",
+      "assertions": [
+        "Computes the indifference point before recommending anything",
+        "States that at today's usage the customer should stay, then shows the trajectory that changes it",
+        "Shows a 12-month total-cost comparison with the arithmetic, not just a conclusion",
+        "Reports the billings delta separately from the committed-ARR delta",
+        "Names the guardrail that would withdraw the recommendation in writing",
+        "Does not recommend the upgrade if the crossing falls outside the remaining term",
+        "Records any input it had to default (growth rate, remaining term, discount) in an Assumption Register with the consequence of it being wrong"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Acme's renewal is 24 Jan, notice period is 60 days. They're at 236 active on 250 seats with 18 people getting access-denied errors. Write me the business case my champion can take to their CFO.",
+      "expected_output": "A customer-facing one-pager: their goal quoted, value delivered to date with customer-side validators, the constraint stated as 18 named blocked people with the date range, ROI and payback computed from the customer's own validated numbers, at least two commercial structures plus 'do nothing' with 12-month costs, a single recommendation, guardrails, and the approval path. Plus the internal record with the ranking arithmetic and the opt-out timing decision.",
+      "assertions": [
+        "Computes the opt-out deadline as 25 November and uses it for the timing decision",
+        "Computes floor (18), base (~31) and ceiling seat counts and recommends the base",
+        "Derives the effective per-seat price from ARR / contracted seats rather than quoting list price",
+        "Presents at least two commercial structures plus an explicit 'do nothing' option with its cost",
+        "Builds the ROI from the customer's own validated inputs and labels any vendor estimate as such",
+        "Puts the customer-facing text inside a fenced ```text block below the CUSTOMER-FACING divider, with no unfilled placeholders such as [Name] left inside the fence",
+        "The customer-facing block contains no health band, risk language, propensity, ranked value, CSM hours or ARR-at-risk figure, and no phrase from the banned list ('just checking in', 'touching base', 'we value your partnership')",
+        "Includes a data-lineage table showing where each number can be reproduced in the customer's own systems"
+      ],
+      "files": []
+    }
+  ]
+}

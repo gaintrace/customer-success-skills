@@ -1,0 +1,114 @@
+{
+  "skill_name": "book-of-business-triage",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "It's Monday. I have 40 mid-market accounts, about $3.8M ARR, and no idea what to work on. Two renewals are coming up, one account has an escalation open for three weeks, and I know I've been ignoring the bottom half of my book. Help me plan the week.",
+      "expected_output": "A full weekly queue: capacity lines A–J with their basis, a must-do block containing the escalation and any renewal inside the opt-out window, a top-decile block reserving a touch for the largest accounts before anything is ranked, an RPH-ranked high-return block allocated against line J with a printed cut line, a maintenance block, a rot sweep, a written not-this-week list that reconciles against the whole book, and a seven-family Coverage Ledger with a confidence cap.",
+      "assertions": [
+        "Prints capacity lines A through J with an hour value and a basis for each, before ranking any account",
+        "Reserves the top ARR decile as line I before walking the ranked list, and allocates the ranked list against J = H − I, not against H or against 40 hours",
+        "Computes top-decile membership as ceil(N/10) accounts by ARR plus every account holding at least 10% of book ARR, and prints the membership list with the ARR cut-off",
+        "Gives every top-decile member a row with a touch this week, a named covering row elsewhere in the queue, or an escalation carrying its ARR and the hours needed — no member is dropped for having a healthy band, and no row has a blank 'Touch this week' cell",
+        "Surfaces days since the last bilateral touch for every top-decile member as a computed field, treating an unmeasured last touch as the longest silence rather than as recent",
+        "Places the escalation open >14 days in the must-do block, not in the ranked high-return block",
+        "Computes and uses opt-out deadline (renewal_date − notice_period_days), not the renewal date alone, for every renewal-driven row",
+        "Ranks the high-return block by return per hour with the arithmetic shown for at least the top rows, and states the tie-break rule",
+        "Prints an explicit cut line row with the running total at that point",
+        "Produces a 'Deliberately Not This Week' section containing every account below the cut line, each row carrying a non-empty reason, the specific row that displaced it, a deferral count, a promotion trigger and a next-review date — no row says only 'no capacity' or 'lower priority'",
+        "Prints the reconciliation line proving accounts worked + accounts written off = every account in the book",
+        "Ends with a Coverage Ledger over all seven signal families and a stated confidence cap",
+        "Asks its clarifying questions as a single batched AskUserQuestion of no more than four, each with 2-4 mutually exclusive options and the recommended one first and labelled",
+        "Asks nothing that .agents/cs-context.md already answers (segment boundaries, notice period, coverage model, fiscal year)",
+        "If the questions go unanswered it proceeds on the recommended defaults, states them in one line at the top, and records each in an Assumptions table with a concrete 'if wrong' consequence"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm one of two CSMs covering 220 SMB accounts as a pool. Leadership wants us to 'do proactive outreach to everyone monthly'. Is that realistic, and what should this week actually look like?",
+      "expected_output": "A capacity answer first — the pooled cycle-time arithmetic showing how long a full sweep actually takes — followed by a pooled queue built from SLA-bounded queues rather than per-account plans, and a written correction of the monthly promise.",
+      "assertions": [
+        "Computes pooled capacity separately (higher reactive reserve, lower internal load) rather than reusing the named-CSM defaults",
+        "Shows the cycle-time arithmetic: accounts per CSM ÷ (maintenance hours ÷ hours per touch), and states the resulting weeks per full sweep",
+        "Reserves the top ARR decile of the pooled book before allocating any sweep hours by risk, and escalates by name any decile member the 25%-of-H reserve cap cannot fund rather than trimming the block silently",
+        "States that the monthly promise is not supported by the arithmetic and names the cadence that is",
+        "Structures the work as SLA-bounded queues (declared, commercial, risk, expansion, onboarding, maintenance sweep) rather than per-account plans",
+        "Requires a written handover note on every pooled item",
+        "Names the named-CSM cosplay anti-pattern or its substance — promising a relationship the staffing does not fund",
+        "Names no competing CS-platform product anywhere, referring to tooling generically as 'your CS platform' or 'whichever platform holds your playbooks'",
+        "Does not cite any published accounts-per-CSM ratio to justify or attack the book size, and says plainly that no neutral benchmark exists",
+        "Writes every account not worked this cycle into the not-this-week list — banding sub-floor tech-touch accounts into one row per segment with its count, its ARR and its next review — and reconciles the total against the whole 220-account book"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Here's my book as JSON [40 accounts]. My calendar already has 11 hours of customer meetings this week, I have two 1:1s and a forecast call, and last week I lost 9 hours to an incident. Give me the queue.",
+      "expected_output": "A capacity computation that survives the meeting load, an honest verdict on whether the week is servable, and either a queue or an escalation packet if must-do work exceeds deployable hours.",
+      "assertions": [
+        "Costs the 11 hours of committed meetings at play duration (prep + delivery + follow-up + write-up), not at invite length, and says so",
+        "Sizes the reactive reserve from the reported history rather than setting it to zero, and labels it as a default if history is insufficient",
+        "Evaluates the over-commitment stop rule explicitly: must-do hours plus committed meetings against line C",
+        "Subtracts the top-decile reserve as line I and allocates the ranked list against J = H − I; when the meeting load leaves too little, the decile members are escalated by name rather than quietly dropped, and the reserve is never used to fund the incident",
+        "If the stop rule fires, produces the capacity stress-test escalation rather than a queue that pretends to fit",
+        "Quantifies the ARR deliberately not covered in dollars, not just as an account count, and prints the reconciliation line: accounts worked + accounts written off = the whole book",
+        "Any account with a null risk band or null last_interaction is reported as UNKNOWN / unrankable, never scored as low risk or as recently touched",
+        "Every recommended action carries action, owner, date, expected effect and success measure",
+        "Records the reactive-reserve figure it used, and any other default it ran on, in an Assumptions table with a named consequence rather than burying it in prose"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "My manager asked which accounts nobody has touched in a quarter. Also, there's an account I've pushed to next week three weeks running — what do I do with it?",
+      "expected_output": "Rot-sweep mode: the six filters run with segment-scaled thresholds, plus the deferral rule resolving the repeatedly-deferred account to either a booked checkpoint or a written demotion.",
+      "assertions": [
+        "Runs in rot-sweep mode and produces section 4 only, rather than a full weekly queue",
+        "Applies segment-scaled silence thresholds (e.g. enterprise 45d, mid-market 60–90d, SMB/tech-touch 120d) rather than one threshold for the whole book",
+        "Counts only bilateral interactions as a touch, explicitly excluding vendor outbound, marketing sends and NPS blasts",
+        "Runs the additional filters: no product activity, dark account past day 60 with zero core events, unowned account, stale assessment",
+        "Resolves the thrice-deferred account to exactly one of a booked 15-minute checkpoint or a written demotion with a reason and a review date — not a fourth deferral",
+        "Reports accounts with missing interaction data as 'UNKNOWN — requires <source>' rather than omitting them from the sweep",
+        "States the silence thresholds as practitioner rules of thumb, not as measured benchmarks",
+        "Keeps the output internal: no customer-facing draft is emitted, and deferral counts, risk bands and ARR-at-risk figures are never phrased as something to send the account",
+        "Every account named in the sweep leaves with a written disposition — a reason, the row or decision that displaced it, and a next-review date — rather than being listed as untouched with no owner of the decision"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Attaching the account export RevOps sent me — it's an XLSX, there are a couple of title rows above the header and the ARR column has dollar signs and commas in it. No usage data in there. Can you still build me a work queue for this week?",
+      "expected_output": "ingest.py run first, low-confidence column mappings confirmed, the as-of date requested, and a real queue built on the families that are present — with the missing families named in the Coverage Ledger and confidence capped — rather than a refusal.",
+      "assertions": [
+        "Runs ../cs-context/scripts/ingest.py on the file before quoting any number from it, rather than parsing the spreadsheet by eye",
+        "Finds the real header row beneath the title rows and normalises the ARR column from text to numbers instead of failing on it",
+        "Confirms every column mapping below 0.80 confidence with the user before ranking on those columns",
+        "Asks for the export's as-of date and prints it against the source in the artifact",
+        "Produces a queue despite the missing product-usage data, with the absent signal families named in the Coverage Ledger and confidence explicitly capped, rather than refusing",
+        "Records each default it proceeded on in an Assumptions table with a concrete 'if wrong' consequence",
+        "Names no CS-platform product when describing where the missing usage data would come from"
+      ],
+      "files": [
+        "accounts.xlsx"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "I've got 60 accounts. My three biggest are all green and I haven't spoken to any of them since May. Everything on my at-risk list is small. What do I actually work on this week?",
+      "expected_output": "Capacity arithmetic first, then a top-decile block that reserves a touch for the largest accounts regardless of their health band, then the rest of the book ranked by return per hour against the remaining hours, and a written not-this-week list that reconciles against all 60 accounts.",
+      "assertions": [
+        "Reserves the top ARR decile — ceil(60/10) = 6 accounts by ARR, plus any account holding at least 10% of book ARR — before ranking anything by risk",
+        "Places the three large green accounts in the top-decile block with a touch scheduled this week, rather than ranking them against the small at-risk accounts and letting them fall below the cut line",
+        "Prints line I (top-decile reserve) and line J (H − I) in the capacity arithmetic and states that the ranked list is allocated against J",
+        "Reports days since the last bilateral touch for each of the three large accounts as a computed field rather than leaving the silence for the reader to notice",
+        "Refuses to remove a decile member because its band is Secure or green; the only two exits offered are a named covering row elsewhere in the queue or an escalation carrying the account's ARR and the hours it needed",
+        "Caps the reserve at 25% of the effective queue budget and, if the cap binds, touches the longest-silent members first and escalates the remainder by name",
+        "Lists every account below the cut line in 'Deliberately Not This Week' with a non-empty reason, the specific row that displaced it, a deferral count, a promotion trigger and a next-review date",
+        "Prints the reconciliation line: accounts worked + accounts written off = 60 of 60",
+        "Does not present the small at-risk accounts as the whole answer, and does not describe the green accounts as safe because their band is green"
+      ],
+      "files": []
+    }
+  ]
+}

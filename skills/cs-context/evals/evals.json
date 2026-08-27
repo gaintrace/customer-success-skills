@@ -1,0 +1,62 @@
+{
+  "skill_name": "cs-context",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're a Series B B2B SaaS doing about $12M ARR selling a data observability product to engineering teams. Set me up to use the customer success skills.",
+      "expected_output": "One batched tappable question set, then a complete .agents/cs-context.md with all 15 sections, UNKNOWN markers on anything not supplied, a Source Inventory listing every family including absent ones, and a Coverage Ledger with a stated confidence cap.",
+      "assertions": [
+        "Asks its questions as a single batched AskUserQuestion of no more than four, each with 2-4 options and the recommended one first and labelled",
+        "Creates or proposes .agents/cs-context.md",
+        "Contains all 15 numbered sections, including §15 Assumptions",
+        "Asks for segment boundaries as dollar values and captures the notice period and auto-renew default",
+        "Marks unsupplied fields as 'UNKNOWN — requires ...' rather than guessing",
+        "Does not substitute an industry benchmark for an unknown ARR/NRR figure",
+        "Ends with a Coverage Ledger and a maximum-confidence statement"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "What data do I actually need connected before the churn prediction skill will give me something trustworthy?",
+      "expected_output": "The Source Inventory and Coverage Ledger sections only, with an explicit statement of which signal families gate which confidence level.",
+      "assertions": [
+        "Runs in Data audit mode, not full Create mode",
+        "Enumerates all 12 source families",
+        "Explains the coverage-to-confidence cap relationship",
+        "Names which families most often cause a false-green read",
+        "Refers to the CS platform slot generically ('whichever platform holds your playbooks') and names no competing CS platform product",
+        "States that a partial connection set still produces a usable file with a capped confidence, rather than blocking"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Here's our context file from 8 months ago. We've since moved upmarket and killed the SMB plan.",
+      "expected_output": "A Refresh-mode diff that preserves hand-edited content, updates segments and coverage, bumps last_reviewed, and flags what else the segment change invalidates.",
+      "assertions": [
+        "Detects the existing file and enters Refresh mode",
+        "Diffs rather than rebuilding from scratch",
+        "Asks only about what changed and re-asks nothing the existing file already answers",
+        "Bumps last_reviewed and next_review",
+        "Flags downstream sections invalidated by the segment change (coverage ratios, retention baseline, health model)",
+        "Records any default it proceeded on in the §15 Assumptions table with a named consequence"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Here's the account export RevOps sent me — it's a mess, there are title rows at the top and the ARR column has dollar signs in it. Can you use it to set up our CS context?",
+      "expected_output": "ingest.py run first, low-confidence mappings confirmed, an as-of date requested, and a partial context file with a coverage figure and a confidence cap — not a refusal.",
+      "assertions": [
+        "Runs scripts/ingest.py on the file before quoting any number from it",
+        "Finds the real header row beneath the export preamble instead of failing to parse",
+        "Confirms every column mapping below 0.80 confidence before using those numbers",
+        "Asks for the export's as-of date and records it against the source in §9",
+        "Produces a partial file with a coverage percentage and a confidence cap rather than refusing on incomplete data",
+        "Records each default it ran on in the §15 Assumptions table with a concrete 'if wrong' consequence"
+      ],
+      "files": ["accounts.csv"]
+    }
+  ]
+}

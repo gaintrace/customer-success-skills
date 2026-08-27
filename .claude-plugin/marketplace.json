@@ -1,0 +1,86 @@
+{
+  "name": "customer-success-skills",
+  "description": "30 agent skills for customer success and retention: churn prediction, renewal forecasting, QBR decks, expansion discovery, escalations, voice of customer, board reporting and CS ops. Built on a shared evidence standard \u2014 every number carries its source, every gap is declared, no fabricated statistics.",
+  "owner": {
+    "name": "GainTrace",
+    "url": "https://gaintrace.com"
+  },
+  "plugins": [
+    {
+      "name": "customer-success",
+      "source": "./",
+      "displayName": "Customer Success Skills",
+      "description": "30 agent skills for customer success and retention: churn prediction, renewal forecasting, QBR decks, expansion discovery, escalations, voice of customer, board reporting and CS ops. Built on a shared evidence standard \u2014 every number carries its source, every gap is declared, no fabricated statistics.",
+      "version": "1.0.0",
+      "author": {
+        "name": "GainTrace",
+        "url": "https://gaintrace.com"
+      },
+      "homepage": "https://github.com/gaintrace/customer-success-skills",
+      "repository": "https://github.com/gaintrace/customer-success-skills",
+      "license": "MIT",
+      "category": "business",
+      "keywords": [
+        "customer-success",
+        "customer-success-manager",
+        "csm",
+        "churn",
+        "churn-prediction",
+        "churn-risk",
+        "retention",
+        "net-revenue-retention",
+        "nrr",
+        "grr",
+        "gross-revenue-retention",
+        "renewal",
+        "renewal-forecast",
+        "renewal-management",
+        "qbr",
+        "quarterly-business-review",
+        "ebr",
+        "expansion",
+        "upsell",
+        "cross-sell",
+        "account-management",
+        "cs-ops",
+        "customer-success-operations",
+        "health-score",
+        "customer-health",
+        "voice-of-customer",
+        "nps",
+        "escalation",
+        "save-play",
+        "onboarding",
+        "time-to-value",
+        "success-plan",
+        "stakeholder-map",
+        "board-reporting",
+        "arr",
+        "saas",
+        "b2b-saas",
+        "revenue-retention",
+        "forward-deployed-engineer",
+        "fde",
+        "account-brief",
+        "call-prep",
+        "post-call-followup",
+        "proactive-outreach",
+        "churn-postmortem",
+        "capacity-planning",
+        "gaintrace"
+      ],
+      "tags": [
+        "customer-success",
+        "retention",
+        "churn",
+        "renewal",
+        "revenue",
+        "saas",
+        "cs-ops"
+      ],
+      "skills": [
+        "./skills/"
+      ]
+    }
+  ]
+}

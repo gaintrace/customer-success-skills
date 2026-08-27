@@ -1,0 +1,89 @@
+{
+  "account": "Northwind Logistics",
+  "period": "FY26 trailing 12 months (2025-07-01 .. 2026-06-30)",
+  "as_of": "2026-08-24",
+  "customer_cost": {
+    "fees_in_period": 180000,
+    "internal_cost": 24000,
+    "internal_cost_source": "K. Osei, Finance Ops, 2026-08-12"
+  },
+  "benefits": [
+    {
+      "name": "Month-end close cycle",
+      "class": "time_released",
+      "baseline": {
+        "value": 9.0,
+        "unit": "working days",
+        "date": "2025-11-30",
+        "source": "Their close calendar, extracted by their FP&A team",
+        "supplied_by": "customer"
+      },
+      "current": {
+        "value": 5.5,
+        "date": "2026-06-30"
+      },
+      "users_affected": 140,
+      "hours_saved_per_user_per_week": 1.2,
+      "working_weeks_per_year": 46,
+      "adoption_rate": 0.8,
+      "loaded_hourly_cost": 68.0,
+      "loaded_cost_source": "customer",
+      "alpha": 0.7,
+      "alpha_level": "A2",
+      "alpha_attested_by": "J. Alvarez, Controller, email 2026-08-14",
+      "haircut": 0.1,
+      "haircut_reason": "Two of six teams changed process independently in April",
+      "redeployment": "Two FTE-equivalents moved to the audit-readiness programme"
+    },
+    {
+      "name": "Permissions support load",
+      "class": "time_released",
+      "baseline": {
+        "value": 31,
+        "unit": "tickets/month",
+        "date": "2025-12-31",
+        "source": "Zendesk, tag=permissions, extracted by us",
+        "supplied_by": "reconstructed"
+      },
+      "current": {
+        "value": 12,
+        "date": "2026-06-30"
+      },
+      "users_affected": 3,
+      "hours_saved_per_user_per_week": 2.0,
+      "working_weeks_per_year": 46,
+      "adoption_rate": 1.0,
+      "loaded_hourly_cost": 55.0,
+      "loaded_cost_source": "estimated",
+      "alpha": 0.6,
+      "alpha_level": "A2",
+      "alpha_attested_by": null,
+      "haircut": 0.15,
+      "haircut_reason": "Their IT ran a separate access-review project in Q1",
+      "redeployment": null
+    },
+    {
+      "name": "Faster quote turnaround correlates with win rate",
+      "class": "revenue_influenced",
+      "baseline": {
+        "value": null,
+        "unit": "win rate %",
+        "date": null,
+        "source": null,
+        "supplied_by": "none"
+      },
+      "current": {
+        "value": 34.0,
+        "date": "2026-06-30"
+      },
+      "alpha": 0.4,
+      "alpha_level": "A4",
+      "alpha_attested_by": null
+    }
+  ],
+  "exclusions": [
+    "Licence cost of the two integrations they built themselves",
+    "Any revenue effect from the quote-turnaround change (A4 attribution)",
+    "Headcount they did not hire — not claimed, because nobody has attested it"
+  ]
+}

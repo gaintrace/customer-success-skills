@@ -1,0 +1,243 @@
+{
+  "as_of": "2026-11-03",
+  "period": {
+    "label": "FY26 Q4",
+    "start": "2026-11-01",
+    "end": "2027-01-31",
+    "opening_arr": 42800000
+  },
+  "base_rates": {
+    "closed_won": 1.0,
+    "commit": 0.97,
+    "most_likely": 0.85,
+    "best_case": 0.35,
+    "at_risk": 0.3,
+    "omitted": 0.0
+  },
+  "scenario_rates": {},
+  "mid_term": {
+    "new_customer_arr": 610000,
+    "expansion_arr": 180000,
+    "cross_sell_arr": 95000,
+    "contraction_arr": 60000,
+    "churn_arr": 140000,
+    "product_churn_arr": 0,
+    "reactivation_arr": 35000,
+    "contracted_ramp_arr": 120000,
+    "fx_arr": -45000
+  },
+  "renewals": [
+    {
+      "account_id": "A-1001",
+      "name": "Northwind Logistics",
+      "segment": "Enterprise",
+      "industry": "Logistics",
+      "owner": "S. Okafor",
+      "atr": 840000,
+      "called_arr": 840000,
+      "category": "commit",
+      "expansion_arr": 42000,
+      "value_delta_reason": null,
+      "renewal_date": "2026-12-31",
+      "notice_period_days": 90,
+      "order_form_issued": true,
+      "eb_contact_days": 12,
+      "distinct_contacts_90d": 6
+    },
+    {
+      "account_id": "A-1002",
+      "name": "Halcyon Health",
+      "segment": "Enterprise",
+      "industry": "Healthcare",
+      "owner": "S. Okafor",
+      "atr": 620000,
+      "called_arr": 560000,
+      "category": "most_likely",
+      "value_delta_reason": "seat_reduction",
+      "renewal_date": "2027-01-15",
+      "notice_period_days": 60,
+      "order_form_issued": false,
+      "eb_contact_days": 40,
+      "distinct_contacts_90d": 4
+    },
+    {
+      "account_id": "A-1003",
+      "name": "Pemberton Financial",
+      "segment": "Enterprise",
+      "industry": "Financial Services",
+      "owner": "R. Nakamura",
+      "atr": 540000,
+      "called_arr": 0,
+      "category": "at_risk",
+      "loss_type": "logo",
+      "churn_reason": "vendor_consolidation",
+      "renewal_date": "2027-01-31",
+      "notice_period_days": 90,
+      "order_form_issued": false,
+      "eb_contact_days": 120,
+      "distinct_contacts_90d": 1
+    },
+    {
+      "account_id": "A-1004",
+      "name": "Kestrel Analytics",
+      "segment": "Mid-Market",
+      "industry": "Software",
+      "owner": "R. Nakamura",
+      "atr": 180000,
+      "called_arr": 180000,
+      "category": "commit",
+      "cross_sell_arr": 30000,
+      "renewal_date": "2026-12-15",
+      "notice_period_days": 30,
+      "order_form_issued": true,
+      "eb_contact_days": 8,
+      "distinct_contacts_90d": 5
+    },
+    {
+      "account_id": "A-1005",
+      "name": "Foxglove Retail",
+      "segment": "Mid-Market",
+      "industry": "Retail",
+      "owner": "T. Abara",
+      "atr": 145000,
+      "called_arr": 145000,
+      "category": "best_case",
+      "expansion_arr": 20000,
+      "expansion_proposed_arr": 35000,
+      "renewal_date": "2027-01-20",
+      "notice_period_days": 30,
+      "order_form_issued": false,
+      "eb_contact_days": 55,
+      "distinct_contacts_90d": 3
+    },
+    {
+      "account_id": "A-1006",
+      "name": "Arden Manufacturing",
+      "segment": "Mid-Market",
+      "industry": "Manufacturing",
+      "owner": "T. Abara",
+      "atr": 132000,
+      "called_arr": 132000,
+      "category": "most_likely",
+      "renewal_date": "2026-12-20",
+      "notice_period_days": 60,
+      "order_form_issued": false,
+      "eb_contact_days": 25,
+      "distinct_contacts_90d": 2
+    },
+    {
+      "account_id": "A-1007",
+      "name": "Belvoir Media",
+      "segment": "SMB",
+      "industry": "Media",
+      "owner": "T. Abara",
+      "atr": 48000,
+      "called_arr": 24000,
+      "category": "at_risk",
+      "value_delta_reason": "product_removal",
+      "renewal_date": "2026-12-05",
+      "notice_period_days": 30,
+      "order_form_issued": false,
+      "eb_contact_days": 70,
+      "distinct_contacts_90d": 1
+    },
+    {
+      "account_id": "A-1008",
+      "name": "Corvid Labs",
+      "segment": "SMB",
+      "industry": "Software",
+      "owner": "T. Abara",
+      "atr": 36000,
+      "called_arr": 36000,
+      "category": "closed_won",
+      "renewal_date": "2026-11-10",
+      "notice_period_days": 30,
+      "order_form_issued": true,
+      "eb_contact_days": 5,
+      "distinct_contacts_90d": 3
+    },
+    {
+      "account_id": "A-1009",
+      "name": "Dunmore Freight",
+      "segment": "Mid-Market",
+      "industry": "Logistics",
+      "owner": "S. Okafor",
+      "atr": 96000,
+      "called_arr": 96000,
+      "category": "most_likely",
+      "renewal_date": "2027-01-10",
+      "notice_period_days": 60,
+      "order_form_issued": false,
+      "eb_contact_days": 30,
+      "distinct_contacts_90d": 4
+    },
+    {
+      "account_id": "A-1010",
+      "name": "Eastvale Energy",
+      "segment": "Enterprise",
+      "industry": "Energy",
+      "owner": "R. Nakamura",
+      "atr": 410000,
+      "called_arr": 390000,
+      "category": "commit",
+      "value_delta_reason": "discount_concession",
+      "renewal_date": "2026-12-31",
+      "notice_period_days": 60,
+      "order_form_issued": true,
+      "eb_contact_days": 18,
+      "distinct_contacts_90d": 5
+    }
+  ],
+  "prior_snapshot": [
+    {
+      "account_id": "A-1001",
+      "category": "most_likely",
+      "called_arr": 840000
+    },
+    {
+      "account_id": "A-1002",
+      "category": "most_likely",
+      "called_arr": 620000
+    },
+    {
+      "account_id": "A-1003",
+      "category": "most_likely",
+      "called_arr": 540000
+    },
+    {
+      "account_id": "A-1004",
+      "category": "commit",
+      "called_arr": 180000
+    },
+    {
+      "account_id": "A-1005",
+      "category": "best_case",
+      "called_arr": 145000
+    },
+    {
+      "account_id": "A-1006",
+      "category": "most_likely",
+      "called_arr": 132000
+    },
+    {
+      "account_id": "A-1007",
+      "category": "most_likely",
+      "called_arr": 48000
+    },
+    {
+      "account_id": "A-1008",
+      "category": "commit",
+      "called_arr": 36000
+    },
+    {
+      "account_id": "A-1009",
+      "category": "most_likely",
+      "called_arr": 96000
+    },
+    {
+      "account_id": "A-1010",
+      "category": "commit",
+      "called_arr": 410000
+    }
+  ]
+}

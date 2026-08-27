@@ -1,0 +1,55 @@
+{
+  "as_of": "2026-08-28",
+  "accounts": [
+    {
+      "name": "Acme Corp",
+      "arr": 148000,
+      "renewal_date": "2027-02-01",
+      "notice_period_days": 90,
+      "gross_margin_pct": 0.78,
+      "horizon_years": 2.0,
+      "root_cause": "RC6",
+      "savability_band": "moderate",
+      "scenario": "full_churn",
+      "hours": {"csm": 14, "exec": 5, "am": 4},
+      "concession": {"discount_pct": 0.0, "credits": 0}
+    },
+    {
+      "name": "Delta Systems",
+      "arr": 310000,
+      "renewal_date": "2026-11-30",
+      "notice_period_days": 60,
+      "gross_margin_pct": 0.74,
+      "horizon_years": 1.0,
+      "root_cause": "RC4",
+      "savability_band": "high",
+      "scenario": "downsell",
+      "downsell_pct": 0.35,
+      "hours": {"csm": 10, "support": 12, "engineering": 24, "exec": 3},
+      "concession": {"discount_pct": 0.05, "credits": 6000}
+    },
+    {
+      "name": "Northwind Systems",
+      "arr": 62000,
+      "renewal_date": "2026-10-15",
+      "notice_period_days": 30,
+      "gross_margin_pct": 0.72,
+      "horizon_years": 1.0,
+      "root_cause": "RC10",
+      "savability_band": "structural",
+      "scenario": "full_churn",
+      "hours": {"csm": 6},
+      "concession": {"discount_pct": 0.0, "credits": 0}
+    },
+    {
+      "name": "Helios Freight",
+      "arr": 96000,
+      "root_cause": "RC7",
+      "savability_band": "low",
+      "scenario": "downsell",
+      "downsell_pct": 0.40,
+      "hours": {"csm": 9, "am": 8, "exec": 2},
+      "concession": {"discount_pct": 0.18, "credits": 2500}
+    }
+  ]
+}

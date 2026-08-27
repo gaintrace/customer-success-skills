@@ -1,0 +1,19 @@
+---
+const { title = 'Install', rows, note } = Astro.props;
+---
+<div class="install">
+  <div class="install__bar">
+    <span class="install__dot"></span><span class="install__dot"></span><span class="install__dot"></span>
+    <span class="install__title">{title}</span>
+  </div>
+  <div class="install__body">
+    {rows.map((cmd) => (
+      <div class="install__row">
+        <span class="install__prompt" aria-hidden="true">$</span>
+        <code class="install__cmd">{cmd}</code>
+        <button class="copy" type="button" data-copy={cmd} aria-label={`Copy: ${cmd}`}>Copy</button>
+      </div>
+    ))}
+    {note && <p class="install__note" set:html={note} />}
+  </div>
+</div>

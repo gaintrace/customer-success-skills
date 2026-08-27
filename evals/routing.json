@@ -1,0 +1,313 @@
+{
+  "_note": "How real users phrase things — not command names. Each prompt must reach exactly one skill. Run: python3 scripts/check_triggers.py",
+  "cases": [
+    {
+      "prompt": "which of my renewals in the next 90 days are at risk",
+      "expect": "churn-risk"
+    },
+    {
+      "prompt": "acme has gone really quiet, should I be worried",
+      "expect": "churn-risk"
+    },
+    {
+      "prompt": "is northwind going to churn",
+      "expect": "churn-risk"
+    },
+    {
+      "prompt": "their health score says 82 but my gut says something is wrong",
+      "expect": "churn-risk"
+    },
+    {
+      "prompt": "prep me for the acme call tomorrow",
+      "expect": "pre-call-brief"
+    },
+    {
+      "prompt": "I have a meeting with contoso at 10 and I know nothing about them",
+      "expect": "pre-call-brief"
+    },
+    {
+      "prompt": "catch me up on this account, I'm covering for someone",
+      "expect": "pre-call-brief"
+    },
+    {
+      "prompt": "build the QBR for northwind",
+      "expect": "qbr-builder"
+    },
+    {
+      "prompt": "I need a quarterly business review deck by thursday",
+      "expect": "qbr-builder"
+    },
+    {
+      "prompt": "I just got off a call with acme, here are my notes",
+      "expect": "post-call-followup"
+    },
+    {
+      "prompt": "draft the recap email from this transcript",
+      "expect": "post-call-followup"
+    },
+    {
+      "prompt": "who should I reach out to this week and what do I say",
+      "expect": "proactive-outreach"
+    },
+    {
+      "prompt": "their usage dropped, write me something that isn't just checking in",
+      "expect": "proactive-outreach"
+    },
+    {
+      "prompt": "where is my expansion revenue hiding",
+      "expect": "expansion-finder"
+    },
+    {
+      "prompt": "what should I upsell in my book",
+      "expect": "expansion-finder"
+    },
+    {
+      "prompt": "they are maxed out on seats, can we grow this",
+      "expect": "expansion-finder"
+    },
+    {
+      "prompt": "what is my renewal number going to be this quarter",
+      "expect": "renewal-forecast"
+    },
+    {
+      "prompt": "my forecast feels wrong, help me pressure test it",
+      "expect": "renewal-forecast"
+    },
+    {
+      "prompt": "calculate our NRR and GRR",
+      "expect": "renewal-forecast"
+    },
+    {
+      "prompt": "acme renews in november, what do I need to do between now and then",
+      "expect": "renewal-prep"
+    },
+    {
+      "prompt": "walk me through the renewal plan for this account",
+      "expect": "renewal-prep"
+    },
+    {
+      "prompt": "the monthly CS report is due",
+      "expect": "retention-report"
+    },
+    {
+      "prompt": "put together the retention numbers for the leadership meeting",
+      "expect": "retention-report"
+    },
+    {
+      "prompt": "northwind is red, what do we actually do about it",
+      "expect": "save-play"
+    },
+    {
+      "prompt": "we need a rescue plan for this account",
+      "expect": "save-play"
+    },
+    {
+      "prompt": "what went wrong with the accounts we lost last quarter",
+      "expect": "churn-postmortem"
+    },
+    {
+      "prompt": "run a loss review on this churn",
+      "expect": "churn-postmortem"
+    },
+    {
+      "prompt": "build a success plan with them for next year",
+      "expect": "success-plan"
+    },
+    {
+      "prompt": "our goals with this customer are vague, make them measurable",
+      "expect": "success-plan"
+    },
+    {
+      "prompt": "who do we actually know at this account",
+      "expect": "stakeholder-map"
+    },
+    {
+      "prompt": "our champion left, who else do we have",
+      "expect": "stakeholder-map"
+    },
+    {
+      "prompt": "new customer starting monday, plan their onboarding",
+      "expect": "onboarding-plan"
+    },
+    {
+      "prompt": "this implementation is three weeks behind",
+      "expect": "onboarding-plan"
+    },
+    {
+      "prompt": "what should I work on this week across my book",
+      "expect": "book-of-business-triage"
+    },
+    {
+      "prompt": "I have 40 accounts and no idea where to start on monday",
+      "expect": "book-of-business-triage"
+    },
+    {
+      "prompt": "our health score is garbage, nobody trusts it",
+      "expect": "health-score-designer"
+    },
+    {
+      "prompt": "design a health score that actually predicts renewal",
+      "expect": "health-score-designer"
+    },
+    {
+      "prompt": "what data do we have and what is missing before any of this works",
+      "expect": "cs-data-audit"
+    },
+    {
+      "prompt": "audit our CS instrumentation",
+      "expect": "cs-data-audit"
+    },
+    {
+      "prompt": "what are customers actually telling us across surveys and tickets",
+      "expect": "voice-of-customer"
+    },
+    {
+      "prompt": "synthesise our NPS feedback into themes",
+      "expect": "voice-of-customer"
+    },
+    {
+      "prompt": "I present retention to the board next week",
+      "expect": "exec-retention-review"
+    },
+    {
+      "prompt": "the CFO wants to know why NRR dropped",
+      "expect": "exec-retention-review"
+    },
+    {
+      "prompt": "how many CSMs do we actually need next year",
+      "expect": "coverage-and-capacity"
+    },
+    {
+      "prompt": "our books are too big, model the coverage",
+      "expect": "coverage-and-capacity"
+    },
+    {
+      "prompt": "set up customer success context for my company",
+      "expect": "cs-context"
+    },
+    {
+      "prompt": "onboard me to these skills, what do you need from me",
+      "expect": "cs-context"
+    },
+    {
+      "prompt": "they want a 20% discount to renew, how do I respond",
+      "expect": "renewal-negotiation"
+    },
+    {
+      "prompt": "procurement just got involved and is pushing on price",
+      "expect": "renewal-negotiation"
+    },
+    {
+      "prompt": "design our playbooks and what triggers them",
+      "expect": "cs-playbook-designer"
+    },
+    {
+      "prompt": "our alerts fire constantly and nobody acts on them",
+      "expect": "cs-playbook-designer"
+    },
+    {
+      "prompt": "write the technical account plan for this deployment",
+      "expect": "fde-account-plan"
+    },
+    {
+      "prompt": "what technical debt are we carrying for this customer",
+      "expect": "fde-account-plan"
+    },
+    {
+      "prompt": "i'm the only one who knows this deployment and i'm going on leave",
+      "expect": "fde-account-plan"
+    },
+    {
+      "prompt": "scope this deployment before we commit to it",
+      "expect": "fde-scoping"
+    },
+    {
+      "prompt": "write the statement of work for this implementation",
+      "expect": "fde-scoping"
+    },
+    {
+      "prompt": "they keep asking for extra work and I don't know if it's a change order",
+      "expect": "fde-scoping"
+    },
+    {
+      "prompt": "who can we use as a reference for this deal",
+      "expect": "customer-advocacy"
+    },
+    {
+      "prompt": "we keep asking the same customers to do case studies",
+      "expect": "customer-advocacy"
+    },
+    {
+      "prompt": "they said no to the reference call, should I be worried",
+      "expect": "customer-advocacy"
+    },
+    {
+      "prompt": "we never captured a baseline, can we still prove ROI",
+      "expect": "value-case"
+    },
+    {
+      "prompt": "build the value case for their CFO",
+      "expect": "value-case"
+    },
+    {
+      "prompt": "quantify the impact of our deployment before the renewal",
+      "expect": "value-case"
+    },
+    {
+      "prompt": "they love us but nothing moves, is he really our champion",
+      "expect": "stakeholder-map"
+    },
+    {
+      "prompt": "who actually signs at this account and who is blocking us",
+      "expect": "stakeholder-map"
+    },
+    {
+      "prompt": "who can we ask for a case study",
+      "expect": "customer-advocacy"
+    },
+    {
+      "prompt": "we need reference customers for sales",
+      "expect": "customer-advocacy"
+    },
+    {
+      "prompt": "prove the ROI to their finance team",
+      "expect": "value-case"
+    },
+    {
+      "prompt": "we never captured a baseline, can we still show value",
+      "expect": "value-case"
+    },
+    {
+      "prompt": "should we build this custom or push back to product",
+      "expect": "custom-vs-product"
+    },
+    {
+      "prompt": "this customer wants something bespoke, what does it cost us long term",
+      "expect": "custom-vs-product"
+    },
+    {
+      "prompt": "is it worth building this just for one customer",
+      "expect": "custom-vs-product"
+    },
+    {
+      "prompt": "check whether their integrations are actually working",
+      "expect": "integration-health"
+    },
+    {
+      "prompt": "their sync has been failing silently for weeks",
+      "expect": "integration-health"
+    },
+    {
+      "prompt": "we had an outage, write the note to their exec",
+      "expect": "exec-escalation-comms"
+    },
+    {
+      "prompt": "I need to tell them we missed the date",
+      "expect": "exec-escalation-comms"
+    },
+    {
+      "prompt": "how do I tell them we got the number wrong",
+      "expect": "exec-escalation-comms"
+    }
+  ]
+}

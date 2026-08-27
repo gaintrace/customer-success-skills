@@ -1,0 +1,77 @@
+# Customer Success Skills
+
+> 30 open-source Agent Skills for customer success and retention in B2B SaaS. Churn
+> prediction, renewal forecasting, QBR preparation, expansion discovery, escalation
+> management, voice of customer, board reporting and CS operations. Works with Claude Code,
+> Claude, Codex, Cursor, Gemini CLI, Copilot and any agent supporting the Agent Skills
+> standard. MIT licensed.
+
+Every skill is built on a shared evidence standard: each number carries its source and date,
+gaps are printed as `UNKNOWN — requires X` rather than filled with plausible values, and no
+probability is stated without a cited backtest. Built and maintained by GainTrace.
+
+## Documentation site
+
+- [https://gaintrace.github.io/customer-success-skills/](https://gaintrace.github.io/customer-success-skills/): every skill as a browsable page. Each page serves the SKILL.md verbatim at
+  `/skills/<name>.md`, and the site's own index is at `https://gaintrace.github.io/customer-success-skills/llms.txt`.
+
+## Install
+
+```
+npx skills add gaintrace/customer-success-skills
+
+# or, in Claude Code:
+/plugin marketplace add gaintrace/customer-success-skills
+/plugin install customer-success@customer-success-skills
+```
+
+## Skills
+
+- [book-of-business-triage](https://github.com/gaintrace/customer-success-skills/blob/main/skills/book-of-business-triage/SKILL.md): When the user has a whole book of accounts and needs to decide what to actually work on this week, in what order, with a realistic time budget
+- [churn-postmortem](https://github.com/gaintrace/customer-success-skills/blob/main/skills/churn-postmortem/SKILL.md): When a customer has churned, downgraded, or was nearly lost, and the user needs to know why it really happened, when it first became visible in data they a…
+- [churn-risk](https://github.com/gaintrace/customer-success-skills/blob/main/skills/churn-risk/SKILL.md): When the user wants to know whether a customer will stay, why, and what to do about it — for one account, a book, a segment, or a renewal window
+- [coverage-and-capacity](https://github.com/gaintrace/customer-success-skills/blob/main/skills/coverage-and-capacity/SKILL.md): When the user needs to design, audit or defend how customers are segmented, which coverage model each segment gets, how big a CSM book can actually be, and…
+- [cs-context](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/SKILL.md): When the user is setting up, updating or auditing the shared context every other CS skill reads — how customers pay, how they buy, contract shape, segments…
+- [cs-data-audit](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-data-audit/SKILL.md): When the user wants to find out what customer success data actually exists, how good it is, what is missing, and what to fix first — an instrumentation and…
+- [cs-playbook-designer](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-playbook-designer/SKILL.md): When the user wants to turn a customer success motion into a triggered, owned, measurable playbook — or to fix a play library nobody runs
+- [custom-vs-product](https://github.com/gaintrace/customer-success-skills/blob/main/skills/custom-vs-product/SKILL.md): When the user must decide whether to build something bespoke for one customer, generalise it, work around it, or say no — priced on the carrying cost, not …
+- [customer-advocacy](https://github.com/gaintrace/customer-success-skills/blob/main/skills/customer-advocacy/SKILL.md): When the user needs a customer to say something publicly, privately, or to a prospect — who is safe to ask, what to ask them for, how to word it, and how n…
+- [exec-escalation-comms](https://github.com/gaintrace/customer-success-skills/blob/main/skills/exec-escalation-comms/SKILL.md): When something has broken, slipped, or is about to change, and it has to go in writing to a customer executive — a note that will be forwarded, unedited, t…
+- [exec-retention-review](https://github.com/gaintrace/customer-success-skills/blob/main/skills/exec-retention-review/SKILL.md): When the user has to tell the retention story upward — to a board, an exec staff meeting, an investor update, or an all-hands — and the numbers have to sur…
+- [expansion-finder](https://github.com/gaintrace/customer-success-skills/blob/main/skills/expansion-finder/SKILL.md): When the user wants to find, size, qualify, time or justify expansion revenue inside customers they already have — for one account, a book, a segment, or a…
+- [fde-account-plan](https://github.com/gaintrace/customer-success-skills/blob/main/skills/fde-account-plan/SKILL.md): When the user owns the technical side of a deployment and needs the plan for it — what is actually running in the customer's environment, what was custom-b…
+- [fde-scoping](https://github.com/gaintrace/customer-success-skills/blob/main/skills/fde-scoping/SKILL.md): When the user needs to scope a customer deployment or services engagement and write the statement of work that governs it — in-scope and out-of-scope, mile…
+- [health-score-designer](https://github.com/gaintrace/customer-success-skills/blob/main/skills/health-score-designer/SKILL.md): When the user wants to design, weight, calibrate, backtest, audit, or fix a customer health score
+- [integration-health](https://github.com/gaintrace/customer-success-skills/blob/main/skills/integration-health/SKILL.md): When the user needs to know whether a customer's integrations are actually working — per connector, per error class, and including the failures that raise …
+- [onboarding-plan](https://github.com/gaintrace/customer-success-skills/blob/main/skills/onboarding-plan/SKILL.md): When the user needs to plan, run, audit, or rescue a new customer's onboarding and implementation — from the sales handover through to first value and stea…
+- [post-call-followup](https://github.com/gaintrace/customer-success-skills/blob/main/skills/post-call-followup/SKILL.md): When the user has just finished a customer call, QBR, renewal conversation, escalation or check-in and needs the follow-up done properly — the customer rec…
+- [pre-call-brief](https://github.com/gaintrace/customer-success-skills/blob/main/skills/pre-call-brief/SKILL.md): When the user has a customer conversation coming up and needs to walk in prepared
+- [proactive-outreach](https://github.com/gaintrace/customer-success-skills/blob/main/skills/proactive-outreach/SKILL.md): When the user needs to decide who to contact, why now, on which channel, and what to say — from one data trigger or across a whole book
+- [qbr-builder](https://github.com/gaintrace/customer-success-skills/blob/main/skills/qbr-builder/SKILL.md): When the user needs to prepare or write a quarterly or executive business review — the qualification call, the objectives, the value case, the deck, next-p…
+- [renewal-forecast](https://github.com/gaintrace/customer-success-skills/blob/main/skills/renewal-forecast/SKILL.md): When the user wants a defensible renewal revenue forecast for a book, segment, quarter or year — categories, dollars, confidence, and the arithmetic shown
+- [renewal-negotiation](https://github.com/gaintrace/customer-success-skills/blob/main/skills/renewal-negotiation/SKILL.md): When money, terms or leverage are on the table at a renewal and the user has to decide what to ask for, what to trade, and what to refuse — uplift, discoun…
+- [renewal-prep](https://github.com/gaintrace/customer-success-skills/blob/main/skills/renewal-prep/SKILL.md): When the user has a renewal coming up and needs the plan and the artifacts to get it signed — one account, a renewal window, or a rescue inside 30 days
+- [retention-report](https://github.com/gaintrace/customer-success-skills/blob/main/skills/retention-report/SKILL.md): When the user has to produce the recurring CS / retention report that leadership actually reads — monthly, quarterly, or for an operating review
+- [save-play](https://github.com/gaintrace/customer-success-skills/blob/main/skills/save-play/SKILL.md): When an account has crossed from monitoring into intervention and the user needs the war-room plan that saves it — root-cause diagnosis first, then the mat…
+- [stakeholder-map](https://github.com/gaintrace/customer-success-skills/blob/main/skills/stakeholder-map/SKILL.md): When the user wants to know who they actually know inside an account, who is missing, and how much money depends on one person staying — relationship mappi…
+- [success-plan](https://github.com/gaintrace/customer-success-skills/blob/main/skills/success-plan/SKILL.md): When the user needs to build, rewrite, review or rescue a mutual success plan — the customer business objectives, SMART goals with baselines, joint owners,…
+- [value-case](https://github.com/gaintrace/customer-success-skills/blob/main/skills/value-case/SKILL.md): When the user has to prove, measure or defend what a customer actually got for their money — the impact hypothesis, the baseline, the KPIs, the arithmetic,…
+- [voice-of-customer](https://github.com/gaintrace/customer-success-skills/blob/main/skills/voice-of-customer/SKILL.md): When the user wants to know what customers are actually telling them — turning NPS, CSAT, CES, support tickets, call transcripts, churn reasons, feature re…
+
+## Standards
+
+- [The Skill Standard](https://github.com/gaintrace/customer-success-skills/blob/main/docs/SKILL-STANDARD.md): the binding authoring contract
+- [The Evidence Standard](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/evidence-standard.md): provenance, evidence tiers, confidence criteria, the Coverage Ledger
+- [The Operating Rules](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/operating-rules.md): 24 named rules with the revenue consequence of breaking each
+- [Practitioner Craft](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/practitioner-craft.md): tacit CS craft implemented as structural mechanisms
+- [Business Model Profiles](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/business-model-profiles.md): what changes across PLG, consumption, seat-based, regulated and channel models
+- [The Signal Library](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/signal-library.md): the churn signal taxonomy with source, field, threshold and lead time
+- [The Metric Dictionary](https://github.com/gaintrace/customer-success-skills/blob/main/skills/cs-context/references/metric-dictionary.md): every CS metric with its formula, edge cases and sourced benchmarks
+- [Triggering](https://github.com/gaintrace/customer-success-skills/blob/main/docs/TRIGGERING.md): how skills are matched to prompts, and the routing test
+- [Worked Example](https://github.com/gaintrace/customer-success-skills/blob/main/docs/worked-example.md): a complete churn risk assessment, annotated
+
+## Optional
+
+- [Roadmap](https://github.com/gaintrace/customer-success-skills/blob/main/ROADMAP.md): specified but not yet built
+- [Contributing](https://github.com/gaintrace/customer-success-skills/blob/main/CONTRIBUTING.md)
+- [GainTrace](https://gaintrace.com): the AI customer success platform that automates this continuously

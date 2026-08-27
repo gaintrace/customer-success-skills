@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { CATEGORIES } from '../lib/catalog.js';
+import { SITE_FULL_NAME, href } from '../lib/site.js';
+---
+
+<Base
+  title={`Not found — ${SITE_FULL_NAME}`}
+  description="That page does not exist. Browse the 30 customer success agent skills instead."
+  noindex={true}
+>
+  <div class="wrap" style="padding: clamp(4rem, 12vw, 9rem) 0">
+    <p class="eyebrow">404</p>
+    <h1 style="font-size: clamp(2.2rem, 6vw, 4rem); margin-bottom: 1.25rem">
+      That page isn't here.
+    </h1>
+    <p style="max-width: var(--measure); color: var(--ink-2); margin-bottom: 2rem">
+      Which is, at least, declared rather than silently omitted. Try the skill index — everything
+      in the library is one click from there.
+    </p>
+    <div class="hero__actions" style="margin-bottom: 3.5rem">
+      <a class="btn" href={href('/skills/')}>All 30 skills →</a>
+      <a class="btn btn--ghost" href={href('/')}>Home</a>
+    </div>
+
+    <p class="eyebrow">Jump to a group</p>
+    <div class="tags">
+      {CATEGORIES.map((c) => (
+        <a class="tag" href={href(`/skills/#${c.id}`)}>{c.label}</a>
+      ))}
+    </div>
+  </div>
+</Base>
